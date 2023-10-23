@@ -1,4 +1,4 @@
-module grupp.lab4 {
+module grupp.LAB {
     requires javafx.controls;
     requires javafx.fxml;
 

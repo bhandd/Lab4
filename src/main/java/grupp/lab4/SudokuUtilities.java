@@ -1,5 +1,7 @@
 package grupp.lab4;
 
+import javafx.scene.layout.BorderPane;
+
 public class SudokuUtilities {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}

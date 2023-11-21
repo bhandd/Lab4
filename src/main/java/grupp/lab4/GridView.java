@@ -12,15 +12,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
-
 public class GridView extends BorderPane { //Check if using BorderPane is the right way to go?
     private Label[][] numberTiles; // the tiles/squares to show in the ui grid
     private TilePane numberPane;
-    private EventHandler<? super MouseEvent> tileClickHandler;
+    //private EventHandler<? super MouseEvent> tileClickHandler;
     private MenuBar menubar;
-
     private Bord bord;
+
+    private Controller controller;
+
+    private char buttonCheck;
 
     private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
         @Override
@@ -29,8 +30,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
                 for(int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
                     if(event.getSource() == numberTiles[row][col]) {
                         // we got the row and column - now call the appropriate controller method, e.g.
-                        //controller.onTileSelectedOrSomeSuch(row, col, ...);
-                        // then ...
+                        controller.MouseEvent(buttonCheck,row,col);
+                        System.out.println(buttonCheck);
                         return;
                     }
                 }
@@ -40,12 +41,11 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
     public GridView() {
         this.bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
+        buttonCheck = '0';
         numberTiles = new Label[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
         initNumberTiles();
-        // ...
         numberPane = makeNumberPane();
-
-
+        controller = new Controller(this , bord);
         this.setCenter(numberPane);
         this.setLeft(left());
         this.setRight(right());
@@ -73,7 +73,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
                 tile.setFont(font);
                 tile.setAlignment(Pos.CENTER);
                 tile.setStyle("-fx-border-color: black; -fx-border-width: 0.5px;"); // css style
-                tile.setOnMouseClicked(tileClickHandler); // add your custom event handler
+                tile.setOnMouseClicked(tileCLickHandler); // add your custom event handler
                 // add new tile to grid
                 numberTiles[row][col] = tile;
             }
@@ -140,25 +140,25 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         l2.setAlignment(Pos.CENTER);
         Button one = new Button("1");
-        //one.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        one.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button two = new Button("2");
-        //two.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        two.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button three = new Button("3");
-        //three.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        three.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button four = new Button("4");
-        //four.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        four.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button five = new Button("5");
-        //five.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        five.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button six = new Button("6");
-        //six.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        six.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button seven = new Button("7");
-        //seven.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        seven.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button eight = new Button("8");
-        //eight.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        eight.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button nine = new Button("9");
-        //nine.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        nine.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button clear = new Button("C");
-        //clear.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        clear.addEventHandler(ActionEvent.ACTION, buttonHandler);
         l2.getChildren().addAll(one,two,three,four,five,six,seven,eight,nine,clear);
         l2.setPadding(new Insets(10));
         l2.setSpacing(1);
@@ -215,6 +215,23 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         }
     };
+
+    private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            buttonCheck=controller.PressedButton(actionEvent.getSource());
+        }
+    };
+
+    public void updateTile(int row, int col) {
+        numberTiles[row][col].setText("");
+        if(bord.getCurrentValue(row,col) == 0) {
+            numberTiles[row][col].setText("");
+        }
+        else {
+            numberTiles[row][col].setText(Integer.toString(bord.getCurrentValue(row,col)));
+        }
+    }
 }
 
 

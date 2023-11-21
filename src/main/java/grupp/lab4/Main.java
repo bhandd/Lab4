@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Main extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         GridView gridView = new GridView();
         MenuBar menuBar = gridView.getMenu();
 
@@ -22,6 +22,10 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.setTitle("Sudoku");
         stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
     }
 
     /*public static void main(String[] args) {

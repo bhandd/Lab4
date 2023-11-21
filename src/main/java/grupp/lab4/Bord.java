@@ -33,7 +33,7 @@ public class Bord {
      **/
     public Bord() {
 
-        Square square = inGameBord[Rows][Cols];
+        //Square square = inGameBord[Rows][Cols];
 //        for(int i = 0;i<Rows;i++) {
 //            for (int j = 0;j<Cols;j++) {
 //                Square data = new Square(tempBord[i][j][1],false,tempBord[i][j][0]);
@@ -78,8 +78,12 @@ public class Bord {
         return 1;
     }
 
-    public Square getSqareValue(int row, int col) {
+    /*public Square getSqareValue(int row, int col) {
        return inGameBord[row][col];
+    }*/
+
+    public int getCurrentValue(int x, int y){
+        return this.inGameBord[x][y].getValue();
     }
 
     public void setSquareValue(int val, int row, int col) {

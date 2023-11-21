@@ -39,12 +39,12 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     public GridView() {
-
+        this.bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
         numberTiles = new Label[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
         initNumberTiles();
         // ...
         numberPane = makeNumberPane();
-        this.bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
+
 
         this.setCenter(numberPane);
         this.setLeft(left());
@@ -66,7 +66,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
                 Label tile = new Label(""/* add number, or "", to display */); // data from model
                 if(!bord.getPosOnBordByPos(row,col).isLocked()) {
-                    tile = new Label(Integer.toString(bord.get))
+                    tile = new Label(Integer.toString(bord.getCurrentValue(row,col)));
                 }
                 tile.setPrefWidth(32);
                 tile.setPrefHeight(32);

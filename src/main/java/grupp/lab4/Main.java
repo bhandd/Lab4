@@ -24,12 +24,12 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         //launch();
          Bord bord = new Bord();
          bord.setSquareValue(5,3,2);
         System.out.println(bord.toString());
 
-    }
+    }*/
 
 }

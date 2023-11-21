@@ -20,6 +20,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     private EventHandler<? super MouseEvent> tileClickHandler;
     private MenuBar menubar;
 
+    private Bord bord;
+
     private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
@@ -37,10 +39,13 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     public GridView() {
+
         numberTiles = new Label[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
         initNumberTiles();
         // ...
         numberPane = makeNumberPane();
+        this.bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
+
         this.setCenter(numberPane);
         this.setLeft(left());
         this.setRight(right());
@@ -59,7 +64,10 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
-                Label tile = new Label(/* add number, or "", to display */); // data from model
+                Label tile = new Label(""/* add number, or "", to display */); // data from model
+                if(!bord.getPosOnBordByPos(row,col).isLocked()) {
+                    tile = new Label(Integer.toString(bord.get))
+                }
                 tile.setPrefWidth(32);
                 tile.setPrefHeight(32);
                 tile.setFont(font);

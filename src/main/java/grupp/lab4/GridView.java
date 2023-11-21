@@ -12,10 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import static javafx.event.ActionEvent.*;
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
-public class GridView extends BorderPane {
+public class GridView extends BorderPane { //Check if using BorderPane is the right way to go?
     private Label[][] numberTiles; // the tiles/squares to show in the ui grid
     private TilePane numberPane;
     private EventHandler<? super MouseEvent> tileClickHandler;
@@ -107,7 +106,9 @@ public class GridView extends BorderPane {
 
         return root;
     }
-
+    /*
+        Add EventHandler
+     */
     public VBox left() {
         VBox l1 = new VBox();
 
@@ -123,7 +124,9 @@ public class GridView extends BorderPane {
         //check.addEventHandler(ActionEvent.ACTION, EventCheckGame);
         return l1;
     }
-
+    /*
+        Add EventHandler
+     */
     public VBox right() {
         VBox l2 = new VBox();
 
@@ -154,21 +157,56 @@ public class GridView extends BorderPane {
 
         return l2;
     }
-
+    /*
+        Add Eventhandler
+     */
     public void creatMenu()  {
         Menu file = new Menu("File");
         MenuItem loadGameItem = new MenuItem("Load Game");
+        loadGameItem.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add load game eventhandler
         MenuItem saveGameItem = new MenuItem("Save Game");
+        saveGameItem.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add save game eventhandler
         MenuItem exitGame = new MenuItem("Exit");
+        exitGame.addEventHandler(ActionEvent.ACTION, eventExitHandler);
         file.getItems().addAll(loadGameItem,saveGameItem,exitGame);
 
+        Menu gameMenu = new Menu("Game");
+        MenuItem restartGame = new MenuItem("Restart");
+        restartGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add restartgame eventhandler
+        MenuItem gameLevel = new MenuItem("Choose Level");
+        gameLevel.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add Choose level eventhandler
+        gameMenu.getItems().addAll(restartGame,gameLevel);
+
+        Menu helpMenu = new Menu("Help");
+        MenuItem checkGame = new MenuItem("Check game");
+        checkGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add check gmae stat eventhandler
+        MenuItem clerGame = new MenuItem("Clear");
+        clerGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add clear stat eventhandler
+        MenuItem gameRules = new MenuItem("Game Rulse");
+        gameRules.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add Game Rulse eventhandler
+        helpMenu.getItems().addAll(checkGame, clerGame, gameRules);
+
         menubar = new MenuBar();
-        menubar.getMenus().addAll(file);
+        menubar.getMenus().addAll(file, gameMenu, helpMenu);
     }
 
     public MenuBar getMenu() {
         return this.menubar;
     }
+
+    private EventHandler<ActionEvent> eventExitHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            System.exit(0);
+        }
+    };
+
+    private EventHandler<ActionEvent> eventRestartHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+
+        }
+    };
 }
 
 

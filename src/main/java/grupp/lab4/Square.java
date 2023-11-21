@@ -2,12 +2,12 @@ package grupp.lab4;
 
 public class Square {
 
-        private boolean taken = false;
+        private int taken = 0;
         private boolean locked = false;
         private int value = 0;
 
 
-        public Square(boolean taken, boolean locked, int value) {
+        public Square(int taken, boolean locked, int value) {
             this.taken = taken;
             this.locked = locked;
             this.value = value;
@@ -15,29 +15,34 @@ public class Square {
         }
 
         public Square() {
-            this.taken = false;
+            this.taken = 0;
             this.locked = false;
             this.value = 0;
 
         }
 
-        public boolean isTaken() {
+        public int isTaken() {
             return taken;
         }
 
         public void setTaken() {
-            this.taken = true;
+            this.taken = 0;
         }
-        public void removeTaken() {
-            this.taken = false;
+        public void removeValue() {
+            this.value = 0;
         }
 
         public boolean isLocked() {
             return locked;
         }
 
-        public void setLocked() {
-            this.locked = true;
+        public void setLocked(boolean set) {
+            if(set == true) {
+                this.locked = true;
+            }
+            else {
+                this.locked = false;
+            }
         }
 
         public int getValue() {

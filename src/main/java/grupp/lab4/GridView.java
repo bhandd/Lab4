@@ -186,7 +186,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         gameMenu.getItems().addAll(restartGame,gameLevel);
 
         Menu helpMenu = new Menu("Help");
-        MenuItem checkGame = new MenuItem("Check game");
+        MenuItem checkGame = new MenuItem("Check/end game");
         checkGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add check gmae stat eventhandler
         MenuItem clerGame = new MenuItem("Clear");
         clerGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add clear stat eventhandler

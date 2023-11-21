@@ -1,5 +1,9 @@
 package grupp.lab4;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Bord {
 
     public static final int Cols = 9;
@@ -22,12 +26,34 @@ public class Bord {
         this.theDiffiulty = theDiffiulty;
     }
 
+
+    /** Parameterlös konstruktor
+     * Skapar en tom 9x9 matrix
+     *
+     **/
+    public Bord() {
+
+        Square square = inGameBord[Rows][Cols];
+//        for(int i = 0;i<Rows;i++) {
+//            for (int j = 0;j<Cols;j++) {
+//                Square data = new Square(tempBord[i][j][1],false,tempBord[i][j][0]);
+//                this.inGameBord[i][j] = data;
+//
+//                if (tempBord[i][j][0] == 0) {
+//                    inGameBord[i][j].setLocked(true);
+//                }
+//            }
+//        }
+
+    }
+
     public Square getPosOnBordByPos(int posX, int posY) {
         return inGameBord[posX][posY];
     }
 
     public void handleButtonOfChoice(int button, int posX, int posY) {
-        if(inGameBord[posX][posY].isLocked()) {
+        if(inGameBord[posX][posY].isLocked())
+        {
             inGameBord[posX][posY].setValue(button);
         }
     }
@@ -46,7 +72,41 @@ public class Bord {
         return true;
     }
 
+
+
     public int Hint() {
         return 1;
+    }
+
+    public Square getSqareValue(int row, int col) {
+       return inGameBord[row][col];
+    }
+
+    public void setSquareValue(int val, int row, int col) {
+        inGameBord[row][col].setValue(val);
+    }
+
+
+
+    public SudokuUtilities.SudokuLevel getTheDiffiulty() {
+        return theDiffiulty;
+    }
+
+    public void setTheDiffiulty(SudokuUtilities.SudokuLevel theDiffiulty) {
+        this.theDiffiulty = theDiffiulty;
+    }
+
+    public Square[][] getInGameBord() {
+
+        return inGameBord;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Bord{" +
+                "inGameBord=" + Arrays.toString(inGameBord) +
+                ", theDiffiulty=" + theDiffiulty +
+                '}';
     }
 }

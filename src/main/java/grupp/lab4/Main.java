@@ -13,7 +13,9 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         GridView gridView = new GridView();
         MenuBar menuBar = gridView.getMenu();
+
         VBox root = new VBox(menuBar, gridView);
+
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.sizeToScene();
@@ -22,5 +24,12 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {launch();}
+    public static void main(String[] args) {
+        //launch();
+         Bord bord = new Bord();
+         bord.setSquareValue(5,3,2);
+        System.out.println(bord.toString());
+
+    }
+
 }

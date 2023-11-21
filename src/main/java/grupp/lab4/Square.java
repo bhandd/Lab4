@@ -48,7 +48,7 @@ public class Square {
         public int getValue() {
             return value;
         }
-
+/** **/
         public void setValue(int value) {
             if(value < 1 || value > 9) this.value = value;
         }

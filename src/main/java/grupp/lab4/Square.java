@@ -50,10 +50,15 @@ public class Square {
         }
 /** **/
         public void setValue(int value) {
-            if(value < 1 || value > 9) this.value = value;
+            this.value = value;
         }
 
-
-
-
+    @Override
+    public String toString() {
+        return "squareData{" +
+                "correctValue=" + taken +
+                ", hidden=" + locked +
+                ", currentValue=" + value +
+                '}';
+    }
 }

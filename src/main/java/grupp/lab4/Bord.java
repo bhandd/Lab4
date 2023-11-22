@@ -51,10 +51,10 @@ public class Bord {
         return inGameBord[posX][posY];
     }
 
-    public void handleButtonOfChoice(int button, int posX, int posY) {
+    public void handleButtonOfChoice(char button, int posX, int posY) {
         if(inGameBord[posX][posY].isLocked())
         {
-            inGameBord[posX][posY].setValue(button);
+            inGameBord[posX][posY].setValue(button-'0');
         }
     }
 
@@ -83,7 +83,7 @@ public class Bord {
     }*/
 
     public int getCurrentValue(int x, int y){
-        return this.inGameBord[x][y].getValue();
+        return inGameBord[x][y].getValue();
     }
 
     public void setSquareValue(int val, int row, int col) {
@@ -105,12 +105,15 @@ public class Bord {
         return inGameBord;
     }
 
-
+    //Kolla och lägga till andra variabler från classen
     @Override
     public String toString() {
-        return "Bord{" +
-                "inGameBord=" + Arrays.toString(inGameBord) +
-                ", theDiffiulty=" + theDiffiulty +
-                '}';
+        String info = "";
+        for (int i = 0; i < Rows; i++) {
+            for(int j = 0; j < Cols; i++) {
+                info += inGameBord[i][j].getValue();
+            }
+        }
+        return info;
     }
 }

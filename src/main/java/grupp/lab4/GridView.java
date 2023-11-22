@@ -18,9 +18,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     //private EventHandler<? super MouseEvent> tileClickHandler;
     private MenuBar menubar;
     private Bord bord;
-
     private Controller controller;
-
     private char buttonCheck;
 
     private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
@@ -50,7 +48,6 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         this.setLeft(left());
         this.setRight(right());
         creatMenu();
-        // ...
     }
 
     // use this method to get a reference to the number (called by some other class)
@@ -127,7 +124,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         l1.getChildren().add(hint);
         l1.setPadding(new Insets(10));
         l1.setSpacing(10);
-        //this.setleft(l1);
+        this.setLeft(l1);
         //hint.addEventHandler(ActionEvent.ACTION, EventHint);
         //check.addEventHandler(ActionEvent.ACTION, EventCheckGame);
         return l1;
@@ -162,6 +159,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         l2.getChildren().addAll(one,two,three,four,five,six,seven,eight,nine,clear);
         l2.setPadding(new Insets(10));
         l2.setSpacing(1);
+        this.setRight(l2);
 
         return l2;
     }
@@ -224,12 +222,20 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     public void updateTile(int row, int col) {
-        numberTiles[row][col].setText("");
+        //numberTiles[row][col].setText("");
         if(bord.getCurrentValue(row,col) == 0) {
             numberTiles[row][col].setText("");
         }
         else {
             numberTiles[row][col].setText(Integer.toString(bord.getCurrentValue(row,col)));
+        }
+    }
+
+    public void updateBord() {
+        for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
+            for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
+                updateTile(row,col);
+            }
         }
     }
 }

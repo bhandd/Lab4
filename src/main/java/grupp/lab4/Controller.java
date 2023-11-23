@@ -35,8 +35,8 @@ public class Controller {
 
     }
 
-    public void EventRestartGame() {
-
+    public void eventRestartGame(Bord newbord) {
+        this.bord = newbord;
     }
 
     public void EventLoadGame() {

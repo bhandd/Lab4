@@ -103,7 +103,6 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
                                 numberTiles[srow * SudokuUtilities.SECTION_SIZE + row][scol * SudokuUtilities.SECTION_SIZE + col]);
                     }
                 }
-
                 // add the section to the root tile pane
                 root.getChildren().add(section);
             }
@@ -178,7 +177,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         Menu gameMenu = new Menu("Game");
         MenuItem restartGame = new MenuItem("Restart");
-        restartGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add restartgame eventhandler
+        restartGame.addEventHandler(ActionEvent.ACTION, restartHandler); //Add restartgame eventhandler
         MenuItem gameLevel = new MenuItem("Choose Level");
         gameLevel.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add Choose level eventhandler
         gameMenu.getItems().addAll(restartGame,gameLevel);
@@ -222,7 +221,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     public void updateTile(int row, int col) {
-        //numberTiles[row][col].setText("");
+        numberTiles[row][col].setText("");
         if(bord.getCurrentValue(row,col) == 0) {
             numberTiles[row][col].setText("");
         }
@@ -238,6 +237,15 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             }
         }
     }
+
+    private EventHandler<ActionEvent> restartHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            bord = new Bord(bord.getTheDiffiulty());
+            controller.eventRestartGame(bord);
+            updateBord();
+        }
+    };
 }
 
 

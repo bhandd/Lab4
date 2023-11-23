@@ -12,7 +12,8 @@ public class Controller {
 
     public void MouseEvent(char button, int x, int y) {
         if (button == 'C') {
-            //add remove capabilities
+            bord.removeCurrentValue(x,y);
+            view.updateTile(x,y);
         } else if (bord.getCurrentValue(x,y)==0) {
             bord.handleButtonOfChoice(button,x,y);
             view.updateTile(x,y);
@@ -24,7 +25,11 @@ public class Controller {
     }
 
     public void EventClearGame() {
-
+        for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
+            for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                bord.removeCurrentValue(i,j);
+            }
+        }
     }
 
     public void EventCheckGame() {

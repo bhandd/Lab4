@@ -186,7 +186,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         MenuItem checkGame = new MenuItem("Check/end game");
         checkGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add check gmae stat eventhandler
         MenuItem clerGame = new MenuItem("Clear");
-        clerGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add clear stat eventhandler
+        clerGame.addEventHandler(ActionEvent.ACTION, clearHandler); //Add clear stat eventhandler
         MenuItem gameRules = new MenuItem("Game Rulse");
         gameRules.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add Game Rulse eventhandler
         helpMenu.getItems().addAll(checkGame, clerGame, gameRules);
@@ -243,6 +243,14 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         public void handle(ActionEvent actionEvent) {
             bord = new Bord(bord.getTheDiffiulty());
             controller.eventRestartGame(bord);
+            updateBord();
+        }
+    };
+
+    public EventHandler<ActionEvent> clearHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            controller.EventClearGame();
             updateBord();
         }
     };

@@ -105,6 +105,12 @@ public class Bord {
         return inGameBord;
     }
 
+    public void removeCurrentValue(int posx, int posy) {
+        if(inGameBord[posx][posy].isLocked()) {
+            inGameBord[posx][posy].removeValue();
+        }
+    }
+
     //Kolla och lägga till andra variabler från classen
     @Override
     public String toString() {

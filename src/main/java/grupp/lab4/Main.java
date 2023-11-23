@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
-import java.io.IOException;
 
 public class Main extends Application {
 

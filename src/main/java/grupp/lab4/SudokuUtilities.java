@@ -56,6 +56,7 @@ public class SudokuUtilities {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 values[row][col][0] =
+                        //TODO: här ska vi sätta in vår random genererade sudoku
                         convertCharToSudokuInt(charRepresentation[charIndex++]);
             }
         }

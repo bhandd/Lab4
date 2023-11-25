@@ -199,6 +199,13 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         return this.menubar;
     }
 
+
+    //TODO:metod för att generera ett nytt spel med random bräde
+    public void newGame(){
+
+
+    }
+
     private EventHandler<ActionEvent> eventExitHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {

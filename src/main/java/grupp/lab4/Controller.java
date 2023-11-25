@@ -10,6 +10,7 @@ public class Controller {
         this.bord = bord;
     }
 
+
     public void MouseEvent(char button, int x, int y) {
         if (button == 'C') {
             bord.removeCurrentValue(x,y);
@@ -40,6 +41,11 @@ public class Controller {
 
     }
 
+    /**
+     *
+     *
+     * @param newbord
+     */
     public void eventRestartGame(Bord newbord) {
         this.bord = newbord;
     }

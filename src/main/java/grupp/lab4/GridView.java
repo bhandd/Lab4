@@ -181,7 +181,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         MenuItem restartGame = new MenuItem("Restart");
         restartGame.addEventHandler(ActionEvent.ACTION, restartHandler);
         MenuItem gameLevel = new MenuItem("Choose Level");
-        gameLevel.addEventHandler(ActionEvent.ACTION, levelHandler); //Add Choose level eventhandler
+        gameLevel.addEventHandler(ActionEvent.ACTION, levelHandler);
         gameMenu.getItems().addAll(restartGame,gameLevel);
 
         Menu helpMenu = new Menu("Help");
@@ -190,7 +190,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         MenuItem clerGame = new MenuItem("Clear");
         clerGame.addEventHandler(ActionEvent.ACTION, clearHandler); //Add clear stat eventhandler
         MenuItem gameRules = new MenuItem("Game Rulse");
-        gameRules.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add Game Rulse eventhandler
+        gameRules.addEventHandler(ActionEvent.ACTION, rulesHandler); //Add Game Rulse eventhandler
         helpMenu.getItems().addAll(checkGame, clerGame, gameRules);
 
         menubar = new MenuBar();
@@ -265,8 +265,10 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             ButtonType easy = new ButtonType("Easy");
             ButtonType medium = new ButtonType("Medium");
             ButtonType hard = new ButtonType("Hard");
-            alert.getButtonTypes().setAll(easy,medium,hard);
-
+            ButtonType cancel = new ButtonType("Cancel");
+            alert.getButtonTypes().setAll(easy,medium,hard,cancel);
+            alert.setTitle("Difficulty");
+            alert.setHeaderText(null);
             alert.setContentText("Choose the difficulty");
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.get() == easy){
@@ -282,6 +284,21 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
                 controller.eventRestartGame(bord);
                 updateBord();
             }
+        }
+    };
+
+    public EventHandler<ActionEvent> rulesHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setTitle("Rulse");
+            alert.setHeaderText("Sudoku Rules");
+            alert.setContentText("Every square needs contain a number\n" +
+                    "The numbers 1-9 can be used\n" +
+                    "In each of the 3x3 boxes the numbers 1-9 can only appare once\n" +
+                    "The same numbers can only appare once in each row and column\n");
+            alert.showAndWait();
         }
     };
 }

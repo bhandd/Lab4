@@ -38,7 +38,29 @@ public class Controller {
     }
 
     public void EventHint() {
+        int amountof = 0;
+        for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
+            for(int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
+                if(bord.getCurrentValue(row,col)!= 0) {
+                    amountof++;
+                }
+            }
+        }
 
+        if (amountof==81) {
+                throw new IllegalArgumentException("Bord is filled");
+        }
+
+        int RowToPlaceHint = 0;
+        int ColToPlaceHint = 0;
+        int hintValue = 0;
+        while (hintValue == 0) { //look for place to place hint
+            //Search for hint in bord
+            if(bord.getCurrentValue(RowToPlaceHint,ColToPlaceHint)==0) {
+                //Place hint
+            }
+        }
+        //set value on bord
     }
 
     /**

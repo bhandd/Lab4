@@ -12,6 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.Optional;
+
 public class GridView extends BorderPane { //Check if using BorderPane is the right way to go?
     private Label[][] numberTiles; // the tiles/squares to show in the ui grid
     private TilePane numberPane;
@@ -177,9 +179,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         Menu gameMenu = new Menu("Game");
         MenuItem restartGame = new MenuItem("Restart");
-        restartGame.addEventHandler(ActionEvent.ACTION, restartHandler); //Add restartgame eventhandler
+        restartGame.addEventHandler(ActionEvent.ACTION, restartHandler);
         MenuItem gameLevel = new MenuItem("Choose Level");
-        gameLevel.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add Choose level eventhandler
+        gameLevel.addEventHandler(ActionEvent.ACTION, levelHandler); //Add Choose level eventhandler
         gameMenu.getItems().addAll(restartGame,gameLevel);
 
         Menu helpMenu = new Menu("Help");
@@ -210,13 +212,6 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         @Override
         public void handle(ActionEvent actionEvent) {
             System.exit(0);
-        }
-    };
-
-    private EventHandler<ActionEvent> eventRestartHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-
         }
     };
 
@@ -259,6 +254,34 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         public void handle(ActionEvent actionEvent) {
             controller.EventClearGame();
             updateBord();
+        }
+    };
+
+    public EventHandler<ActionEvent> levelHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            ButtonType easy = new ButtonType("Easy");
+            ButtonType medium = new ButtonType("Medium");
+            ButtonType hard = new ButtonType("Hard");
+            alert.getButtonTypes().setAll(easy,medium,hard);
+
+            alert.setContentText("Choose the difficulty");
+            Optional<ButtonType> choice = alert.showAndWait();
+            if (choice.get() == easy){
+                bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
+                controller.eventRestartGame(bord);
+                updateBord();
+            } else if (choice.get() == medium){
+                bord = new Bord(SudokuUtilities.SudokuLevel.MEDIUM);
+                controller.eventRestartGame(bord);
+                updateBord();
+            } else if (choice.get() == hard) {
+                bord = new Bord(SudokuUtilities.SudokuLevel.HARD);
+                controller.eventRestartGame(bord);
+                updateBord();
+            }
         }
     };
 }

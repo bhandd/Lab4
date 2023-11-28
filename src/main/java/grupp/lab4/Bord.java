@@ -3,6 +3,7 @@ package grupp.lab4;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Bord {
 
@@ -109,6 +110,10 @@ public class Bord {
         if(inGameBord[posx][posy].isLocked()) {
             inGameBord[posx][posy].removeValue();
         }
+    }
+
+    public void GivepalceforHint() {
+        Random pos = new Random();
     }
 
     //Kolla och lägga till andra variabler från classen

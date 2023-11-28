@@ -156,7 +156,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         Button nine = new Button("9");
         nine.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button clear = new Button("C");
-        clear.addEventHandler(ActionEvent.ACTION, clearHandler);
+        clear.addEventHandler(ActionEvent.ACTION, buttonHandler);
         l2.getChildren().addAll(one,two,three,four,five,six,seven,eight,nine,clear);
         l2.setPadding(new Insets(10));
         l2.setSpacing(1);

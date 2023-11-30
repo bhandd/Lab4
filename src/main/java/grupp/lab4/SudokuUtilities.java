@@ -1,7 +1,5 @@
 package grupp.lab4;
 
-import javafx.scene.layout.BorderPane;
-
 public class SudokuUtilities {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}
@@ -22,13 +20,21 @@ public class SudokuUtilities {
      */
     public static int[][][] generateSudokuMatrix(SudokuLevel level) {
         String representationString;
+        int[][][] representationInt;
         switch (level) {
             case EASY: representationString = easy; break;
             case MEDIUM: representationString = medium; break;
             case HARD: representationString = hard; break;
             default: representationString = medium;
         }
-        return convertStringToIntMatrix(representationString);
+
+        //Original
+       // return convertStringToIntMatrix(representationString);
+
+        //Efter randomizeSudoku
+       representationInt = convertStringToIntMatrix(representationString);
+      //  return swapNumbers(representationInt);            //Todo: fixa den så den funkar om den behövs
+        return randomize(representationInt);
     }
 
     /**
@@ -56,7 +62,7 @@ public class SudokuUtilities {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
                 values[row][col][0] =
-                        //TODO: här ska vi sätta in vår random genererade sudoku
+
                         convertCharToSudokuInt(charRepresentation[charIndex++]);
             }
         }
@@ -69,7 +75,80 @@ public class SudokuUtilities {
             }
         }
 
+
+
         return values;
+    }
+
+    /**
+     * Randomiserar vilka värden som skall visas
+     * @param sudokuValues
+     * @return
+     */
+    //TODO: funkar inte, fixa så den funkar
+    private static int[][][] randomize(int[][][] sudokuValues){
+
+        int HowManyDisplayedNumbers = (int)(Math.random()*35+25);
+
+        for(int i = HowManyDisplayedNumbers; i >0 ; i--) {
+            for (int row = 0; row < GRID_SIZE; row++) {
+                for (int col = 0; col < GRID_SIZE; col++) {
+                    if(sudokuValues[row][col][0] == 0 && (int)(Math.random()*1+0) == 1){
+                     //   System.out.println("Value to store: " + sudokuValues[row][col][1]);
+                        sudokuValues[row][col][0] = sudokuValues[row][col][1];
+//                    }else if(sudokuValues[row][col][0] != 0){
+//                        sudokuValues[row][col][0] = 0;
+
+                    }
+
+
+                }
+            }
+        }
+
+        return sudokuValues;
+    }
+
+    /**
+     * Byter plats på två random nummer
+     * @param sudokuValues
+     * @return
+     */
+    //TODO: Behövs? isåfall fixa så den funkar
+   private static int[][][] swapNumbers(int[][][] sudokuValues){
+       System.out.println("randomIzeSudoku Initialized");               //Test
+       int[][] position1;
+       int[][] position2;
+       int firstNumber;
+       int secNumber;
+       int counterOne = 0;
+       int counterTwo = 0;
+       do{
+             firstNumber = (int)(Math.random()*9+1);
+             secNumber = (int)(Math.random()*9+1);
+        }while (firstNumber == secNumber);
+
+       System.out.println("First number: " + firstNumber);               //Test
+       System.out.println("Second number: " + secNumber);               //Test
+
+           for (int row1 = 0; row1 < GRID_SIZE; row1++) {
+               for (int col1 = 0; col1 < GRID_SIZE; col1++) {
+                   if(firstNumber == sudokuValues[row1][col1][1]){
+
+                   }
+                   }
+               }
+
+
+
+
+
+
+
+
+       System.out.println("randomIzeSudoku Finished!");
+    return sudokuValues;
+
     }
 
     private static int convertCharToSudokuInt(char ch) {

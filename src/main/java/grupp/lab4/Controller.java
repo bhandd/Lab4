@@ -5,12 +5,22 @@ public class Controller {
     private GridView view;
     private Bord bord;
 
+    /**
+     *
+     * @param view
+     * @param bord
+     */
     public Controller(GridView view, Bord bord) {
         this.view = view;
         this.bord = bord;
     }
 
-
+    /**
+     *
+     * @param button
+     * @param x
+     * @param y
+     */
     public void MouseEvent(char button, int x, int y) {
         if (button == 'C') {
             bord.removeCurrentValue(x,y);
@@ -21,6 +31,11 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     * @param button
+     * @return
+     */
     public char PressedButton(Object button) {
         return button.toString().charAt(button.toString().length()-2);
     }
@@ -33,6 +48,9 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
     public void EventCheckGame() {
 
     }
@@ -57,7 +75,7 @@ public class Controller {
         while (hintValue == 0) { //look for place to place hint
             //Search for hint in bord
             if(bord.getCurrentValue(RowToPlaceHint,ColToPlaceHint)==0) {
-                //Place hint
+
             }
         }
         //set value on bord
@@ -72,10 +90,16 @@ public class Controller {
         this.bord = newbord;
     }
 
+    /**
+     *
+     */
     public void EventLoadGame() {
 
     }
 
+    /**
+     *
+     */
     public void EventSaveGame() {
 
     }

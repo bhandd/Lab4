@@ -23,6 +23,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     private Controller controller;
     private char buttonCheck;
 
+    /**
+     *
+     */
     private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
@@ -39,6 +42,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    /**
+     *
+     */
     public GridView() {
         this.bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
         buttonCheck = '0';
@@ -79,6 +85,10 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     }
 
+    /**
+     *
+     * @return
+     */
     private final TilePane makeNumberPane() {
         // create the root tile pane
         TilePane root = new TilePane();
@@ -112,8 +122,10 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         return root;
     }
-    /*
-        Add EventHandler
+
+    /**
+     *
+     * @return
      */
     public VBox left() {
         VBox l1 = new VBox();
@@ -126,12 +138,14 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         l1.setPadding(new Insets(10));
         l1.setSpacing(10);
         this.setLeft(l1);
-        //hint.addEventHandler(ActionEvent.ACTION, EventHint);
+        hint.addEventHandler(ActionEvent.ACTION, hintHandler);
         //check.addEventHandler(ActionEvent.ACTION, EventCheckGame);
         return l1;
     }
-    /*
-        Add EventHandler
+
+    /**
+     *
+     * @return
      */
     public VBox right() {
         VBox l2 = new VBox();
@@ -164,8 +178,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         return l2;
     }
-    /*
-        Add Eventhandler
+
+    /**
+     *
      */
     public void creatMenu()  {
         Menu file = new Menu("File");
@@ -197,6 +212,10 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         menubar.getMenus().addAll(file, gameMenu, helpMenu);
     }
 
+    /**
+     *
+     * @return
+     */
     public MenuBar getMenu() {
         return this.menubar;
     }
@@ -208,6 +227,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
     }
 
+    /**
+     *
+     */
     private EventHandler<ActionEvent> eventExitHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -215,6 +237,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    /**
+     *
+     */
     private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -222,6 +247,11 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    /**
+     *
+     * @param row
+     * @param col
+     */
     public void updateTile(int row, int col) {
         numberTiles[row][col].setText("");
         if(bord.getCurrentValue(row,col) == 0) {
@@ -232,6 +262,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     }
 
+    /**
+     *
+     */
     public void updateBord() {
         for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
@@ -240,6 +273,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     }
 
+    /**
+     *
+     */
     private EventHandler<ActionEvent> restartHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -249,6 +285,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    /**
+     *
+     */
     public EventHandler<ActionEvent> clearHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -257,6 +296,11 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    /**
+     *  Gives you four choose, three where you can start a new game
+     *  with a diffrent level or a cancel an go back to game.
+     *  This choose is made with an alert
+     */
     public EventHandler<ActionEvent> levelHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -287,6 +331,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    /**
+     * Shows the rulses of a sudoku game in the form of an alert popup
+     */
     public EventHandler<ActionEvent> rulesHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -299,6 +346,23 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
                     "In each of the 3x3 boxes the numbers 1-9 can only appare once\n" +
                     "The same numbers can only appare once in each row and column\n");
             alert.showAndWait();
+        }
+    };
+
+    public EventHandler<ActionEvent> checkHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            controller.EventCheckGame();
+        }
+    };
+
+    public EventHandler<ActionEvent> hintHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            controller.EventHint();
+            updateBord();
         }
     };
 }

@@ -1,5 +1,7 @@
 package grupp.lab4;
 
+import java.util.Random;
+
 public class SudokuUtilities {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}
@@ -34,11 +36,13 @@ public class SudokuUtilities {
         //Efter randomizeSudoku
        representationInt = convertStringToIntMatrix(representationString);
       //  return swapNumbers(representationInt);            //Todo: fixa den så den funkar om den behövs
+           //representationInt = randomize(representationInt);
+
         return randomize(representationInt);
     }
 
     /**
-     * Create a 3-dimensional matrix with initial values and solution in Sudoku.
+     * Create a 3-dimerepresentationIntnsional matrix with initial values and solution in Sudoku.
      *
      * @param stringRepresentation A string of 2*81 characters, 0-9. The first 81 characters represents
      *                             the initial values, '0' representing an empty cell.
@@ -80,33 +84,33 @@ public class SudokuUtilities {
         return values;
     }
 
+
+
+
     /**
      * Randomiserar vilka värden som skall visas
+     *
      * @param sudokuValues
-     * @return
      */
     //TODO: funkar inte, fixa så den funkar
     private static int[][][] randomize(int[][][] sudokuValues){
+        Random random = new Random();
 
-        int HowManyDisplayedNumbers = (int)(Math.random()*35+25);
+//        int HowManyDisplayedNumbers = (int)(Math.random()*35+25);
 
-        for(int i = HowManyDisplayedNumbers; i >0 ; i--) {
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
-                    if(sudokuValues[row][col][0] == 0 && (int)(Math.random()*1+0) == 1){
-                     //   System.out.println("Value to store: " + sudokuValues[row][col][1]);
-                        sudokuValues[row][col][0] = sudokuValues[row][col][1];
-//                    }else if(sudokuValues[row][col][0] != 0){
-//                        sudokuValues[row][col][0] = 0;
-
+                    if(sudokuValues[row][col][0] == 0) {
                     }
 
+                    double probability = random.nextDouble();
+                    if(probability <= 0.3){
+                        sudokuValues[row][col][0] = sudokuValues[row][col][1];
+                    }
 
                 }
             }
-        }
-
-        return sudokuValues;
+return sudokuValues;
     }
 
     /**
@@ -157,15 +161,24 @@ public class SudokuUtilities {
     }
 
     private static final String easy =
-                    "000914070" +
-                    "010000054" +
-                    "040002000" +
-                    "007569001" +
-                    "401000500" +
-                    "300100000" +
-                    "039000408" +
-                    "650800030" +
-                    "000403260" + // solution values after this substring
+//                    "000914070" +
+//                    "010000054" +
+//                    "040002000" +
+//                    "007569001" +
+//                    "401000500" +
+//                    "300100000" +
+//                    "039000408" +
+//                    "650800030" +
+//                    "000403260" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" + //solution values after this substring
                     "583914672" +
                     "712386954" +
                     "946752183" +
@@ -177,15 +190,24 @@ public class SudokuUtilities {
                     "178493265";
 
     private static final String medium =
-                    "300000010" +
-                    "000050906" +
-                    "050401200" +
-                    "030000080" +
-                    "002069400" +
-                    "000000002" +
-                    "900610000" +
-                    "200300058" +
-                    "100800090" +
+//                    "300000010" +
+//                    "000050906" +
+//                    "050401200" +
+//                    "030000080" +
+//                    "002069400" +
+//                    "000000002" +
+//                    "900610000" +
+//                    "200300058" +
+//                    "100800090" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
                     "324976815" +
                     "718253946" +
                     "659481273" +
@@ -197,15 +219,24 @@ public class SudokuUtilities {
                     "143825697";
 
     private static final String hard =
-                    "030600000" +
-                    "000010070" +
-                    "080000000" +
-                    "000020000" +
-                    "340000800" +
-                    "500030094" +
-                    "000400000" +
-                    "150800200" +
-                    "700006050" +
+//                    "030600000" +
+//                    "000010070" +
+//                    "080000000" +
+//                    "000020000" +
+//                    "340000800" +
+//                    "500030094" +
+//                    "000400000" +
+//                    "150800200" +
+//                    "700006050" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
                     "931687542" +
                     "465219378" +
                     "287345916" +

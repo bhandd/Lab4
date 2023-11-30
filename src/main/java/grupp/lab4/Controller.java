@@ -73,12 +73,13 @@ public class Controller {
         int ColToPlaceHint = 0;
         int hintValue = 0;
         while (hintValue == 0) { //look for place to place hint
-            //Search for hint in bord
+            RowToPlaceHint = (int) (Math.random()*9)+0;
+            ColToPlaceHint = (int) (Math.random()*9)+0;
             if(bord.getCurrentValue(RowToPlaceHint,ColToPlaceHint)==0) {
-
+                hintValue = bord.Hint(RowToPlaceHint,ColToPlaceHint);
             }
         }
-        //set value on bord
+        bord.setSquareValue(hintValue,RowToPlaceHint,ColToPlaceHint);
     }
 
     /**

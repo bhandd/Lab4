@@ -75,13 +75,11 @@ public class Bord {
 
 
 
-    public int Hint() {
-        return 1;
+    public int Hint(int posx, int posy) {
+        return this.inGameBord[posx][posy].isTaken();
     }
 
-    /*public Square getSqareValue(int row, int col) {
-       return inGameBord[row][col];
-    }*/
+    //public int handleHintBordPos(int )
 
     public int getCurrentValue(int x, int y){
         return inGameBord[x][y].getValue();

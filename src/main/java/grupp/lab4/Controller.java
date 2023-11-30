@@ -51,8 +51,12 @@ public class Controller {
     /**
      *
      */
-    public void EventCheckGame() {
-
+    public boolean EventCheckGame() {
+        if(bord.handleCheckEndGame() == 81) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void EventHint() {

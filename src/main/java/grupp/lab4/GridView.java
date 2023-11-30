@@ -353,8 +353,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         @Override
         public void handle(ActionEvent actionEvent) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            if(controller.EventCheckGame()) {
 
-            controller.EventCheckGame();
+            }
         }
     };
 

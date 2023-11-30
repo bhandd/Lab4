@@ -96,18 +96,14 @@ public class SudokuUtilities {
     private static int[][][] randomize(int[][][] sudokuValues){
         Random random = new Random();
 
-//        int HowManyDisplayedNumbers = (int)(Math.random()*35+25);
-
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
                     if(sudokuValues[row][col][0] == 0) {
                     }
-
                     double probability = random.nextDouble();
                     if(probability <= 0.3){
                         sudokuValues[row][col][0] = sudokuValues[row][col][1];
                     }
-
                 }
             }
 return sudokuValues;

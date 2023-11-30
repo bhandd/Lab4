@@ -185,9 +185,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     public void creatMenu()  {
         Menu file = new Menu("File");
         MenuItem loadGameItem = new MenuItem("Load Game");
-        loadGameItem.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add load game eventhandler
+        loadGameItem.addEventHandler(ActionEvent.ACTION, eventLoadGameHandler); //Add load game eventhandler
         MenuItem saveGameItem = new MenuItem("Save Game");
-        saveGameItem.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add save game eventhandler
+        saveGameItem.addEventHandler(ActionEvent.ACTION, eventSaveGameHandler); //Add save game eventhandler
         MenuItem exitGame = new MenuItem("Exit");
         exitGame.addEventHandler(ActionEvent.ACTION, eventExitHandler);
         file.getItems().addAll(loadGameItem,saveGameItem,exitGame);
@@ -235,6 +235,33 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         public void handle(ActionEvent actionEvent) {
             System.exit(0);
         }
+    };
+
+    private EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setTitle("Save");
+            alert.setHeaderText("Location: ");
+            alert.setContentText("Fixa rutin för att spara spel");
+            alert.showAndWait();
+        }
+//Todo: rutin för spara spel
+            };
+
+    private EventHandler<ActionEvent> eventLoadGameHandler = new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setTitle("Save");
+            alert.setHeaderText("Location: ");
+            alert.setContentText("Fixa rutin för att ladda spel");
+            alert.showAndWait();
+        }
+//Todo: rutin för ladda spel
     };
 
     /**

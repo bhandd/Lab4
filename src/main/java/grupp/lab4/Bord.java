@@ -1,11 +1,12 @@
 package grupp.lab4;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Bord {
+public class Bord implements Serializable {
 
     public static final int Cols = 9;
     public static final int Rows = 9;

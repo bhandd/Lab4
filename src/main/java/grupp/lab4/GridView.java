@@ -11,6 +11,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
 
 import java.util.Optional;
 
@@ -240,12 +241,16 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     private EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            FileChooser save = new FileChooser();
 
-            alert.setTitle("Save");
-            alert.setHeaderText("Location: ");
-            alert.setContentText("Fixa rutin för att spara spel");
-            alert.showAndWait();
+            save.setTitle("Save game");
+            save.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("sudoku file", "*.sud"));
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//
+//            alert.setTitle("Save");
+//            alert.setHeaderText("Location: ");
+//            alert.setContentText("Fixa rutin för att spara spel");
+//            alert.showAndWait();
         }
 //Todo: rutin för spara spel
             };
@@ -254,7 +259,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         @Override
         public void handle(ActionEvent actionEvent) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            Alert alert = new Alert(Alert.AlertType.NONE);
 
             alert.setTitle("Save");
             alert.setHeaderText("Location: ");

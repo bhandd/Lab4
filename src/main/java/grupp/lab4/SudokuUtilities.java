@@ -1,8 +1,9 @@
 package grupp.lab4;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class SudokuUtilities {
+public class SudokuUtilities implements Serializable {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}
 
@@ -101,7 +102,7 @@ public class SudokuUtilities {
                     if(sudokuValues[row][col][0] == 0) {
                     }
                     double probability = random.nextDouble();
-                    if(probability <= 0.3){
+                    if(probability <= 0.37){
                         sudokuValues[row][col][0] = sudokuValues[row][col][1];
                     }
                 }

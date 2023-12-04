@@ -1,6 +1,8 @@
 package grupp.lab4;
 
-public class Square {
+import java.io.Serializable;
+
+public class Square implements Serializable {
 
         private int taken = 0;
         private boolean locked = false;

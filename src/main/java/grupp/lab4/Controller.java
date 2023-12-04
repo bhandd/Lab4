@@ -52,7 +52,9 @@ public class Controller {
      *
      */
     public boolean EventCheckGame() {
-        if(bord.handleCheckEndGame() == 81) {
+        System.out.println(bord.handleCheckGame());
+        System.out.println(view.checkPlaced());
+        if(bord.handleCheckGame() == view.checkPlaced()) {
             return true;
         } else {
             return false;
@@ -77,8 +79,8 @@ public class Controller {
         int ColToPlaceHint = 0;
         int hintValue = 0;
         while (hintValue == 0) { //look for place to place hint
-            RowToPlaceHint = (int) (Math.random()*9)+0;
-            ColToPlaceHint = (int) (Math.random()*9)+0;
+            RowToPlaceHint = (int) (Math.random() * 9);
+            ColToPlaceHint = (int) (Math.random() * 9);
             if(bord.getCurrentValue(RowToPlaceHint,ColToPlaceHint)==0) {
                 hintValue = bord.Hint(RowToPlaceHint,ColToPlaceHint);
             }

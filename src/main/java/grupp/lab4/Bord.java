@@ -59,7 +59,7 @@ public class Bord {
         }
     }
 
-    public int handleCheckGame() {
+    public int checkGame() {
         int count = 0;
         for(int row = 0;row < SudokuUtilities.GRID_SIZE;row++) {
             for(int col = 0;col < SudokuUtilities.GRID_SIZE;col++) {
@@ -69,12 +69,12 @@ public class Bord {
         return count;
     }
 
-    public int handleCheckEndGame() {
+    public int handleCheckGame() {
         int amount = 0;
         for(int i=0; i < SudokuUtilities.GRID_SIZE;i++) {
-            for (int j=0; j < SudokuUtilities.GRID_SIZE;i++) {
+            for (int j=0; j < SudokuUtilities.GRID_SIZE;j++) {
                 if (inGameBord[i][j].isLocked()) {
-                    if(inGameBord[i][i].getValue() == inGameBord[i][j].isTaken()) {
+                    if(inGameBord[i][j].getValue() == inGameBord[i][j].isTaken()) {
                         amount++;
                     }
                 }
@@ -96,7 +96,9 @@ public class Bord {
     }
 
     public void setSquareValue(int val, int row, int col) {
-        inGameBord[row][col].setValue(val);
+        if(inGameBord[row][col].getValue()==0){
+            inGameBord[row][col].setValue(val);
+        }
     }
 
 
@@ -118,10 +120,6 @@ public class Bord {
         if(inGameBord[posx][posy].isLocked()) {
             inGameBord[posx][posy].removeValue();
         }
-    }
-
-    public void GivepalceforHint() {
-        Random pos = new Random();
     }
 
     //Kolla och lägga till andra variabler från classen

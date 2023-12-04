@@ -202,7 +202,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
         Menu helpMenu = new Menu("Help");
         MenuItem checkGame = new MenuItem("Check/end game");
-        checkGame.addEventHandler(ActionEvent.ACTION, eventExitHandler); //Add check gmae stat eventhandler
+        checkGame.addEventHandler(ActionEvent.ACTION, checkHandler); //Add check gmae stat eventhandler
         MenuItem clerGame = new MenuItem("Clear");
         clerGame.addEventHandler(ActionEvent.ACTION, clearHandler); //Add clear stat eventhandler
         MenuItem gameRules = new MenuItem("Game Rulse");
@@ -408,6 +408,20 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             updateBord();
         }
     };
+
+    public int checkPlaced() {
+        int count = 0;
+        for(int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
+            for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                if(bord.getPosOnBordByPos(i,j).isLocked()) {
+                    if(bord.getPosOnBordByPos(i,j).getValue()!=0) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
 }
 
 

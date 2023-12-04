@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class Square implements Serializable {
 
-        private int taken = 0;
-        private boolean locked = false;
-        private int value = 0;
+        private int taken;
+        private boolean locked;
+        private int value;
 
 
         public Square(int taken, boolean locked, int value) {
@@ -17,9 +17,9 @@ public class Square implements Serializable {
         }
 
         public Square() {
-            //this.taken = 0;
-            //this.locked = false;
-            //this.value = 0;
+            this.taken = 0;
+            this.locked = false;
+            this.value = 0;
         }
 
         public int isTaken() {

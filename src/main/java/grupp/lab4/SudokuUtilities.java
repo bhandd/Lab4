@@ -32,14 +32,14 @@ public class SudokuUtilities implements Serializable {
         }
 
         //Original
-       //return convertStringToIntMatrix(representationString);
+       return convertStringToIntMatrix(representationString);
 
         //Efter randomizeSudoku
-       representationInt = convertStringToIntMatrix(representationString);
+       //representationInt = convertStringToIntMatrix(representationString);
       //  return swapNumbers(representationInt);            //Todo: fixa den så den funkar om den behövs
            //representationInt = randomize(representationInt);
 
-        return randomize(representationInt);
+        //return randomize(representationInt);
     }
 
     /**
@@ -158,24 +158,24 @@ return sudokuValues;
     }
 
     private static final String easy =
-//                    "000914070" +
-//                    "010000054" +
-//                    "040002000" +
-//                    "007569001" +
-//                    "401000500" +
-//                    "300100000" +
-//                    "039000408" +
-//                    "650800030" +
-//                    "000403260" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" + //solution values after this substring
+                    "000914070" +
+                    "010000054" +
+                    "040002000" +
+                    "007569001" +
+                    "401000500" +
+                    "300100000" +
+                    "039000408" +
+                    "650800030" +
+                    "000403260" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" + //solution values after this substring
                     "583914672" +
                     "712386954" +
                     "946752183" +
@@ -187,24 +187,24 @@ return sudokuValues;
                     "178493265";
 
     private static final String medium =
-//                    "300000010" +
-//                    "000050906" +
-//                    "050401200" +
-//                    "030000080" +
-//                    "002069400" +
-//                    "000000002" +
-//                    "900610000" +
-//                    "200300058" +
-//                    "100800090" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
+                    "300000010" +
+                    "000050906" +
+                    "050401200" +
+                    "030000080" +
+                    "002069400" +
+                    "000000002" +
+                    "900610000" +
+                    "200300058" +
+                    "100800090" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
                     "324976815" +
                     "718253946" +
                     "659481273" +

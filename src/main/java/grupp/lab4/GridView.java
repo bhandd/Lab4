@@ -139,7 +139,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         l1.setSpacing(10);
         this.setLeft(l1);
         hint.addEventHandler(ActionEvent.ACTION, hintHandler);
-        //check.addEventHandler(ActionEvent.ACTION, EventCheckGame);
+        check.addEventHandler(ActionEvent.ACTION, checkHandler);
         return l1;
     }
 
@@ -352,9 +352,18 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     public EventHandler<ActionEvent> checkHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             if(controller.EventCheckGame()) {
-
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game complet");
+                alert.setHeaderText(null);
+                alert.setContentText("You have done it all tiles are in the right place");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game complet");
+                alert.setHeaderText(null);
+                alert.setContentText("Some tiles are not correct");
+                alert.showAndWait();
             }
         }
     };

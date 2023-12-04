@@ -72,7 +72,7 @@ public class Bord {
     public int handleCheckEndGame() {
         int amount = 0;
         for(int i=0; i < SudokuUtilities.GRID_SIZE;i++) {
-            for (int j=0; j < SudokuUtilities.GRID_SIZE;i++) {
+            for (int j=0; j < SudokuUtilities.GRID_SIZE;j++) {
                 if (inGameBord[i][j].isLocked()) {
                     if(inGameBord[i][i].getValue() == inGameBord[i][j].isTaken()) {
                         amount++;

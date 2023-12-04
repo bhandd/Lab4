@@ -15,10 +15,9 @@ public class Square {
         }
 
         public Square() {
-            this.taken = 0;
-            this.locked = false;
-            this.value = 0;
-
+            //this.taken = 0;
+            //this.locked = false;
+            //this.value = 0;
         }
 
         public int isTaken() {

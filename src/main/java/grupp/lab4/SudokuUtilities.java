@@ -31,7 +31,7 @@ public class SudokuUtilities {
         }
 
         //Original
-       // return convertStringToIntMatrix(representationString);
+       //return convertStringToIntMatrix(representationString);
 
         //Efter randomizeSudoku
        representationInt = convertStringToIntMatrix(representationString);

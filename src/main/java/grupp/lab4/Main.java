@@ -13,9 +13,9 @@ public class Main extends Application {
         GridView gridView = new GridView();
         MenuBar menuBar = gridView.getMenu();
 
-        VBox root = new VBox(menuBar, gridView);
+        VBox root = new VBox(menuBar, gridView); //pane VBox kallad root
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root);  //Lägger in pane root i scene
         stage.setScene(scene);
         stage.sizeToScene();
         stage.setResizable(false);

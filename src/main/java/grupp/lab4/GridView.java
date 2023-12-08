@@ -1,28 +1,40 @@
 package grupp.lab4;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
+import java.io.File;
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class GridView extends BorderPane { //Check if using BorderPane is the right way to go?
     private Label[][] numberTiles; // the tiles/squares to show in the ui grid
+    private Canvas canvas; //TODO:behövs?
     private TilePane numberPane;
     //private EventHandler<? super MouseEvent> tileClickHandler;
     private MenuBar menubar;
     private Bord bord;
     private Controller controller;
     private char buttonCheck;
+
+    FileChooser fileChooser = new FileChooser(); //TODO:Check if this is right
 
     /**
      *
@@ -46,6 +58,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     /**
      *
      */
+    //TODO: GridView ska ta emot en Bord bord?
     public GridView() {
         this.bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
         buttonCheck = '0';
@@ -238,34 +251,44 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    //TODO: ta bort
+    public void initializeDirectory(URL location, ResourceBundle resources){
+
+      //  fileChooser.setInitialDirectory(new File("C:\\temp"));
+
+}
+
+    /**
+     * handle for save game
+      */
     private EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            FileChooser save = new FileChooser();
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("SudokuSave", "*.sud");
 
-            save.setTitle("Save game");
-            save.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("sudoku file", "*.sud"));
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//
-//            alert.setTitle("Save");
-//            alert.setHeaderText("Location: ");
-//            alert.setContentText("Fixa rutin för att spara spel");
-//            alert.showAndWait();
+            fileChooser.getExtensionFilters().addAll(ex1);
+            fileChooser.setTitle("Open my files");
+            fileChooser.setInitialDirectory(new File("/C:/temp"));
+            File selectedFile = fileChooser.showOpenDialog(null);
         }
 //Todo: rutin för spara spel
             };
+
 
     private EventHandler<ActionEvent> eventLoadGameHandler = new EventHandler<ActionEvent>() {
 
         @Override
         public void handle(ActionEvent actionEvent) {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("SudokuLoad", "*.sud");
 
-            Alert alert = new Alert(Alert.AlertType.NONE);
+            fileChooser.getExtensionFilters().addAll(ex1);
+            fileChooser.setTitle("Open my files");
+            fileChooser.setInitialDirectory(new File("/C:/temp"));
+            File selectedFile = fileChooser.showOpenDialog(null);
 
-            alert.setTitle("Save");
-            alert.setHeaderText("Location: ");
-            alert.setContentText("Fixa rutin för att ladda spel");
-            alert.showAndWait();
+
         }
 //Todo: rutin för ladda spel
     };

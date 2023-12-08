@@ -93,7 +93,7 @@ public class SudokuUtilities implements Serializable {
      *
      * @param sudokuValues
      */
-    //TODO: funkar inte, fixa så den funkar
+    //TODO: Fixa extra funktioner, kontroll att den inte lämnar en 3x3 utan siffror etc
     private static int[][][] randomize(int[][][] sudokuValues){
         Random random = new Random();
 

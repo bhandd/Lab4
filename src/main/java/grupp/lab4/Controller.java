@@ -1,5 +1,12 @@
 package grupp.lab4;
 
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 public class Controller {
 
     private GridView view;
@@ -61,6 +68,7 @@ public class Controller {
         }
     }
 
+    //TODO: Detta bör vara i antingen gridview eller sudokulogic för att uppnå MVC
     public void EventHint() {
         int amountof = 0;
         for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
@@ -94,7 +102,7 @@ public class Controller {
      * @param newbord
      */
     public void eventRestartGame(Bord newbord) {
-        this.bord = newbord;
+        bord = newbord;
     }
 
     /**
@@ -108,6 +116,32 @@ public class Controller {
      *
      */
     public void EventSaveGame() {
+        FileChooser fileChooser = new FileChooser();
+        File file = null;
+        fileChooser.setTitle("Save Game");
+        fileChooser.setInitialFileName("sudokuSave");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("bytecode", "*.sud"));
+
+      //  serializeToFile(file, bord);
 
     }
+
+
+    //TODO: flytta/ta bort, för test
+//    public static void serializeToFile(File file, Bord sudokuBord) throws IOException {
+//
+//        ObjectOutputStream out = null;
+//        try{
+//            out = new ObjectOutputStream(new FileOutputStream(file));
+//            out.writeObject(sudokuBord);
+//        }
+//        finally {
+//            if(out != null){
+//                out.close();
+//                // ...
+//                // and then, make sure the file always get closed
+//            }
+//        }
+//    }
+
 }

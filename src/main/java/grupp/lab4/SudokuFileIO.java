@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SudokuFileIO {
 
-    public class ProjectsFileIO {
+
 
         /**
          * to store the game in serialized form.
@@ -50,6 +50,6 @@ public class SudokuFileIO {
             //   return null;
         }
 
-        private ProjectsFileIO() {}
+        private SudokuFileIO() {}
     }
-}
+

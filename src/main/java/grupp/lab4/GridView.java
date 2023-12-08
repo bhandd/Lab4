@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -268,11 +269,17 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("SudokuSave", "*.sud");
 
             fileChooser.getExtensionFilters().addAll(ex1);
-            fileChooser.setTitle("Open my files");
+            fileChooser.setTitle("Save my files");
             fileChooser.setInitialDirectory(new File("/C:/temp"));
-            File selectedFile = fileChooser.showOpenDialog(null);
+            File selectedFile = fileChooser.showSaveDialog(null);
+            //TODO: kontrollera exceptions
+            try {
+                SudokuFileIO.serializeToFile(selectedFile, bord);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-//Todo: rutin för spara spel
+
             };
 
 
@@ -288,9 +295,17 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             fileChooser.setInitialDirectory(new File("/C:/temp"));
             File selectedFile = fileChooser.showOpenDialog(null);
 
+            //TODO: kontrollera exceptions och gör så att filen laddas in i spelets board
+            try {
+                SudokuFileIO.deSerializeFromFile(selectedFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
 
         }
-//Todo: rutin för ladda spel
+
     };
 
     /**

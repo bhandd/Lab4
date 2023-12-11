@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Square implements Serializable {
 
+        //TODO ändra namn på variablerna
+
         private int taken;
         private boolean locked;
         private int value;

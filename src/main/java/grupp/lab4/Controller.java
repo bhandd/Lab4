@@ -23,10 +23,10 @@ public class Controller {
     }
 
     /**
-     *
-     * @param button
-     * @param x
-     * @param y
+     * Takes button of choice ("1-9" or "C") and updateTile
+     * @param button button of choice
+     * @param x x position on bord
+     * @param y y position on bord
      */
     public void MouseEvent(char button, int x, int y) {
         if (button == 'C') {
@@ -47,6 +47,9 @@ public class Controller {
         return button.toString().charAt(button.toString().length()-2);
     }
 
+    /**
+     * Clears bord when clear event is called
+     */
     public void EventClearGame() {
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
@@ -56,7 +59,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Check numbers of board
      */
     public boolean EventCheckGame() {
         if(bord.handleCheckGame() == view.checkPlaced()) {

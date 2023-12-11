@@ -57,7 +57,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     /**
-     *
+     *  The Constructor creates a bord, menubar, the tiles an butten choices.
+     *  And the intaials input is set to zero.
      */
     //TODO: GridView ska ta emot en Bord bord?
     public GridView() {
@@ -73,11 +74,18 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         creatMenu();
     }
 
+    /**
+     * A method to get a reference to the numberpane
+     * @return numberPane
+     */
     // use this method to get a reference to the number (called by some other class)
     public TilePane getNumberPane() {
         return numberPane;
     }
 
+    /**
+     * Create the view tiles to the game, with what height, width and font they will have.
+     */
     // called by constructor (only)
     private final void initNumberTiles() {
         Font font = Font.font("Monospaced", FontWeight.NORMAL, 20);
@@ -101,8 +109,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     }
 
     /**
-     *
-     * @return
+     * Makes the tiles of the border (that the number rest in)
+     * @return Tilepane
      */
     private final TilePane makeNumberPane() {
         // create the root tile pane
@@ -139,8 +147,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     }
 
     /**
-     *
-     * @return
+     * Creates two buttones of the left side of window/box
+     * @return Left side boxes
      */
     public VBox left() {
         VBox l1 = new VBox();
@@ -159,8 +167,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     }
 
     /**
-     *
-     * @return
+     * Creates every number of choices and delete option on right side
+     * @return Right side boxes
      */
     public VBox right() {
         VBox l2 = new VBox();
@@ -195,7 +203,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     }
 
     /**
-     *
+     *  Creates the menubar and all objects on top of the window
      */
     public void creatMenu()  {
         Menu file = new Menu("File");
@@ -228,8 +236,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     }
 
     /**
-     *
-     * @return
+     * Returns menubar
+     * @return menubar
      */
     public MenuBar getMenu() {
         return this.menubar;
@@ -243,7 +251,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     }
 
     /**
-     *
+     * handles exit option in menubar
      */
     private EventHandler<ActionEvent> eventExitHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -280,9 +288,11 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             }
         }
 
-            };
+    };
 
-
+    /**
+     * handle for Loadgame
+     */
     private EventHandler<ActionEvent> eventLoadGameHandler = new EventHandler<ActionEvent>() {
 
         @Override
@@ -309,7 +319,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     /**
-     *
+     *  Event for button press
      */
     private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -319,9 +329,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     /**
-     *
-     * @param row
-     * @param col
+     * Update a single tile on the bord
+     * @param row row on the board
+     * @param col col on the board
      */
     public void updateTile(int row, int col) {
         numberTiles[row][col].setText("");
@@ -334,7 +344,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     }
 
     /**
-     *
+     * Update the complet board
      */
     public void updateBord() {
         for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
@@ -345,7 +355,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     }
 
     /**
-     *
+     * Handler for restart of game
      */
     private EventHandler<ActionEvent> restartHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -357,7 +367,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     /**
-     *
+     * Handler for clearing the board
      */
     public EventHandler<ActionEvent> clearHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -439,6 +449,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    /**
+     * Handler for hint of number
+     */
     public EventHandler<ActionEvent> hintHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -447,6 +460,10 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
+    /**
+     * Check for amount of placed numbers on the game bord
+     * @return the amount of placed numbers
+     */
     public int checkPlaced() {
         int count = 0;
         for(int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {

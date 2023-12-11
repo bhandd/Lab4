@@ -43,8 +43,7 @@ public class SudokuFileIO {
             }finally {
                 if (in != null){
                     in.close();
-                    // ...
-                    // and then, make sure the file always get closed
+
                 }
             }
             //   return null;

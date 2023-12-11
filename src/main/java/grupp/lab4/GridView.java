@@ -307,7 +307,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
 
             //TODO: kontrollera exceptions och gör så att filen laddas in i spelets board
             try {
-                SudokuFileIO.deSerializeFromFile(selectedFile);
+            Bord loadedBord = SudokuFileIO.deSerializeFromFile(selectedFile);
+            bord = loadedBord; //TODO: stämmer inte, låser alla rutor och går inte att göra clear
+            updateBord();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {

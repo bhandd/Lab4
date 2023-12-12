@@ -63,6 +63,7 @@ public class Controller {
      */
     public boolean EventCheckGame() {
         if(bord.handleCheckGame() == bord.checkPlaced()) {
+            System.out.println(bord.checkPlaced());
             return true;
         } else {
             return false;

@@ -74,10 +74,8 @@ public class Bord implements Serializable {
         int amount = 0;
         for(int i=0; i < SudokuUtilities.GRID_SIZE;i++) {
             for (int j=0; j < SudokuUtilities.GRID_SIZE;j++) {
-                if (inGameBord[i][j].isLocked()) {
-                    if(inGameBord[i][j].getValue() == inGameBord[i][j].isTaken()) {
+                if(inGameBord[i][j].getValue() == inGameBord[i][j].isTaken()) {
                         amount++;
-                    }
                 }
             }
         }
@@ -130,10 +128,8 @@ public class Bord implements Serializable {
         int count = 0;
         for(int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
             for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                if(getPosOnBordByPos(i,j).isLocked()) {
-                    if(getPosOnBordByPos(i,j).getValue()!=0) {
-                        count++;
-                    }
+                if(getPosOnBordByPos(i,j).getValue()!=0) {
+                    count++;
                 }
             }
         }

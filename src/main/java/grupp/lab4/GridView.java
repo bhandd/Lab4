@@ -35,26 +35,6 @@ public class GridView extends BorderPane {
     private char buttonCheck;
 
     FileChooser fileChooser = new FileChooser(); //TODO:Check if this is right
-
-    /**
-     *
-     */
-    private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
-                for(int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
-                    if(event.getSource() == numberTiles[row][col]) {
-                        // we got the row and column - now call the appropriate controller method, e.g.
-                        controller.MouseEvent(buttonCheck,row,col);
-                        System.out.println(buttonCheck);
-                        return;
-                    }
-                }
-            }
-        }
-    };
-
     /**
      *  The Constructor creates a bord, menubar, the tiles an butten choices.
      *  And the intaials input is set to zero.
@@ -72,6 +52,24 @@ public class GridView extends BorderPane {
         this.setRight(right());
         creatMenu();
     }
+
+    /**
+     *
+     */
+    private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
+                for(int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
+                    if(event.getSource() == numberTiles[row][col]) {
+                        // we got the row and column - now call the appropriate controller method, e.g.
+                        controller.MouseEvent(buttonCheck,row,col);
+                        return;
+                    }
+                }
+            }
+        }
+    };
 
     /**
      * A method to get a reference to the numberpane

@@ -64,6 +64,7 @@ public class GridView extends BorderPane {
                     if(event.getSource() == numberTiles[row][col]) {
                         // we got the row and column - now call the appropriate controller method, e.g.
                         controller.MouseEvent(buttonCheck,row,col);
+                        FullBord();
                         return;
                     }
                 }
@@ -220,7 +221,7 @@ public class GridView extends BorderPane {
         gameMenu.getItems().addAll(restartGame,gameLevel);
 
         Menu helpMenu = new Menu("Help");
-        MenuItem checkGame = new MenuItem("Check/end game");
+        MenuItem checkGame = new MenuItem("Check");
         checkGame.addEventHandler(ActionEvent.ACTION, checkHandler); //Add check gmae stat eventhandler
         MenuItem clerGame = new MenuItem("Clear");
         clerGame.addEventHandler(ActionEvent.ACTION, clearHandler); //Add clear stat eventhandler
@@ -430,13 +431,13 @@ public class GridView extends BorderPane {
         public void handle(ActionEvent actionEvent) {
             if(controller.EventCheckGame()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Game complet");
+                alert.setTitle("Check");
                 alert.setHeaderText(null);
-                alert.setContentText("You have done it all tiles are in the right place");
+                alert.setContentText("All tiles are in the right place");
                 alert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Game complet");
+                alert.setTitle("Check");
                 alert.setHeaderText(null);
                 alert.setContentText("Some tiles are not correct");
                 alert.showAndWait();
@@ -452,10 +453,32 @@ public class GridView extends BorderPane {
         public void handle(ActionEvent actionEvent) {
             controller.EventHint();
             updateBord();
+            FullBord();
         }
     };
 
+    public void FullBord() {
+        if (bord.checkPlaced()==81) {
+            if(controller.EventCheckGame()) {
+                ButtonType newGame = new ButtonType("New game");
+                ButtonType quit = new ButtonType("Quit");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.getButtonTypes().setAll(newGame,quit);
+                alert.setTitle("Completed game");
+                alert.setHeaderText("All tiles are in the right place :)");
+                alert.setContentText("Do you wnat to quit and start a new game");
+                Optional<ButtonType> choice= alert.showAndWait();
+                if (choice.get() == newGame) {
+                    ActionEvent actionEvent = new ActionEvent();
+                    levelHandler.handle(actionEvent);
+                }else {
+                    System.exit(0);
+                }
+            } else {
 
+            }
+        }
+    }
 }
 
 

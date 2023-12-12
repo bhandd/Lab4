@@ -75,16 +75,7 @@ public class Controller {
      */
     //TODO: Detta bör vara i antingen gridview eller sudokulogic för att uppnå MVC
     public void EventHint() {
-        int amountof = 0;
-        for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
-            for(int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
-                if(bord.getCurrentValue(row,col)!= 0) {
-                    amountof++;
-                }
-            }
-        }
-
-        if (amountof==81) {
+        if (bord.checkPlaced()==81) {
                 throw new IllegalArgumentException("Bord is filled");
         }
 

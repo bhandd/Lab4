@@ -1,23 +1,18 @@
 package grupp.lab4;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,9 +37,11 @@ public class GridView extends BorderPane {
     //TODO: GridView ska ta emot en Bord bord?
     public GridView() {
         this.bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
+
         buttonCheck = '0';
         numberTiles = new Label[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
         initNumberTiles();
+
         numberPane = makeNumberPane();
         controller = new Controller(this , bord);
         this.setCenter(numberPane);
@@ -91,7 +88,7 @@ public class GridView extends BorderPane {
         for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
                 Label tile = new Label(""/* add number, or "", to display */); // data from model
-                if(!bord.getPosOnBordByPos(row,col).isLocked()) {
+                if(!bord.getSquareInfoByPos(row,col).isLocked()) {
                     tile = new Label(Integer.toString(bord.getCurrentValue(row,col)));
                 }
                 tile.setPrefWidth(32);
@@ -287,31 +284,42 @@ public class GridView extends BorderPane {
     /**
      * Handle for Loadgame
      */
+
     private EventHandler<ActionEvent> eventLoadGameHandler = new EventHandler<ActionEvent>() {
 
         @Override
         public void handle(ActionEvent actionEvent) {
-            File selectedFile = null;
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open my files");
-            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
-            fileChooser.getExtensionFilters().addAll(ex1);
-            fileChooser.setInitialDirectory(new File("/C:/temp"));
-
-            //TODO: kontrollera exceptions och gör så att filen laddas in i spelets board
-            try {
-                selectedFile = fileChooser.showOpenDialog(null);
-                if(selectedFile != null){
-                    Bord loadedBord = SudokuFileIO.deSerializeFromFile(selectedFile);
-                    bord = loadedBord; //TODO: stämmer inte, låser alla rutor och går inte att göra clear
-                    updateBord();
-                }
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+//TODO: fixa någon kontroll så den inte gör så att programmet kraschar när man väljer 'cancel' i filechooser
+            bord = controller.loadGame();
+            if (bord != null) {
+                updateBord();
             }
-        }
 
+
+//            File selectedFile = null;
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Open my files");
+//            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
+//            fileChooser.getExtensionFilters().addAll(ex1);
+//            fileChooser.setInitialDirectory(new File("/C:/temp"));
+//
+//
+//            //TODO: kontrollera exceptions och gör så att filen laddas in i spelets board
+//            try {
+//                selectedFile = fileChooser.showOpenDialog(this.getScene().getWindow());
+//                if(selectedFile != null) {
+//                    bord = SudokuFileIO.deSerializeFromFile(selectedFile);
+//                    //bord = ; //TODO: stämmer inte, låser alla rutor och går inte att göra clear
+//                    bord.getAllLocked();
+//                    System.out.println("-------------------------------------------------------");
+//                    updateBord();
+//
+//                    bord.getAllLocked();
+//                }
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+        }
     };
 
     /**

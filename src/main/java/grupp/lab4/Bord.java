@@ -1,10 +1,6 @@
 package grupp.lab4;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 public class Bord implements Serializable {
 
@@ -15,6 +11,7 @@ public class Bord implements Serializable {
 
     public Bord(SudokuUtilities.SudokuLevel theDiffiulty) {
         int tempBord[][][] = SudokuUtilities.generateSudokuMatrix(theDiffiulty);
+
         for(int i = 0;i<Rows;i++) {
             for (int j = 0;j<Cols;j++) {
                 Square data = new Square(tempBord[i][j][1],false,tempBord[i][j][0]);
@@ -49,7 +46,7 @@ public class Bord implements Serializable {
 
     }
 
-    public Square getPosOnBordByPos(int posX, int posY) {
+    public Square getSquareInfoByPos(int posX, int posY) {
         return inGameBord[posX][posY];
     }
 
@@ -70,6 +67,8 @@ public class Bord implements Serializable {
         return count;
     }
 
+
+
     public int handleCheckGame() {
         int amount = 0;
         for(int i=0; i < SudokuUtilities.GRID_SIZE;i++) {
@@ -80,6 +79,21 @@ public class Bord implements Serializable {
             }
         }
         return amount;
+    }
+    /**
+     * Check for amount of placed numbers on the game bord
+     * @return the amount of placed numbers
+     */
+    public int checkPlaced() {
+        int count = 0;
+        for(int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
+            for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                if(getSquareInfoByPos(i,j).getValue()!=0) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
 
@@ -120,21 +134,7 @@ public class Bord implements Serializable {
             inGameBord[posx][posy].removeValue();
         }
     }
-    /**
-     * Check for amount of placed numbers on the game bord
-     * @return the amount of placed numbers
-     */
-    public int checkPlaced() {
-        int count = 0;
-        for(int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
-            for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                if(getPosOnBordByPos(i,j).getValue()!=0) {
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
+
 
     //Kolla och lägga till andra variabler från classen
     @Override

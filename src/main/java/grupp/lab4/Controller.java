@@ -121,7 +121,25 @@ public class Controller {
       //  serializeToFile(file, bord);
 
     }
+    public Bord loadGame(){
+        File selectedFile = null;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open my files");
+        FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
+        fileChooser.getExtensionFilters().addAll(ex1);
+        fileChooser.setInitialDirectory(new File("/C:/temp"));
 
+        try {
+            selectedFile = fileChooser.showOpenDialog(this.view.getScene().getWindow());
+            //   if(selectedFile != null) {
+            this.bord = SudokuFileIO.deSerializeFromFile(selectedFile);
+            return this.bord;
+            //   }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+// return null;
+    }
 
     //TODO: flytta/ta bort, för test
 //    public static void serializeToFile(File file, Bord sudokuBord) throws IOException {

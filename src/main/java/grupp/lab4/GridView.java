@@ -268,10 +268,14 @@ public class GridView extends BorderPane {
             FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
             fileChooser.getExtensionFilters().addAll(ex1);
             fileChooser.setInitialDirectory(new File("/C:/temp"));
-            File selectedFile = fileChooser.showSaveDialog(null);
+
             //TODO: kontrollera exceptions
             try {
-                SudokuFileIO.serializeToFile(selectedFile, bord);
+                File selectedFile = fileChooser.showSaveDialog(null);
+                if(selectedFile != null){
+                    SudokuFileIO.serializeToFile(selectedFile, bord);
+                }
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -292,16 +296,17 @@ public class GridView extends BorderPane {
             FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
             fileChooser.getExtensionFilters().addAll(ex1);
             fileChooser.setInitialDirectory(new File("/C:/temp"));
-            selectedFile = fileChooser.showOpenDialog(null);
 
             //TODO: kontrollera exceptions och gör så att filen laddas in i spelets board
             try {
-            Bord loadedBord = SudokuFileIO.deSerializeFromFile(selectedFile);
-            bord = loadedBord; //TODO: stämmer inte, låser alla rutor och går inte att göra clear
-            updateBord();
+                selectedFile = fileChooser.showOpenDialog(null);
+                if(selectedFile != null){
+                    Bord loadedBord = SudokuFileIO.deSerializeFromFile(selectedFile);
+                    bord = loadedBord; //TODO: stämmer inte, låser alla rutor och går inte att göra clear
+                    updateBord();
+                }
+
             } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }

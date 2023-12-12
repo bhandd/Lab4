@@ -122,6 +122,23 @@ public class Bord implements Serializable {
             inGameBord[posx][posy].removeValue();
         }
     }
+    /**
+     * Check for amount of placed numbers on the game bord
+     * @return the amount of placed numbers
+     */
+    public int checkPlaced() {
+        int count = 0;
+        for(int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
+            for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                if(getPosOnBordByPos(i,j).isLocked()) {
+                    if(getPosOnBordByPos(i,j).getValue()!=0) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
 
     //Kolla och lägga till andra variabler från classen
     @Override

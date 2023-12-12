@@ -25,11 +25,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class GridView extends BorderPane { //Check if using BorderPane is the right way to go?
+public class GridView extends BorderPane {
     private Label[][] numberTiles; // the tiles/squares to show in the ui grid
     private Canvas canvas; //TODO:behövs?
     private TilePane numberPane;
-    //private EventHandler<? super MouseEvent> tileClickHandler;
     private MenuBar menubar;
     private Bord bord;
     private Controller controller;
@@ -243,15 +242,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         return this.menubar;
     }
 
-
-    //TODO:metod för att generera ett nytt spel med random bräde
-    public void newGame(){
-
-
-    }
-
     /**
-     * handles exit option in menubar
+     * Handles exit option in menubar
      */
     private EventHandler<ActionEvent> eventExitHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -274,10 +266,9 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         @Override
         public void handle(ActionEvent actionEvent) {
             FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("SudokuSave", "*.sud");
-
-            fileChooser.getExtensionFilters().addAll(ex1);
             fileChooser.setTitle("Save my files");
+            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
+            fileChooser.getExtensionFilters().addAll(ex1);
             fileChooser.setInitialDirectory(new File("/C:/temp"));
             File selectedFile = fileChooser.showSaveDialog(null);
             //TODO: kontrollera exceptions
@@ -291,19 +282,19 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
     };
 
     /**
-     * handle for Loadgame
+     * Handle for Loadgame
      */
     private EventHandler<ActionEvent> eventLoadGameHandler = new EventHandler<ActionEvent>() {
 
         @Override
         public void handle(ActionEvent actionEvent) {
+            File selectedFile = null;
             FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("SudokuLoad", "*.sud");
-
-            fileChooser.getExtensionFilters().addAll(ex1);
             fileChooser.setTitle("Open my files");
+            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
+            fileChooser.getExtensionFilters().addAll(ex1);
             fileChooser.setInitialDirectory(new File("/C:/temp"));
-            File selectedFile = fileChooser.showOpenDialog(null);
+            selectedFile = fileChooser.showOpenDialog(null);
 
             //TODO: kontrollera exceptions och gör så att filen laddas in i spelets board
             try {
@@ -315,13 +306,12 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-
         }
 
     };
 
     /**
-     *  Event for button press
+     * Event for button press
      */
     private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -392,8 +382,8 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
             ButtonType easy = new ButtonType("Easy");
             ButtonType medium = new ButtonType("Medium");
             ButtonType hard = new ButtonType("Hard");
-            ButtonType cancel = new ButtonType("Cancel");
-            alert.getButtonTypes().setAll(easy,medium,hard,cancel);
+
+            alert.getButtonTypes().setAll(easy,medium,hard);
             alert.setTitle("Difficulty");
             alert.setHeaderText(null);
             alert.setContentText("Choose the difficulty");
@@ -462,23 +452,7 @@ public class GridView extends BorderPane { //Check if using BorderPane is the ri
         }
     };
 
-    /**
-     * Check for amount of placed numbers on the game bord
-     * @return the amount of placed numbers
-     */
-    public int checkPlaced() {
-        int count = 0;
-        for(int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
-            for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                if(bord.getPosOnBordByPos(i,j).isLocked()) {
-                    if(bord.getPosOnBordByPos(i,j).getValue()!=0) {
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
-    }
+
 }
 
 

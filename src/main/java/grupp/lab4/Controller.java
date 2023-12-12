@@ -62,13 +62,16 @@ public class Controller {
      * Check numbers of board
      */
     public boolean EventCheckGame() {
-        if(bord.handleCheckGame() == view.checkPlaced()) {
+        if(bord.handleCheckGame() == bord.checkPlaced()) {
             return true;
         } else {
             return false;
         }
     }
 
+    /**
+     *
+     */
     //TODO: Detta bör vara i antingen gridview eller sudokulogic för att uppnå MVC
     public void EventHint() {
         int amountof = 0;
@@ -98,8 +101,7 @@ public class Controller {
     }
 
     /**
-     *
-     *
+     * Call new bord for restart of game
      * @param newbord
      */
     public void eventRestartGame(Bord newbord) {
@@ -108,14 +110,14 @@ public class Controller {
 
 
     /**
-     *
+     * Load game from file
      */
     public void EventLoadGame() {
 
     }
 
     /**
-     *
+     * Saves game in file
      */
     public void EventSaveGame() {
         FileChooser fileChooser = new FileChooser();

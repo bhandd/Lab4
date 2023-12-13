@@ -32,14 +32,14 @@ public class SudokuUtilities implements Serializable {
         }
 
         //Original
-       return convertStringToIntMatrix(representationString);
+       //return convertStringToIntMatrix(representationString);
 
         //Efter randomizeSudoku
-       //representationInt = convertStringToIntMatrix(representationString);
+       representationInt = convertStringToIntMatrix(representationString);
       //  return swapNumbers(representationInt);            //Todo: fixa den så den funkar om den behövs
-           //representationInt = randomize(representationInt);
+           //representationInt = randomize(representationInt, level);
 
-        //return randomize(representationInt);
+        return randomize(representationInt, level);
     }
 
     /**
@@ -94,20 +94,33 @@ public class SudokuUtilities implements Serializable {
      * @param sudokuValues
      */
     //TODO: Fixa extra funktioner, kontroll att den inte lämnar en 3x3 utan siffror etc
-    private static int[][][] randomize(int[][][] sudokuValues){
+    private static int[][][] randomize(int[][][] sudokuValues, SudokuLevel level){
         Random random = new Random();
-
+        int amount = 0;
+        int count = 0;
+        switch (level) {
+            case EASY: amount = 30; break;
+            case MEDIUM: amount = 26; break;
+            case HARD: amount = 21; break;
+            default: amount = 26;
+        }
+        while (count<amount) {
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
                     if(sudokuValues[row][col][0] == 0) {
-                    }
-                    double probability = random.nextDouble();
-                    if(probability <= 0.37){
-                        sudokuValues[row][col][0] = sudokuValues[row][col][1];
+                        double probability = random.nextDouble();
+                        if(probability <= 0.37) {
+                            sudokuValues[row][col][0] = sudokuValues[row][col][1];
+                            count++;
+                        }
                     }
                 }
+                if(count==amount) {
+                    break;
+                }
             }
-return sudokuValues;
+        }
+        return sudokuValues;
     }
 
     /**
@@ -158,24 +171,24 @@ return sudokuValues;
     }
 
     private static final String easy =
-                    "000914070" +
-                    "010000054" +
-                    "040002000" +
-                    "007569001" +
-                    "401000500" +
-                    "300100000" +
-                    "039000408" +
-                    "650800030" +
-                    "000403260" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" + //solution values after this substring
+//                    "000914070" +
+//                    "010000054" +
+//                    "040002000" +
+//                    "007569001" +
+//                    "401000500" +
+//                    "300100000" +
+//                    "039000408" +
+//                    "650800030" +
+//                    "000403260" +
+                    "000000000" + //30
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" + //solution values after this substring
                     "583914672" +
                     "712386954" +
                     "946752183" +
@@ -187,24 +200,24 @@ return sudokuValues;
                     "178493265";
 
     private static final String medium =
-                    "300000010" +
-                    "000050906" +
-                    "050401200" +
-                    "030000080" +
-                    "002069400" +
-                    "000000002" +
-                    "900610000" +
-                    "200300058" +
-                    "100800090" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
-//                    "000000000" +
+//                    "300000010" +
+//                    "000050906" +
+//                    "050401200" +
+//                    "030000080" +
+//                    "002069400" +
+//                    "000000002" +
+//                    "900610000" +
+//                    "200300058" +
+//                    "100800090" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
+                    "000000000" +
                     "324976815" +
                     "718253946" +
                     "659481273" +

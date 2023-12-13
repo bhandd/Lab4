@@ -424,6 +424,7 @@ public class GridView extends BorderPane {
     /**
      * Handler for hint of number
      */
+
     public EventHandler<ActionEvent> hintHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -433,6 +434,11 @@ public class GridView extends BorderPane {
         }
     };
 
+    /**
+     * Checks if the Sudoku board is complete and displays a message if it is.
+     *
+     * bord The Sudoku board to check.
+     */
     public void FullBord() {
         if (bord.checkPlaced() == 81) {
             if (controller.EventCheckGame()) {

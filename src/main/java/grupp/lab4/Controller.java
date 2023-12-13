@@ -11,6 +11,7 @@ public class Controller {
 
     private GridView view;
     private Bord bord;
+    private SudokuUtilities logic;
 
     /**
      * @param view
@@ -72,8 +73,9 @@ public class Controller {
     /**
      *
      */
-    //TODO: Detta bör vara i antingen gridview eller sudokulogic för att uppnå MVC
+    //TODO: flyttat till SudokuLogic för MVC. Kolla med Noah innan utkommenterad kod tas bort
     public void EventHint() {
+     //  logic.getHint(bord); //Todo: test att flytta rutinen till sudokuutilities
         if (bord.checkPlaced() == 81) {
             throw new IllegalArgumentException("Bord is filled");
         }
@@ -89,6 +91,7 @@ public class Controller {
             }
         }
         bord.setSquareValue(hintValue, RowToPlaceHint, ColToPlaceHint);
+       // return bord;//TODO: delete
     }
 
 

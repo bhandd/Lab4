@@ -11,6 +11,7 @@ public class SudokuUtilities implements Serializable {
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;
 
+
     /**
      * Create a 3-dimensional matrix with initial values and solution in Sudoku.
      *
@@ -47,6 +48,25 @@ public class SudokuUtilities implements Serializable {
         //representationInt = randomize(representationInt, level);
 
         return randomize(representationInt, level);
+    }
+
+    //TODO: Test att flytta hint, ta bort om den inte ska vara här. Går att göra static men då förlorar man låg koppling och datainkapsling kan brytas
+    public void getHint(Bord bord){
+        if (bord.checkPlaced() == 81) {
+            throw new IllegalArgumentException("Bord is filled");
+        }
+
+        int RowToPlaceHint = 0;
+        int ColToPlaceHint = 0;
+        int hintValue = 0;
+        while (hintValue == 0) { //look for place to place hint
+            RowToPlaceHint = (int) (Math.random() * 9);
+            ColToPlaceHint = (int) (Math.random() * 9);
+            if (bord.getCurrentValue(RowToPlaceHint, ColToPlaceHint) == 0) {
+                hintValue = bord.Hint(RowToPlaceHint, ColToPlaceHint);
+            }
+        }
+        bord.setSquareValue(hintValue, RowToPlaceHint, ColToPlaceHint);
     }
 
     /**

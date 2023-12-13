@@ -25,19 +25,26 @@ public class SudokuUtilities implements Serializable {
         String representationString;
         int[][][] representationInt;
         switch (level) {
-            case EASY: representationString = easy; break;
-            case MEDIUM: representationString = medium; break;
-            case HARD: representationString = hard; break;
-            default: representationString = medium;
+            case EASY:
+                representationString = easy;
+                break;
+            case MEDIUM:
+                representationString = medium;
+                break;
+            case HARD:
+                representationString = hard;
+                break;
+            default:
+                representationString = medium;
         }
 
         //Original
-       //return convertStringToIntMatrix(representationString);
+        //return convertStringToIntMatrix(representationString);
 
         //Efter randomizeSudoku
-       representationInt = convertStringToIntMatrix(representationString);
-      //  return swapNumbers(representationInt);            //Todo: fixa den så den funkar om den behövs
-           //representationInt = randomize(representationInt, level);
+        representationInt = convertStringToIntMatrix(representationString);
+        //  return swapNumbers(representationInt);            //Todo: fixa den så den funkar om den behövs
+        //representationInt = randomize(representationInt, level);
 
         return randomize(representationInt, level);
     }
@@ -81,11 +88,8 @@ public class SudokuUtilities implements Serializable {
         }
 
 
-
         return values;
     }
-
-
 
 
     /**
@@ -94,74 +98,78 @@ public class SudokuUtilities implements Serializable {
      * @param sudokuValues
      */
     //TODO: Fixa extra funktioner, kontroll att den inte lämnar en 3x3 utan siffror etc
-    private static int[][][] randomize(int[][][] sudokuValues, SudokuLevel level){
+    private static int[][][] randomize(int[][][] sudokuValues, SudokuLevel level) {
         Random random = new Random();
-        int amount = 0;
+        double amount = 0;
         int count = 0;
         switch (level) {
-            case EASY: amount = 30; break;
-            case MEDIUM: amount = 26; break;
-            case HARD: amount = 21; break;
-            default: amount = 26;
+            case EASY:
+                amount = 0.3658519827543145;
+                break;
+            case MEDIUM:
+                amount = 0.2665851982754314;
+                break;
+            case HARD:
+                amount = 0.255851982754314;
+                break;
+            default:
+                amount = 0.2665851982754314;
         }
-        while (count<amount) {
-            for (int row = 0; row < GRID_SIZE; row++) {
-                for (int col = 0; col < GRID_SIZE; col++) {
-                    if(sudokuValues[row][col][0] == 0) {
-                        double probability = random.nextDouble();
-                        if(probability <= 0.37) {
-                            sudokuValues[row][col][0] = sudokuValues[row][col][1];
-                            count++;
-                        }
+//        while (count<amount) {
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                if (sudokuValues[row][col][0] == 0) {
+                    double probability = random.nextDouble();
+                    //  System.out.println("probability: "+ probability); //TODO: Delete
+                    if (probability <= amount) {
+                        sudokuValues[row][col][0] = sudokuValues[row][col][1];
+                        count++;
                     }
                 }
-                if(count==amount) {
-                    break;
-                }
             }
+//                if(count==amount) {
+//                    break;
+//                }
         }
+//        }
         return sudokuValues;
     }
 
+
     /**
      * Byter plats på två random nummer
+     *
      * @param sudokuValues
      * @return
      */
     //TODO: Behövs? isåfall fixa så den funkar
-   private static int[][][] swapNumbers(int[][][] sudokuValues){
-       System.out.println("randomIzeSudoku Initialized");               //Test
-       int[][] position1;
-       int[][] position2;
-       int firstNumber;
-       int secNumber;
-       int counterOne = 0;
-       int counterTwo = 0;
-       do{
-             firstNumber = (int)(Math.random()*9+1);
-             secNumber = (int)(Math.random()*9+1);
-        }while (firstNumber == secNumber);
+    private static int[][][] swapNumbers(int[][][] sudokuValues) {
+        System.out.println("randomIzeSudoku Initialized");               //Test
+        int[][] position1;
+        int[][] position2;
+        int firstNumber;
+        int secNumber;
+        int counterOne = 0;
+        int counterTwo = 0;
+        do {
+            firstNumber = (int) (Math.random() * 9 + 1);
+            secNumber = (int) (Math.random() * 9 + 1);
+        } while (firstNumber == secNumber);
 
-       System.out.println("First number: " + firstNumber);               //Test
-       System.out.println("Second number: " + secNumber);               //Test
+        System.out.println("First number: " + firstNumber);               //Test
+        System.out.println("Second number: " + secNumber);               //Test
 
-           for (int row1 = 0; row1 < GRID_SIZE; row1++) {
-               for (int col1 = 0; col1 < GRID_SIZE; col1++) {
-                   if(firstNumber == sudokuValues[row1][col1][1]){
+        for (int row1 = 0; row1 < GRID_SIZE; row1++) {
+            for (int col1 = 0; col1 < GRID_SIZE; col1++) {
+                if (firstNumber == sudokuValues[row1][col1][1]) {
 
-                   }
-                   }
-               }
-
-
+                }
+            }
+        }
 
 
-
-
-
-
-       System.out.println("randomIzeSudoku Finished!");
-    return sudokuValues;
+        System.out.println("randomIzeSudoku Finished!");
+        return sudokuValues;
 
     }
 
@@ -180,7 +188,7 @@ public class SudokuUtilities implements Serializable {
 //                    "039000408" +
 //                    "650800030" +
 //                    "000403260" +
-                    "000000000" + //30
+            "000000000" + //30
                     "000000000" +
                     "000000000" +
                     "000000000" +
@@ -209,7 +217,7 @@ public class SudokuUtilities implements Serializable {
 //                    "900610000" +
 //                    "200300058" +
 //                    "100800090" +
-                    "000000000" +
+            "000000000" +
                     "000000000" +
                     "000000000" +
                     "000000000" +
@@ -238,7 +246,7 @@ public class SudokuUtilities implements Serializable {
 //                    "000400000" +
 //                    "150800200" +
 //                    "700006050" +
-                    "000000000" +
+            "000000000" +
                     "000000000" +
                     "000000000" +
                     "000000000" +

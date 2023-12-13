@@ -13,7 +13,6 @@ public class Controller {
     private Bord bord;
 
     /**
-     *
      * @param view
      * @param bord
      */
@@ -24,27 +23,27 @@ public class Controller {
 
     /**
      * Takes button of choice ("1-9" or "C") and updateTile
+     *
      * @param button button of choice
-     * @param x x position on bord
-     * @param y y position on bord
+     * @param x      x position on bord
+     * @param y      y position on bord
      */
     public void MouseEvent(char button, int x, int y) {
         if (button == 'C') {
-            bord.removeCurrentValue(x,y);
-            view.updateTile(x,y);
-        } else if (bord.getCurrentValue(x,y)==0) {
-            bord.handleButtonOfChoice(button,x,y);
-            view.updateTile(x,y);
+            bord.removeCurrentValue(x, y);
+            view.updateTile(x, y);
+        } else if (bord.getCurrentValue(x, y) == 0) {
+            bord.handleButtonOfChoice(button, x, y);
+            view.updateTile(x, y);
         }
     }
 
     /**
-     *
      * @param button
      * @return
      */
     public char PressedButton(Object button) {
-        return button.toString().charAt(button.toString().length()-2);
+        return button.toString().charAt(button.toString().length() - 2);
     }
 
     /**
@@ -52,8 +51,8 @@ public class Controller {
      */
     public void EventClearGame() {
         for (int i = 0; i < SudokuUtilities.GRID_SIZE; i++) {
-            for(int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
-                bord.removeCurrentValue(i,j);
+            for (int j = 0; j < SudokuUtilities.GRID_SIZE; j++) {
+                bord.removeCurrentValue(i, j);
             }
         }
     }
@@ -62,7 +61,7 @@ public class Controller {
      * Check numbers of board
      */
     public boolean EventCheckGame() {
-        if(bord.handleCheckGame() == bord.checkPlaced()) {
+        if (bord.handleCheckGame() == bord.checkPlaced()) {
             System.out.println(bord.checkPlaced());
             return true;
         } else {
@@ -75,8 +74,8 @@ public class Controller {
      */
     //TODO: Detta bör vara i antingen gridview eller sudokulogic för att uppnå MVC
     public void EventHint() {
-        if (bord.checkPlaced()==81) {
-                throw new IllegalArgumentException("Bord is filled");
+        if (bord.checkPlaced() == 81) {
+            throw new IllegalArgumentException("Bord is filled");
         }
 
         int RowToPlaceHint = 0;
@@ -85,43 +84,59 @@ public class Controller {
         while (hintValue == 0) { //look for place to place hint
             RowToPlaceHint = (int) (Math.random() * 9);
             ColToPlaceHint = (int) (Math.random() * 9);
-            if(bord.getCurrentValue(RowToPlaceHint,ColToPlaceHint)==0) {
-                hintValue = bord.Hint(RowToPlaceHint,ColToPlaceHint);
+            if (bord.getCurrentValue(RowToPlaceHint, ColToPlaceHint) == 0) {
+                hintValue = bord.Hint(RowToPlaceHint, ColToPlaceHint);
             }
         }
-        bord.setSquareValue(hintValue,RowToPlaceHint,ColToPlaceHint);
+        bord.setSquareValue(hintValue, RowToPlaceHint, ColToPlaceHint);
     }
 
+
+    //TODO: borde den inte uppdatera view? kanske behöver föra över vissa rutiner från gridView till controller?
     /**
      * Call new bord for restart of game
+     *
      * @param newbord
      */
     public void eventRestartGame(Bord newbord) {
         bord = newbord;
     }
 
-
     /**
-     * Load game from file
-     */
-    public void EventLoadGame() {
-
-    }
-
-    /**
-     * Saves game in file
+     * Handles the event of clicking the "Save Game" button.
+     *
+     * Opens a file chooser dialog, allows the user to select a file, and then saves
+     * the current Sudoku game data to the selected file.
      */
     public void EventSaveGame() {
         FileChooser fileChooser = new FileChooser();
-        File file = null;
-        fileChooser.setTitle("Save Game");
-        fileChooser.setInitialFileName("sudokuSave");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("bytecode", "*.sud"));
+        fileChooser.setTitle("Save my files");
+        FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
+        fileChooser.getExtensionFilters().addAll(ex1);
+        fileChooser.setInitialDirectory(new File("/C:/temp"));
 
-      //  serializeToFile(file, bord);
+        //TODO: kontrollera exceptions
+        try {
+            File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow()); //TODO: här väljs vilket fönster som skall visa filechooser
+            if (selectedFile != null) {
+                SudokuFileIO.serializeToFile(selectedFile, bord);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
-    public Bord loadGame(){
+
+    /**
+     * Loads a Sudoku game from a file.
+     *
+     * Opens a file chooser dialog, allows the user to select a Sudoku save file, and then de-serializes
+     * the Sudoku game data from the selected file.
+     * @return The deserialized Sudoku game data.
+     */
+    public Bord eventLoadGame() {
         File selectedFile = null;
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open my files");
@@ -138,24 +153,8 @@ public class Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-// return null;
+
     }
 
-    //TODO: flytta/ta bort, för test
-//    public static void serializeToFile(File file, Bord sudokuBord) throws IOException {
-//
-//        ObjectOutputStream out = null;
-//        try{
-//            out = new ObjectOutputStream(new FileOutputStream(file));
-//            out.writeObject(sudokuBord);
-//        }
-//        finally {
-//            if(out != null){
-//                out.close();
-//                // ...
-//                // and then, make sure the file always get closed
-//            }
-//        }
-//    }
 
 }

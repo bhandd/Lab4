@@ -30,9 +30,10 @@ public class GridView extends BorderPane {
     private char buttonCheck;
 
     FileChooser fileChooser = new FileChooser(); //TODO:Check if this is right
+
     /**
-     *  The Constructor creates a bord, menubar, the tiles an butten choices.
-     *  And the intaials input is set to zero.
+     * The Constructor creates a bord, menubar, the tiles an butten choices.
+     * And the intaials input is set to zero.
      */
     //TODO: GridView ska ta emot en Bord bord?
     public GridView() {
@@ -43,7 +44,7 @@ public class GridView extends BorderPane {
         initNumberTiles();
 
         numberPane = makeNumberPane();
-        controller = new Controller(this , bord);
+        controller = new Controller(this, bord);
         this.setCenter(numberPane);
         this.setLeft(left());
         this.setRight(right());
@@ -56,11 +57,11 @@ public class GridView extends BorderPane {
     private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
-                for(int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
-                    if(event.getSource() == numberTiles[row][col]) {
+            for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
+                for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
+                    if (event.getSource() == numberTiles[row][col]) {
                         // we got the row and column - now call the appropriate controller method, e.g.
-                        controller.MouseEvent(buttonCheck,row,col);
+                        controller.MouseEvent(buttonCheck, row, col);
                         FullBord();
                         return;
                     }
@@ -71,6 +72,7 @@ public class GridView extends BorderPane {
 
     /**
      * A method to get a reference to the numberpane
+     *
      * @return numberPane
      */
     // use this method to get a reference to the number (called by some other class)
@@ -88,8 +90,8 @@ public class GridView extends BorderPane {
         for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
                 Label tile = new Label(""/* add number, or "", to display */); // data from model
-                if(!bord.getSquareInfoByPos(row,col).isLocked()) {
-                    tile = new Label(Integer.toString(bord.getCurrentValue(row,col)));
+                if (!bord.getSquareInfoByPos(row, col).isLocked()) {
+                    tile = new Label(Integer.toString(bord.getCurrentValue(row, col)));
                 }
                 tile.setPrefWidth(32);
                 tile.setPrefHeight(32);
@@ -105,6 +107,7 @@ public class GridView extends BorderPane {
 
     /**
      * Makes the tiles of the border (that the number rest in)
+     *
      * @return Tilepane
      */
     private final TilePane makeNumberPane() {
@@ -123,7 +126,7 @@ public class GridView extends BorderPane {
                 TilePane section = new TilePane();
                 section.setPrefColumns(SudokuUtilities.SECTION_SIZE);
                 section.setPrefRows(SudokuUtilities.SECTION_SIZE);
-                section.setStyle( "-fx-border-color: black; -fx-border-width: 0.5px;");
+                section.setStyle("-fx-border-color: black; -fx-border-width: 0.5px;");
 
                 // add number tiles to this section
                 for (int row = 0; row < SudokuUtilities.SECTION_SIZE; row++) {
@@ -143,6 +146,7 @@ public class GridView extends BorderPane {
 
     /**
      * Creates two buttones of the left side of window/box
+     *
      * @return Left side boxes
      */
     public VBox left() {
@@ -163,6 +167,7 @@ public class GridView extends BorderPane {
 
     /**
      * Creates every number of choices and delete option on right side
+     *
      * @return Right side boxes
      */
     public VBox right() {
@@ -189,7 +194,7 @@ public class GridView extends BorderPane {
         nine.addEventHandler(ActionEvent.ACTION, buttonHandler);
         Button clear = new Button("C");
         clear.addEventHandler(ActionEvent.ACTION, buttonHandler);
-        l2.getChildren().addAll(one,two,three,four,five,six,seven,eight,nine,clear);
+        l2.getChildren().addAll(one, two, three, four, five, six, seven, eight, nine, clear);
         l2.setPadding(new Insets(10));
         l2.setSpacing(1);
         this.setRight(l2);
@@ -198,9 +203,9 @@ public class GridView extends BorderPane {
     }
 
     /**
-     *  Creates the menubar and all objects on top of the window
+     * Creates the menubar and all objects on top of the window
      */
-    public void creatMenu()  {
+    public void creatMenu() {
         Menu file = new Menu("File");
         MenuItem loadGameItem = new MenuItem("Load Game");
         loadGameItem.addEventHandler(ActionEvent.ACTION, eventLoadGameHandler); //Add load game eventhandler
@@ -208,14 +213,14 @@ public class GridView extends BorderPane {
         saveGameItem.addEventHandler(ActionEvent.ACTION, eventSaveGameHandler); //Add save game eventhandler
         MenuItem exitGame = new MenuItem("Exit");
         exitGame.addEventHandler(ActionEvent.ACTION, eventExitHandler);
-        file.getItems().addAll(loadGameItem,saveGameItem,exitGame);
+        file.getItems().addAll(loadGameItem, saveGameItem, exitGame);
 
         Menu gameMenu = new Menu("Game");
         MenuItem restartGame = new MenuItem("Restart");
         restartGame.addEventHandler(ActionEvent.ACTION, restartHandler);
         MenuItem gameLevel = new MenuItem("Choose Level");
         gameLevel.addEventHandler(ActionEvent.ACTION, levelHandler);
-        gameMenu.getItems().addAll(restartGame,gameLevel);
+        gameMenu.getItems().addAll(restartGame, gameLevel);
 
         Menu helpMenu = new Menu("Help");
         MenuItem checkGame = new MenuItem("Check");
@@ -232,6 +237,7 @@ public class GridView extends BorderPane {
 
     /**
      * Returns menubar
+     *
      * @return menubar
      */
     public MenuBar getMenu() {
@@ -249,36 +255,22 @@ public class GridView extends BorderPane {
     };
 
     //TODO: ta bort
-    public void initializeDirectory(URL location, ResourceBundle resources){
+    public void initializeDirectory(URL location, ResourceBundle resources) {
 
-      //  fileChooser.setInitialDirectory(new File("C:\\temp"));
+        //  fileChooser.setInitialDirectory(new File("C:\\temp"));
 
-}
+    }
 
     /**
-     * handle for save game
-      */
+     * handle for save game-button
+     * actionEvent The event object representing the button press.
+     */
+
     private EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save my files");
-            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
-            fileChooser.getExtensionFilters().addAll(ex1);
-            fileChooser.setInitialDirectory(new File("/C:/temp"));
-
-            //TODO: kontrollera exceptions
-            try {
-                File selectedFile = fileChooser.showSaveDialog(null);
-                if(selectedFile != null){
-                    SudokuFileIO.serializeToFile(selectedFile, bord);
-                }
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            controller.EventSaveGame();
         }
-
     };
 
     /**
@@ -290,35 +282,11 @@ public class GridView extends BorderPane {
         @Override
         public void handle(ActionEvent actionEvent) {
 //TODO: fixa någon kontroll så den inte gör så att programmet kraschar när man väljer 'cancel' i filechooser
-            bord = controller.loadGame();
+            bord = controller.eventLoadGame();
             if (bord != null) {
                 updateBord();
             }
 
-
-//            File selectedFile = null;
-//            FileChooser fileChooser = new FileChooser();
-//            fileChooser.setTitle("Open my files");
-//            FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
-//            fileChooser.getExtensionFilters().addAll(ex1);
-//            fileChooser.setInitialDirectory(new File("/C:/temp"));
-//
-//
-//            //TODO: kontrollera exceptions och gör så att filen laddas in i spelets board
-//            try {
-//                selectedFile = fileChooser.showOpenDialog(this.getScene().getWindow());
-//                if(selectedFile != null) {
-//                    bord = SudokuFileIO.deSerializeFromFile(selectedFile);
-//                    //bord = ; //TODO: stämmer inte, låser alla rutor och går inte att göra clear
-//                    bord.getAllLocked();
-//                    System.out.println("-------------------------------------------------------");
-//                    updateBord();
-//
-//                    bord.getAllLocked();
-//                }
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
         }
     };
 
@@ -328,22 +296,22 @@ public class GridView extends BorderPane {
     private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            buttonCheck=controller.PressedButton(actionEvent.getSource());
+            buttonCheck = controller.PressedButton(actionEvent.getSource());
         }
     };
 
     /**
      * Update a single tile on the bord
+     *
      * @param row row on the board
      * @param col col on the board
      */
     public void updateTile(int row, int col) {
         numberTiles[row][col].setText("");
-        if(bord.getCurrentValue(row,col) == 0) {
+        if (bord.getCurrentValue(row, col) == 0) {
             numberTiles[row][col].setText("");
-        }
-        else {
-            numberTiles[row][col].setText(Integer.toString(bord.getCurrentValue(row,col)));
+        } else {
+            numberTiles[row][col].setText(Integer.toString(bord.getCurrentValue(row, col)));
         }
     }
 
@@ -351,9 +319,9 @@ public class GridView extends BorderPane {
      * Update the complet board
      */
     public void updateBord() {
-        for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
+        for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
-                updateTile(row,col);
+                updateTile(row, col);
             }
         }
     }
@@ -382,9 +350,9 @@ public class GridView extends BorderPane {
     };
 
     /**
-     *  Gives you four choose, three where you can start a new game
-     *  with a diffrent level or a cancel an go back to game.
-     *  This choose is made with an alert
+     * Gives you four choose, three where you can start a new game
+     * with a diffrent level or a cancel an go back to game.
+     * This choose is made with an alert
      */
     public EventHandler<ActionEvent> levelHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -395,16 +363,16 @@ public class GridView extends BorderPane {
             ButtonType medium = new ButtonType("Medium");
             ButtonType hard = new ButtonType("Hard");
 
-            alert.getButtonTypes().setAll(easy,medium,hard);
+            alert.getButtonTypes().setAll(easy, medium, hard);
             alert.setTitle("Difficulty");
             alert.setHeaderText(null);
             alert.setContentText("Choose the difficulty");
             Optional<ButtonType> choice = alert.showAndWait();
-            if (choice.get() == easy){
+            if (choice.get() == easy) {
                 bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
                 controller.eventRestartGame(bord);
                 updateBord();
-            } else if (choice.get() == medium){
+            } else if (choice.get() == medium) {
                 bord = new Bord(SudokuUtilities.SudokuLevel.MEDIUM);
                 controller.eventRestartGame(bord);
                 updateBord();
@@ -437,7 +405,7 @@ public class GridView extends BorderPane {
     public EventHandler<ActionEvent> checkHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            if(controller.EventCheckGame()) {
+            if (controller.EventCheckGame()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Check");
                 alert.setHeaderText(null);
@@ -466,20 +434,20 @@ public class GridView extends BorderPane {
     };
 
     public void FullBord() {
-        if (bord.checkPlaced()==81) {
-            if(controller.EventCheckGame()) {
+        if (bord.checkPlaced() == 81) {
+            if (controller.EventCheckGame()) {
                 ButtonType newGame = new ButtonType("New game");
                 ButtonType quit = new ButtonType("Quit");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.getButtonTypes().setAll(newGame,quit);
+                alert.getButtonTypes().setAll(newGame, quit);
                 alert.setTitle("Completed game");
                 alert.setHeaderText("All tiles are in the right place :)");
                 alert.setContentText("Do you wnat to quit and start a new game");
-                Optional<ButtonType> choice= alert.showAndWait();
+                Optional<ButtonType> choice = alert.showAndWait();
                 if (choice.get() == newGame) {
                     ActionEvent actionEvent = new ActionEvent();
                     levelHandler.handle(actionEvent);
-                }else {
+                } else {
                     System.exit(0);
                 }
             } else {

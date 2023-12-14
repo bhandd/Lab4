@@ -52,10 +52,13 @@ public class SudokuUtilities implements Serializable {
         //representationInt = randomize(representationInt, level);
         //TODO: behövs ej tyvär
         //return randomize(representationInt, level);
-        swapNumbers(representationInt);
+       // swapNumbers(representationInt);
      //   printAllValues(representationInt, 2);
-        randomizeVertically(representationInt);
+     //   randomizeVertically(representationInt);
        // printAllValues(representationInt, 2);
+
+      //  shiftRows(representationInt); //TODO: fungerar inte riktigt
+       // shiftSelectedRows(representationInt, 0,1);
         return representationInt;
     }
 
@@ -174,7 +177,7 @@ public class SudokuUtilities implements Serializable {
      * @param sudokuValues
      * @return
      */
-    //TODO: lägg till funktionalitet så att sudokut skiftar rader, kolla LAB1 Byter just nu plats på första och sista raden, men det räcker inte för att randomisera, den måste kunna skifta
+    //TODO: lägg till funktionalitet så att sudokut skiftar rader, Byter just nu plats på första och sista raden, men det räcker inte för att randomisera, den måste kunna skifta
     //     * alla rader upp eller ner
     private static int[][][] randomizeVertically(int[][][] sudokuValues){
         System.out.println("RandomizeVertically initialized");
@@ -209,6 +212,122 @@ public class SudokuUtilities implements Serializable {
         System.out.println("RandomizeVertically Done");
         return sudokuValues;
     }
+
+    private static int[] copyRow(int[][][] sudokuValues, int row, int boardIndex){
+        System.out.println("RowCopy initialized!");
+        int[][][] copy = sudokuValues.clone(); // Create a copy of the Sudoku puzzle
+        int[] rowCopy = new int[GRID_SIZE];
+
+            for (int col = 0; col < GRID_SIZE; col++) {
+                rowCopy[col] = sudokuValues[row][col][boardIndex];
+            }
+
+        System.out.println("RowCopy: " + Arrays.toString(rowCopy));
+        System.out.println("RowCopy DONE!");
+            return rowCopy;
+    }
+
+
+    //TODO: Börja Här, metoden anropar andra metoder för att skifta rader, men något är fel
+    private static int[][][] shiftRows(int[][][] sudokuValues){
+        System.out.println("ShiftRows initialized");
+        System.out.println("Original Sudoku:");
+        printAllValues(sudokuValues, 2);
+
+        int[][][] copy = sudokuValues.clone(); // Create a copy of the Sudoku puzzle
+        int[] boardRow ;
+        int[] solutionRow;
+        int firstRow = 0;
+        int nextRow = 1;
+        //copy row 1 and 2
+           boardRow = copyRow(sudokuValues, 0,1);
+           solutionRow = copyRow(sudokuValues, 0, 0);
+
+        System.out.println("The board row copy: " + Arrays.toString(boardRow));
+        System.out.println("The solution row copy: " + Arrays.toString(solutionRow));
+
+            //copy row 1, shift row 2 to row 1, row2 to row3..., place row 1 on row 9
+            for(int row = 0; row < 7; row++) {
+                boardRow = copyRow(sudokuValues, row, 1);
+                solutionRow = copyRow(sudokuValues, row, 0);
+                //shiftrows
+                shiftSelectedRows(sudokuValues, row, row+1);
+                //place row 1 on row 9
+            }
+        for (int col = 0; col < 9; col++) {
+            sudokuValues[8][col][0] = boardRow[col];
+            sudokuValues[8][col][1] = solutionRow[col];
+        }
+            System.out.println("Row 1: " + Arrays.toString(boardRow));
+            System.out.println("Row 2: " + Arrays.toString(solutionRow));
+
+
+
+        System.out.println("Horizontally mirrored Sudoku:");
+        printAllValues(sudokuValues, 2);
+        System.out.println();
+        System.out.println("RandomizeVertically Done");
+        return sudokuValues;
+
+    }
+
+    //TODO: ta bort, fungerar men behövs ej
+    private static int[][][] shiftFirstAndLast(int[][][] sudokuValues){
+        System.out.println("RandomizeVertically initialized");
+        System.out.println("Original Sudoku:");
+        printAllValues(sudokuValues, 2);
+
+        int[][][] copy = sudokuValues.clone(); // Create a copy of the Sudoku puzzle
+        int[] rowCopy = new int[GRID_SIZE];
+        int[] row2 = new int[GRID_SIZE];
+        int firstRow = 0;
+        int lastRow = 8;
+
+        for (int boardIndex = 0; boardIndex < 2; boardIndex++){
+            for(int col = 0; col < GRID_SIZE; col++){
+                rowCopy[col] = sudokuValues[firstRow][col][boardIndex];
+                row2[col] = sudokuValues[lastRow][col][boardIndex];
+            }
+
+            for (int i = 0; i < 9; i++) {
+
+                sudokuValues[firstRow][i][boardIndex] = row2[i];
+                sudokuValues[lastRow][i][boardIndex] = rowCopy[i];
+            }
+            System.out.println("Row 1: " + Arrays.toString(rowCopy));
+            System.out.println("Row 2: " + Arrays.toString(row2));
+        }
+
+
+        System.out.println("Horizontally mirrored Sudoku:");
+        printAllValues(sudokuValues, 2);
+        System.out.println();
+        System.out.println("RandomizeVertically Done");
+        return sudokuValues;
+    }
+
+//TODO: För test eller inte om den funkar
+    private static int[][][] shiftSelectedRows(int[][][] sudokuValues, int row1, int row2){
+        System.out.println("Shift rows initialized");
+        System.out.println("Original Sudoku:");
+        printAllValues(sudokuValues, 2);
+
+
+        for (int boardIndex = 0; boardIndex < 1; boardIndex++){
+            for (int i = 0; i < 9; i++) {
+                sudokuValues[row1][i][boardIndex] =  sudokuValues[row2][i][boardIndex];
+
+            }
+        }
+
+
+        System.out.println("Shifted Sudoku:");
+        printAllValues(sudokuValues, 2);
+        System.out.println();
+        System.out.println("Shift Rows Done");
+        return sudokuValues;
+    }
+
 
     private static int convertCharToSudokuInt(char ch) {
         if (ch < '0' || ch > '9') throw new IllegalArgumentException("character " + ch);

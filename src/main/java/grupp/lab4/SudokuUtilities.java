@@ -2,15 +2,17 @@ package grupp.lab4;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class SudokuUtilities implements Serializable {
 
     public enum SudokuLevel {EASY, MEDIUM, HARD}
-
+//TODO: kolla variabelnamn och vart vi ska använda SECTIONS_PER_ROW och SECTION_SIZE
     public static final int GRID_SIZE = 9;
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;
+
 
 
     /**
@@ -51,6 +53,9 @@ public class SudokuUtilities implements Serializable {
         //TODO: behövs ej tyvär
         //return randomize(representationInt, level);
         swapNumbers(representationInt);
+     //   printAllValues(representationInt, 2);
+        randomizeVertically(representationInt);
+       // printAllValues(representationInt, 2);
         return representationInt;
     }
 
@@ -164,9 +169,86 @@ public class SudokuUtilities implements Serializable {
 
     }
 
+    /**
+     * Byter plats på första och sista raden
+     * @param sudokuValues
+     * @return
+     */
+    //TODO: lägg till funktionalitet så att sudokut skiftar rader, kolla LAB1 Byter just nu plats på första och sista raden, men det räcker inte för att randomisera, den måste kunna skifta
+    //     * alla rader upp eller ner
+    private static int[][][] randomizeVertically(int[][][] sudokuValues){
+        System.out.println("RandomizeVertically initialized");
+        System.out.println("Original Sudoku:");
+        printAllValues(sudokuValues, 2);
+
+        int[][][] copy = sudokuValues.clone(); // Create a copy of the Sudoku puzzle
+        int[] row1 = new int[GRID_SIZE];
+        int[] row2 = new int[GRID_SIZE];
+        int firstRow = 0;
+        int lastRow = 8;
+
+        for (int boardIndex = 0; boardIndex < 2; boardIndex++){
+            for(int col = 0; col < GRID_SIZE; col++){
+                row1[col] = sudokuValues[firstRow][col][boardIndex];
+                row2[col] = sudokuValues[lastRow][col][boardIndex];
+            }
+
+        for (int i = 0; i < 9; i++) {
+
+            sudokuValues[firstRow][i][boardIndex] = row2[i];
+            sudokuValues[lastRow][i][boardIndex] = row1[i];
+        }
+            System.out.println("Row 1: " + Arrays.toString(row1));
+            System.out.println("Row 2: " + Arrays.toString(row2));
+        }
+
+
+        System.out.println("Horizontally mirrored Sudoku:");
+        printAllValues(sudokuValues, 2);
+        System.out.println();
+        System.out.println("RandomizeVertically Done");
+        return sudokuValues;
+    }
+
     private static int convertCharToSudokuInt(char ch) {
         if (ch < '0' || ch > '9') throw new IllegalArgumentException("character " + ch);
         return ch - '0';
+    }
+
+
+    /** Help method
+     * Returns the current value at the specified position (x, y, z) on the Sudoku board.
+     *
+     */
+    public int getCurrentValue(int[][][] sudokuValues, int x, int y,int z) {
+        return sudokuValues[x][y][z];
+    }
+    /**
+     * Help Method
+     */
+    public static void printAllValues(int[][][] sudokuValues, int numberOfBoardsToDisplay){
+        int boardIndex = 0;
+        // System.out.println(Arrays.deepToString(inGameBord));
+
+        for(int z = 0; z < numberOfBoardsToDisplay; z++ ){
+            System.out.println();
+            System.out.println("Board index: " + boardIndex);
+            for (int i = 0; i < 9; i++) {
+                System.out.print("|");
+                for(int j = 0; j < 9; j++) {
+                    if( j % 9 == 0){
+                        System.out.println();
+                    }
+                    System.out.print("|");
+                    System.out.print(sudokuValues[i][j][z]);
+
+                }
+
+            }
+            boardIndex += 1;
+        }
+
+        System.out.println("|");
     }
 
     private static final String easy =

@@ -102,7 +102,7 @@ public class Bord implements Serializable {
     }
 
     //public int handleHintBordPos(int )
-    /**
+    /** Help method
      * Returns the current value at the specified position (x, y) on the Sudoku board.
      *
      * @param x The x-coordinate of the position to get the value for.
@@ -111,6 +111,28 @@ public class Bord implements Serializable {
      */
     public int getCurrentValue(int x, int y) {
         return inGameBord[x][y].getValue();
+    }
+
+    /**
+     * Help Method
+     */
+    public void printAllIntegers(){
+
+        // System.out.println(Arrays.deepToString(inGameBord));
+
+        for (int i = 0; i < 9; i++) {
+            System.out.print("|");
+            for(int j = 0; j < 9; j++) {
+                if( j % 9 == 0){
+                    System.out.println();
+                }
+                System.out.print("|");
+                System.out.print(inGameBord[i][j].getValue());
+
+            }
+
+        }
+        System.out.println("|");
     }
 
     public void setSquareValue(int val, int row, int col) {

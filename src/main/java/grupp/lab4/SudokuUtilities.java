@@ -1,6 +1,7 @@
 package grupp.lab4;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Random;
 
 public class SudokuUtilities implements Serializable {
@@ -43,11 +44,14 @@ public class SudokuUtilities implements Serializable {
         //return convertStringToIntMatrix(representationString);
 
         //Efter randomizeSudoku
+
         representationInt = convertStringToIntMatrix(representationString);
         //  return swapNumbers(representationInt);            //Todo: fixa den så den funkar om den behövs
         //representationInt = randomize(representationInt, level);
-
-        return randomize(representationInt, level);
+        //TODO: behövs ej tyvär
+        //return randomize(representationInt, level);
+        swapNumbers(representationInt);
+        return representationInt;
     }
 
     //TODO: Test att flytta hint, ta bort om den inte ska vara här. Går att göra static men då förlorar man låg koppling och datainkapsling kan brytas
@@ -112,48 +116,6 @@ public class SudokuUtilities implements Serializable {
     }
 
 
-    /**
-     * Randomiserar vilka värden som skall visas
-     *
-     * @param sudokuValues
-     */
-    //TODO: Fixa extra funktioner, kontroll att den inte lämnar en 3x3 utan siffror etc
-    private static int[][][] randomize(int[][][] sudokuValues, SudokuLevel level) {
-        Random random = new Random();
-        double amount = 0;
-        int count = 0;
-        switch (level) {
-            case EASY:
-                amount = 0.3658519827543145;
-                break;
-            case MEDIUM:
-                amount = 0.2665851982754314;
-                break;
-            case HARD:
-                amount = 0.255851982754314;
-                break;
-            default:
-                amount = 0.2665851982754314;
-        }
-//        while (count<amount) {
-        for (int row = 0; row < GRID_SIZE; row++) {
-            for (int col = 0; col < GRID_SIZE; col++) {
-                if (sudokuValues[row][col][0] == 0) {
-                    double probability = random.nextDouble();
-                    //  System.out.println("probability: "+ probability); //TODO: Delete
-                    if (probability <= amount) {
-                        sudokuValues[row][col][0] = sudokuValues[row][col][1];
-                        count++;
-                    }
-                }
-            }
-//                if(count==amount) {
-//                    break;
-//                }
-        }
-//        }
-        return sudokuValues;
-    }
 
 
     /**
@@ -162,32 +124,41 @@ public class SudokuUtilities implements Serializable {
      * @param sudokuValues
      * @return
      */
-    //TODO: Behövs? isåfall fixa så den funkar
+    //TODO: Kolla om det finns någon färdig metod för att byta plats på två nummer i en array
     private static int[][][] swapNumbers(int[][][] sudokuValues) {
-        System.out.println("randomIzeSudoku Initialized");               //Test
-        int[][] position1;
-        int[][] position2;
+
+
         int firstNumber;
         int secNumber;
-        int counterOne = 0;
-        int counterTwo = 0;
+
         do {
             firstNumber = (int) (Math.random() * 9 + 1);
             secNumber = (int) (Math.random() * 9 + 1);
         } while (firstNumber == secNumber);
-
+        System.out.println(Arrays.deepToString(sudokuValues));
         System.out.println("First number: " + firstNumber);               //Test
         System.out.println("Second number: " + secNumber);               //Test
+
+
 
         for (int row1 = 0; row1 < GRID_SIZE; row1++) {
             for (int col1 = 0; col1 < GRID_SIZE; col1++) {
                 if (firstNumber == sudokuValues[row1][col1][1]) {
+                    sudokuValues[row1][col1][1] = secNumber;
+                    if(sudokuValues[row1][col1][0] != 0){
+                        sudokuValues[row1][col1][0] = secNumber;
+                    }
+                } else if (secNumber == sudokuValues[row1][col1][1]) {
+                    sudokuValues[row1][col1][1] = firstNumber;
+                    if(sudokuValues[row1][col1][0] != 0){
+                        sudokuValues[row1][col1][0] = firstNumber;
+                    }
 
                 }
             }
         }
 
-
+        System.out.println(Arrays.deepToString(sudokuValues));
         System.out.println("randomIzeSudoku Finished!");
         return sudokuValues;
 
@@ -199,24 +170,24 @@ public class SudokuUtilities implements Serializable {
     }
 
     private static final String easy =
-//                    "000914070" +
-//                    "010000054" +
-//                    "040002000" +
-//                    "007569001" +
-//                    "401000500" +
-//                    "300100000" +
-//                    "039000408" +
-//                    "650800030" +
-//                    "000403260" +
-            "000000000" + //30
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" + //solution values after this substring
+                    "000914070" +
+                    "010000054" +
+                    "040002000" +
+                    "007569001" +
+                    "401000500" +
+                    "300100000" +
+                    "039000408" +
+                    "650800030" +
+                    "000403260" +
+//            "000000000" + //30
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" + //solution values after this substring
                     "583914672" +
                     "712386954" +
                     "946752183" +
@@ -228,24 +199,24 @@ public class SudokuUtilities implements Serializable {
                     "178493265";
 
     private static final String medium =
-//                    "300000010" +
-//                    "000050906" +
-//                    "050401200" +
-//                    "030000080" +
-//                    "002069400" +
-//                    "000000002" +
-//                    "900610000" +
-//                    "200300058" +
-//                    "100800090" +
-            "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
+                    "300000010" +
+                    "000050906" +
+                    "050401200" +
+                    "030000080" +
+                    "002069400" +
+                    "000000002" +
+                    "900610000" +
+                    "200300058" +
+                    "100800090" +
+//            "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
                     "324976815" +
                     "718253946" +
                     "659481273" +

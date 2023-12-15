@@ -13,8 +13,6 @@ public class SudokuUtilities implements Serializable {
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;
 
-
-
     /**
      * Create a 3-dimensional matrix with initial values and solution in Sudoku.
      *

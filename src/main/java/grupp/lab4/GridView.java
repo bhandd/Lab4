@@ -29,6 +29,8 @@ public class GridView extends BorderPane {
     private Controller controller;
     private char buttonCheck;
 
+    private SudokuUtilities sudokuUtilities;
+
     FileChooser fileChooser = new FileChooser(); //TODO:Check if this is right
 
     /**
@@ -429,6 +431,7 @@ public class GridView extends BorderPane {
         @Override
         public void handle(ActionEvent actionEvent) {
             controller.EventHint();
+            //sudokuUtilities.getHint(bord); //TODO försöka fixa
             updateBord();
             FullBord();
         }
@@ -448,7 +451,7 @@ public class GridView extends BorderPane {
                 alert.getButtonTypes().setAll(newGame, quit);
                 alert.setTitle("Completed game");
                 alert.setHeaderText("All tiles are in the right place :)");
-                alert.setContentText("Do you wnat to quit and start a new game");
+                alert.setContentText("Do you want to quit and start a new game");
                 Optional<ButtonType> choice = alert.showAndWait();
                 if (choice.get() == newGame) {
                     ActionEvent actionEvent = new ActionEvent();
@@ -457,7 +460,22 @@ public class GridView extends BorderPane {
                     System.exit(0);
                 }
             } else {
-
+                ButtonType continu = new ButtonType("Continue");
+                ButtonType newGame = new ButtonType("New game");
+                ButtonType quit = new ButtonType("Quit");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.getButtonTypes().setAll(continu,newGame,quit);
+                alert.setTitle("Incompleted game");
+                alert.setHeaderText("Not all tiles are in the correckt place");
+                alert.setContentText("Do you want to Continue, start a new game or quit");
+                Optional<ButtonType> choice = alert.showAndWait();
+                if (choice.get() == newGame) {
+                    ActionEvent actionEvent = new ActionEvent();
+                    levelHandler.handle(actionEvent);
+                } else if (choice.get() == quit) { //TODO kanske lägga till ett val att spara
+                    controller.EventSaveGame();
+                    System.exit(0);
+                }
             }
         }
     }

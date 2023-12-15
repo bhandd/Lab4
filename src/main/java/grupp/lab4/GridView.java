@@ -14,8 +14,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -271,7 +269,7 @@ public class GridView extends BorderPane {
     private EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            controller.EventSaveGame();
+            controller.saveGame();
         }
     };
 
@@ -335,7 +333,7 @@ public class GridView extends BorderPane {
         @Override
         public void handle(ActionEvent actionEvent) {
             bord = new Bord(bord.getTheDiffiulty());
-            controller.eventRestartGame(bord);
+            controller.restartGame(bord);
             updateBord();
         }
     };
@@ -372,15 +370,15 @@ public class GridView extends BorderPane {
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.get() == easy) {
                 bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
-                controller.eventRestartGame(bord);
+                controller.restartGame(bord);
                 updateBord();
             } else if (choice.get() == medium) {
                 bord = new Bord(SudokuUtilities.SudokuLevel.MEDIUM);
-                controller.eventRestartGame(bord);
+                controller.restartGame(bord);
                 updateBord();
             } else if (choice.get() == hard) {
                 bord = new Bord(SudokuUtilities.SudokuLevel.HARD);
-                controller.eventRestartGame(bord);
+                controller.restartGame(bord);
                 updateBord();
             }
         }
@@ -430,7 +428,7 @@ public class GridView extends BorderPane {
     public EventHandler<ActionEvent> hintHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            controller.EventHint();
+            controller.eventHint();
             //sudokuUtilities.getHint(bord); //TODO försöka fixa
             updateBord();
             FullBord();
@@ -473,7 +471,7 @@ public class GridView extends BorderPane {
                     ActionEvent actionEvent = new ActionEvent();
                     levelHandler.handle(actionEvent);
                 } else if (choice.get() == quit) { //TODO kanske lägga till ett val att spara
-                    controller.EventSaveGame();
+                    controller.saveGame();
                     System.exit(0);
                 }
             }

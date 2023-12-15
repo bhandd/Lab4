@@ -50,7 +50,7 @@ public class SudokuUtilities implements Serializable {
         //representationInt = randomize(representationInt, level);
         //TODO: behövs ej tyvär
         //return randomize(representationInt, level);
-       // swapNumbers(representationInt);
+       swapNumbers(representationInt);
      //   printAllValues(representationInt, 2);
      //   randomizeVertically(representationInt);
        // printAllValues(representationInt, 2);
@@ -61,7 +61,7 @@ public class SudokuUtilities implements Serializable {
     }
 
     //TODO: Test att flytta hint, ta bort om den inte ska vara här. Går att göra static men då förlorar man låg koppling och datainkapsling kan brytas
-    public void getHint(Bord bord){
+    public static void getHint(Bord bord){
         if (bord.checkPlaced() == 81) {
             throw new IllegalArgumentException("Bord is filled");
         }
@@ -116,11 +116,10 @@ public class SudokuUtilities implements Serializable {
                         convertCharToSudokuInt(charRepresentation[charIndex++]);
             }
         }
-
-
         return values;
     }
-
+    private SudokuUtilities() {
+    }
 
 
 

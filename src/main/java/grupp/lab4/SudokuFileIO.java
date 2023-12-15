@@ -11,12 +11,13 @@ public class SudokuFileIO {
      */
     //TODO:
     public static void serializeToFile(File file, Bord sudokuBord) throws IOException {
-
+//ORIGINAL
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
             out.writeObject(sudokuBord);
         } catch (IOException IOEx) {
             throw new IOException("Something went wrong when writing to fille");
         }
+        //TODO: close file
         // ...
         // and then, make sure the file always get closed
     }
@@ -37,14 +38,14 @@ public class SudokuFileIO {
             Bord bord = (Bord) in.readObject();
             return bord;
         } catch (EOFException exception) {
-            throw new EOFException("end of file");
+        return null;
 
         } catch (IOException exception) {
             throw new IOException("IOException");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (NullPointerException exception) {
-            throw new NullPointerException("nullpointerEXCEPTION");
+            exception.printStackTrace();
         } finally {
             try {
                 if (in != null)
@@ -52,6 +53,7 @@ public class SudokuFileIO {
             } catch (Exception exception) {
             }
         }
+        return null;
     }
 
 

@@ -3,15 +3,13 @@ package grupp.lab4;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 public class Controller {
 
     private GridView view;
     private Bord bord;
-    private SudokuUtilities logic;
+
 
     /**
      * @param view
@@ -74,24 +72,9 @@ public class Controller {
      *
      */
     //TODO: flyttat till SudokuLogic för MVC. Kolla med Noah innan utkommenterad kod tas bort
-    public void EventHint() {
-     //  logic.getHint(bord); //Todo: test att flytta rutinen till sudokuutilities
-        if (bord.checkPlaced() == 81) {
-            throw new IllegalArgumentException("Bord is filled");
-        }
-
-        int RowToPlaceHint = 0;
-        int ColToPlaceHint = 0;
-        int hintValue = 0;
-        while (hintValue == 0) { //look for place to place hint
-            RowToPlaceHint = (int) (Math.random() * 9);
-            ColToPlaceHint = (int) (Math.random() * 9);
-            if (bord.getCurrentValue(RowToPlaceHint, ColToPlaceHint) == 0) {
-                hintValue = bord.Hint(RowToPlaceHint, ColToPlaceHint);
-            }
-        }
-        bord.setSquareValue(hintValue, RowToPlaceHint, ColToPlaceHint);
-       // return bord;//TODO: delete
+    public void eventHint() {
+     SudokuUtilities.getHint(bord); //Todo: test att flytta rutinen till sudokuutilities
+     view.updateBord();
     }
 
 
@@ -101,7 +84,7 @@ public class Controller {
      *
      * @param newbord
      */
-    public void eventRestartGame(Bord newbord) {
+    public void restartGame(Bord newbord) {
         bord = newbord;
     }
 
@@ -111,7 +94,7 @@ public class Controller {
      * Opens a file chooser dialog, allows the user to select a file, and then saves
      * the current Sudoku game data to the selected file.
      */
-    public void EventSaveGame() {
+    public void saveGame() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save my files");
         FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
@@ -125,13 +108,14 @@ public class Controller {
                 SudokuFileIO.serializeToFile(selectedFile, bord);
             }
 
-        } catch (IOException e) {
+        } catch (IOException e) {//TODO:Alert:gick inte att läsa in fil
             throw new RuntimeException(e);
         }
 
 
     }
 
+    //TODO:Flytta till SudokuFileIO
     /**
      * Loads a Sudoku game from a file.
      *
@@ -151,8 +135,11 @@ public class Controller {
             selectedFile = fileChooser.showOpenDialog(this.view.getScene().getWindow());
             //   if(selectedFile != null) {
             this.bord = SudokuFileIO.deSerializeFromFile(selectedFile);
+            if (this.bord == null){
+                //TODO:gör en alert-metod att kalla på med feltext
+            }
             return this.bord;
-            //   }
+             //  }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

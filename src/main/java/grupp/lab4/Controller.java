@@ -1,12 +1,12 @@
 package grupp.lab4;
 
+import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Controller {
-
     private GridView view;
     private Bord bord;
 
@@ -61,7 +61,6 @@ public class Controller {
      */
     public boolean EventCheckGame() {
         if (bord.handleCheckGame() == bord.checkPlaced()) {
-            System.out.println(bord.checkPlaced());
             return true;
         } else {
             return false;
@@ -74,7 +73,7 @@ public class Controller {
     //TODO: flyttat till SudokuLogic för MVC. Kolla med Noah innan utkommenterad kod tas bort
     public void eventHint() {
      SudokuUtilities.getHint(bord); //Todo: test att flytta rutinen till sudokuutilities
-     view.updateBord();
+     //view.updateBord();
     }
 
 
@@ -144,6 +143,22 @@ public class Controller {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public void updateTile(Label[][] numberTiles,int row, int col) {
+        numberTiles[row][col].setText("");
+        if (bord.getCurrentValue(row, col) == 0) {
+            numberTiles[row][col].setText("");
+        } else {
+            numberTiles[row][col].setText(Integer.toString(bord.getCurrentValue(row, col)));
+        }
+    }
+    public void updateBord(Label[][] numberTiles) {
+        for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
+            for(int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
+                updateTile(numberTiles,row,col);
+            }
+        }
     }
 
 

@@ -27,8 +27,6 @@ public class GridView extends BorderPane {
     private Controller controller;
     private char buttonCheck;
 
-    private SudokuUtilities sudokuUtilities;
-
     FileChooser fileChooser = new FileChooser(); //TODO:Check if this is right
 
     /**
@@ -284,7 +282,7 @@ public class GridView extends BorderPane {
 //TODO: fixa någon kontroll så den inte gör så att programmet kraschar när man väljer 'cancel' i filechooser
             bord = controller.eventLoadGame();
             if (bord != null) {
-                updateBord();
+                controller.updateBord(numberTiles);
             }
 
         }
@@ -334,7 +332,7 @@ public class GridView extends BorderPane {
         public void handle(ActionEvent actionEvent) {
             bord = new Bord(bord.getTheDiffiulty());
             controller.restartGame(bord);
-            updateBord();
+            controller.updateBord(numberTiles);
         }
     };
 
@@ -345,7 +343,7 @@ public class GridView extends BorderPane {
         @Override
         public void handle(ActionEvent actionEvent) {
             controller.EventClearGame();
-            updateBord();
+            controller.updateBord(numberTiles);
         }
     };
 
@@ -371,15 +369,15 @@ public class GridView extends BorderPane {
             if (choice.get() == easy) {
                 bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
                 controller.restartGame(bord);
-                updateBord();
+                controller.updateBord(numberTiles);
             } else if (choice.get() == medium) {
                 bord = new Bord(SudokuUtilities.SudokuLevel.MEDIUM);
                 controller.restartGame(bord);
-                updateBord();
+                controller.updateBord(numberTiles);
             } else if (choice.get() == hard) {
                 bord = new Bord(SudokuUtilities.SudokuLevel.HARD);
                 controller.restartGame(bord);
-                updateBord();
+                controller.updateBord(numberTiles);
             }
         }
     };
@@ -429,8 +427,7 @@ public class GridView extends BorderPane {
         @Override
         public void handle(ActionEvent actionEvent) {
             controller.eventHint();
-            //sudokuUtilities.getHint(bord); //TODO försöka fixa
-            updateBord();
+            controller.updateBord(numberTiles);
             FullBord();
         }
     };

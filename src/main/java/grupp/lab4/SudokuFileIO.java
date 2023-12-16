@@ -12,14 +12,18 @@ public class SudokuFileIO {
     //TODO:
     public static void serializeToFile(File file, Bord sudokuBord) throws IOException {
 //ORIGINAL
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+ ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+        try {
             out.writeObject(sudokuBord);
+
         } catch (IOException IOEx) {
             throw new IOException("Something went wrong when writing to fille");
+        }finally {
+            out.close();
         }
         //TODO: close file
-        // ...
-        // and then, make sure the file always get closed
+
+
     }
 
     /**
@@ -28,8 +32,8 @@ public class SudokuFileIO {
      */
 
 
-    //TODO: Kolla om alla catch-block verkligen behövs
-    public static Bord deSerializeFromFile(File file) throws IOException {
+    //TODO: Kolla om alla catch-block verkligen behövs och hantera exceptions
+    public static Bord deSerializeFromFile(File file) throws IOException, NullPointerException {
 
         ObjectInputStream in = null;
 
@@ -37,23 +41,25 @@ public class SudokuFileIO {
             in = new ObjectInputStream(new FileInputStream(file));
             Bord bord = (Bord) in.readObject();
             return bord;
-        } catch (EOFException exception) {
-        return null;
+        }catch (IOException e) {
+            throw new IOException(); //throws exeption to calling method
+        }
+//        } catch (EOFException exception) {
+//        return null;
+//
 
-        } catch (IOException exception) {
-            throw new IOException("IOException");
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);}
+         catch (NullPointerException exception) {
+           // exception.printStackTrace(); //printstacktrace används För felsökning
+             throw exception;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        } catch (NullPointerException exception) {
-            exception.printStackTrace();
         } finally {
-            try {
                 if (in != null)
                     in.close();
-            } catch (Exception exception) {
-            }
         }
-        return null;
+
     }
 
 

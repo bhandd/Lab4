@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -46,6 +47,7 @@ public class GridView extends BorderPane {
         this.setCenter(numberPane);
         this.setLeft(left());
         this.setRight(right());
+        this.setBottom(bottom());
         creatMenu();
     }
 
@@ -201,6 +203,20 @@ public class GridView extends BorderPane {
     }
 
     /**
+     * Creates the bottom inset
+     * @return
+     */
+    public VBox bottom() {
+        VBox b1 = new VBox();
+
+        b1.setAlignment(Pos.CENTER);
+        b1.setPadding(new Insets(10));
+        b1.setSpacing(10);
+        this.setBottom(b1);
+        return b1;
+    }
+
+    /**
      * Creates the menubar and all objects on top of the window
      */
     public void creatMenu() {
@@ -267,7 +283,7 @@ public class GridView extends BorderPane {
     private EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            controller.saveGame();
+                controller.saveGame();
         }
     };
 
@@ -280,7 +296,8 @@ public class GridView extends BorderPane {
         @Override
         public void handle(ActionEvent actionEvent) {
 //TODO: fixa någon kontroll så den inte gör så att programmet kraschar när man väljer 'cancel' i filechooser
-            bord = controller.eventLoadGame();
+                bord = controller.loadGame();
+
             if (bord != null) {
                 controller.updateBord(numberTiles);
             }

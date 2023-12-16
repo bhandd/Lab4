@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Controller {
-    private GridView view;
+    private final GridView view;
     private Bord bord;
 
 
@@ -93,23 +93,27 @@ public class Controller {
      * Opens a file chooser dialog, allows the user to select a file, and then saves
      * the current Sudoku game data to the selected file.
      */
+    //Kanske kan vara såhär, för flyttas den till view får man endå kalla på view i controller vilket känns onödigt, samma med loadGame
     public void saveGame() {
+        //Ska dessa till view?
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save my files");
         FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
         fileChooser.getExtensionFilters().addAll(ex1);
         fileChooser.setInitialDirectory(new File("/C:/temp"));
 
-        //TODO: kontrollera exceptions
+        //TODO: kontrollera exceptions, exceptions ska kastas hela vägen upp till där metoden kallades från
         try {
             File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow()); //TODO: här väljs vilket fönster som skall visa filechooser
             if (selectedFile != null) {
                 SudokuFileIO.serializeToFile(selectedFile, bord);
             }
 
-        } catch (IOException e) {//TODO:Alert:gick inte att läsa in fil
+        } catch (IOException e) {//TODO:Alert:"gick inte att läsa in fil"
             throw new RuntimeException(e);
-        }
+        }catch (NullPointerException e) {//TODO:Alert:"gick inte att läsa in fil"
+            System.out.println("Nullpointer Exception hanteras i Controller");
+    }
 
 
     }
@@ -122,27 +126,26 @@ public class Controller {
      * the Sudoku game data from the selected file.
      * @return The deserialized Sudoku game data.
      */
-    public Bord eventLoadGame() {
+    public Bord loadGame(){
         File selectedFile = null;
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open my files");
         FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
         fileChooser.getExtensionFilters().addAll(ex1);
         fileChooser.setInitialDirectory(new File("/C:/temp"));
-
+        selectedFile = fileChooser.showOpenDialog(this.view.getScene().getWindow());
         try {
-            selectedFile = fileChooser.showOpenDialog(this.view.getScene().getWindow());
-            //   if(selectedFile != null) {
             this.bord = SudokuFileIO.deSerializeFromFile(selectedFile);
-            if (this.bord == null){
-                //TODO:gör en alert-metod att kalla på med feltext
-            }
-            return this.bord;
-             //  }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }catch (NullPointerException e) {
+            System.out.println("nullpointer exception för loadGame hanteras i Controller");
         }
-
+        if (this.bord != null){
+            return this.bord;
+        }
+        return null;
     }
 
     public void updateTile(Label[][] numberTiles,int row, int col) {

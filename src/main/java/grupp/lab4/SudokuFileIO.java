@@ -33,29 +33,23 @@ public class SudokuFileIO {
 
 
     //TODO: Kolla om alla catch-block verkligen behövs och hantera exceptions
-    public static Bord deSerializeFromFile(File file) throws IOException, NullPointerException {
+    public static Bord deSerializeFromFile(File file) throws IOException, NullPointerException, ClassNotFoundException {
 
         ObjectInputStream in = null;
 
         try {
             in = new ObjectInputStream(new FileInputStream(file));
-            Bord bord = (Bord) in.readObject();
-            return bord;
-        }catch (IOException e) {
-            throw new IOException(); //throws exeption to calling method
-        }
-//        } catch (EOFException exception) {
-//        return null;
-//
+            return (Bord) in.readObject();
+        }catch (NullPointerException e) {
+            throw new NullPointerException("Är det verkligen nödvändigt med en Alert här?"); //throws exeption to calling method
 
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);}
-         catch (NullPointerException exception) {
-           // exception.printStackTrace(); //printstacktrace används För felsökning
-             throw exception;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
+        } catch (EOFException exception) {
+        throw  new EOFException("Could not read file");
+        }
+         catch (ClassNotFoundException e) {
+            throw new RuntimeException("Could not read file, file corrupt or wrong type");
+        }
+        finally {
                 if (in != null)
                     in.close();
         }

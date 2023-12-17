@@ -1,5 +1,6 @@
 package grupp.lab4;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 
@@ -140,7 +141,17 @@ public class Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }catch (NullPointerException e) {
-            System.out.println("nullpointer exception för loadGame hanteras i Controller");
+            //TODO: Alertmeddelande
+
+
+          //  e.printStackTrace();
+         //   new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }catch (RuntimeException e){
+           // e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+           // e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
         if (this.bord != null){
             return this.bord;

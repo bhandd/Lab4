@@ -1,9 +1,6 @@
 package grupp.lab4;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
 
 public class SudokuUtilities implements Serializable {
 
@@ -39,28 +36,17 @@ public class SudokuUtilities implements Serializable {
             default:
                 representationString = medium;
         }
-
         //Original
         //return convertStringToIntMatrix(representationString);
-
-        //Efter randomizeSudoku
-
         representationInt = convertStringToIntMatrix(representationString);
-        //  return swapNumbers(representationInt);            //Todo: fixa den så den funkar om den behövs
-        //representationInt = randomize(representationInt, level);
-        //TODO: behövs ej tyvär
-        //return randomize(representationInt, level);
-       swapNumbers(representationInt);
-     //   printAllValues(representationInt, 2);
-     //   randomizeVertically(representationInt);
-       // printAllValues(representationInt, 2);
-
-      //  shiftRows(representationInt); //TODO: fungerar inte riktigt
-       // shiftSelectedRows(representationInt, 0,1);
-        return representationInt;
+        return  randomizeSudoku(representationInt);
     }
 
-    //TODO: Test att flytta hint, ta bort om den inte ska vara här. Går att göra static men då förlorar man låg koppling och datainkapsling kan brytas
+    /**
+     * Provides a hint for the given Sudoku puzzle.
+     * This method takes a Sudoku puzzle represented as a SudokuBoard object and provides a hint by placing a value in a random empty cell.
+     * @param bord The Sudoku puzzle to be checked for available hints.
+     */
     public static void getHint(Bord bord){
         if (bord.checkPlaced() == 81) {
             throw new IllegalArgumentException("Bord is filled");
@@ -81,7 +67,6 @@ public class SudokuUtilities implements Serializable {
 
     /**
      * Create a 3-dimerepresentationIntnsional matrix with initial values and solution in Sudoku.
-     *
      * @param stringRepresentation A string of 2*81 characters, 0-9. The first 81 characters represents
      *                             the initial values, '0' representing an empty cell.
      *                             The following 81 characters represents the solution.
@@ -108,7 +93,6 @@ public class SudokuUtilities implements Serializable {
                         convertCharToSudokuInt(charRepresentation[charIndex++]);
             }
         }
-
         // solution values
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
@@ -121,31 +105,40 @@ public class SudokuUtilities implements Serializable {
     private SudokuUtilities() {
     }
 
+    private static int[][][] randomizeSudoku(int[][][] sudokuValues){
+        int timesLeft = (int) (Math.random() * 10 + 1);
+        int timesUp = (int) (Math.random() * 8 + 1);
+        swapTwoRandomNumbers(sudokuValues);
+        do{
+            shiftAllColsLeft(sudokuValues);
+           timesLeft--;
+        }while (timesLeft > 0);
+        do{
+            shiftAllRowsUp(sudokuValues);
+            timesUp--;
+        }while (timesUp > 0);
 
+        return sudokuValues;
+    }
 
     /**
-     * Byter plats på två random nummer
+     * Swaps the values of two randomly selected numbers in the Sudoku puzzle.
+          * This method randomly selects two numbers from 1 to 9 and then swaps their values in the Sudoku puzzle.
+     * It ensures that the numbers are not the same and that they are swapped in both boards of the Sudoku puzzle.
      *
-     * @param sudokuValues
-     * @return
+     * @param sudokuValues The Sudoku puzzle to be modified.
+     * @return The modified Sudoku puzzle.
      */
-    //TODO: Kolla om det finns någon färdig metod för att byta plats på två nummer i en array
-    private static int[][][] swapNumbers(int[][][] sudokuValues) {
-
+    private static int[][][] swapTwoRandomNumbers(int[][][] sudokuValues) {
 
         int firstNumber;
         int secNumber;
-
+        //Two random numbers
         do {
             firstNumber = (int) (Math.random() * 9 + 1);
             secNumber = (int) (Math.random() * 9 + 1);
         } while (firstNumber == secNumber);
-        System.out.println(Arrays.deepToString(sudokuValues));
-        System.out.println("First number: " + firstNumber);               //Test
-        System.out.println("Second number: " + secNumber);               //Test
-
-
-
+        //
         for (int row1 = 0; row1 < GRID_SIZE; row1++) {
             for (int col1 = 0; col1 < GRID_SIZE; col1++) {
                 if (firstNumber == sudokuValues[row1][col1][1]) {
@@ -158,174 +151,82 @@ public class SudokuUtilities implements Serializable {
                     if(sudokuValues[row1][col1][0] != 0){
                         sudokuValues[row1][col1][0] = firstNumber;
                     }
-
                 }
             }
         }
-
-        System.out.println(Arrays.deepToString(sudokuValues));
-        System.out.println("randomIzeSudoku Finished!");
+          System.out.println("swapNumbers Finished!");            //För testning
         return sudokuValues;
+    }
 
+
+
+    /**
+     * Shifts all columns one position to the left in the Sudoku puzzle.
+     * This method modifies the Sudoku puzzle by moving all numbers in each column one position to the left.
+     * It ensures that the numbers are not overwritten by using temporary arrays to store the values of the rows before shifting them.
+     *
+     * @param sudokuValues The Sudoku puzzle to be shifted.
+     * @return The shifted Sudoku puzzle.
+     */
+    //man kan göra en kopia av första kolumnen och sedan skriva över alla kolumner åt vänster
+    //för att sedan sätta in första kolumnen på den sista, men det kommer då bli mer kod
+    private static int[][][] shiftAllColsLeft(int[][][] sudokuValues){
+         System.out.println("Shift cols initialized");
+        int[] colCopy1 = new int[GRID_SIZE];
+        int[] colCopy2 = new int[GRID_SIZE];
+
+        //switch places of col 1-9 to the left
+        for(int col = 0; col < GRID_SIZE-1; col++) {
+            //Do for each board; index[0] and index[1]
+            for (int boardIndex = 0; boardIndex < 2; boardIndex++) {
+                //make a copy of 2 cols
+                for (int row = 0; row < GRID_SIZE; row++) {
+                    colCopy1[row] = sudokuValues[row][col][boardIndex];
+                    colCopy2[row] = sudokuValues[row][col+1][boardIndex];
+                }
+                //switch place of col1 and col2 to the left
+                for (int i = 0; i < 9; i++) {
+                    sudokuValues[i][col][boardIndex] = colCopy2[i];
+                    sudokuValues[i][col+1][boardIndex] = colCopy1[i];//Todo: skriv ut sudokuValues[i][col+1][boardIndex] blir col+1= col[8]?
+                }
+            }
+        }
+        System.out.println("Shift Cols Done");
+        return sudokuValues;
     }
 
     /**
-     * Byter plats på första och sista raden
-     * @param sudokuValues
-     * @return
+     * Shifts all rows one position upwards in the Sudoku puzzle.
+     *
+     * This method modifies the Sudoku puzzle by moving all rows one position upwards.
+     * It ensures that the rows are not overwritten by using temporary arrays to store the values of the rows before shifting them.
+     *
+     * @param sudokuValues The Sudoku puzzle to be shifted.
+     * @return The shifted Sudoku puzzle.
      */
-    //TODO: lägg till funktionalitet så att sudokut skiftar rader, Byter just nu plats på första och sista raden, men det räcker inte för att randomisera, den måste kunna skifta
-    //     * alla rader upp eller ner
-    private static int[][][] randomizeVertically(int[][][] sudokuValues){
-        System.out.println("RandomizeVertically initialized");
-        System.out.println("Original Sudoku:");
-        printAllValues(sudokuValues, 2);
-
-        int[][][] copy = sudokuValues.clone(); // Create a copy of the Sudoku puzzle
-        int[] row1 = new int[GRID_SIZE];
-        int[] row2 = new int[GRID_SIZE];
-        int firstRow = 0;
-        int lastRow = 8;
-
-        for (int boardIndex = 0; boardIndex < 2; boardIndex++){
-            for(int col = 0; col < GRID_SIZE; col++){
-                row1[col] = sudokuValues[firstRow][col][boardIndex];
-                row2[col] = sudokuValues[lastRow][col][boardIndex];
-            }
-
-        for (int i = 0; i < 9; i++) {
-
-            sudokuValues[firstRow][i][boardIndex] = row2[i];
-            sudokuValues[lastRow][i][boardIndex] = row1[i];
-        }
-            System.out.println("Row 1: " + Arrays.toString(row1));
-            System.out.println("Row 2: " + Arrays.toString(row2));
-        }
-
-
-        System.out.println("Horizontally mirrored Sudoku:");
-        printAllValues(sudokuValues, 2);
-        System.out.println();
-        System.out.println("RandomizeVertically Done");
-        return sudokuValues;
-    }
-
-    private static int[] copyRow(int[][][] sudokuValues, int row, int boardIndex){
-        System.out.println("RowCopy initialized!");
-        int[][][] copy = sudokuValues.clone(); // Create a copy of the Sudoku puzzle
-        int[] rowCopy = new int[GRID_SIZE];
-
-            for (int col = 0; col < GRID_SIZE; col++) {
-                rowCopy[col] = sudokuValues[row][col][boardIndex];
-            }
-
-        System.out.println("RowCopy: " + Arrays.toString(rowCopy));
-        System.out.println("RowCopy DONE!");
-            return rowCopy;
-    }
-
-
-    //TODO: Börja Här, metoden anropar andra metoder för att skifta rader, men något är fel
-    private static int[][][] shiftRows(int[][][] sudokuValues){
-        System.out.println("ShiftRows initialized");
-        System.out.println("Original Sudoku:");
-        printAllValues(sudokuValues, 2);
-
-        int[][][] copy = sudokuValues.clone(); // Create a copy of the Sudoku puzzle
-        int[] boardRow ;
-        int[] solutionRow;
-        int firstRow = 0;
-        int nextRow = 1;
-        //copy row 1 and 2
-           boardRow = copyRow(sudokuValues, 0,1);
-           solutionRow = copyRow(sudokuValues, 0, 0);
-
-        System.out.println("The board row copy: " + Arrays.toString(boardRow));
-        System.out.println("The solution row copy: " + Arrays.toString(solutionRow));
-
-            //copy row 1, shift row 2 to row 1, row2 to row3..., place row 1 on row 9
-            for(int row = 0; row < 7; row++) {
-                boardRow = copyRow(sudokuValues, row, 1);
-                solutionRow = copyRow(sudokuValues, row, 0);
-                //shiftrows
-                shiftSelectedRows(sudokuValues, row, row+1);
-                //place row 1 on row 9
-            }
-        for (int col = 0; col < 9; col++) {
-            sudokuValues[8][col][0] = boardRow[col];
-            sudokuValues[8][col][1] = solutionRow[col];
-        }
-            System.out.println("Row 1: " + Arrays.toString(boardRow));
-            System.out.println("Row 2: " + Arrays.toString(solutionRow));
-
-
-
-        System.out.println("Horizontally mirrored Sudoku:");
-        printAllValues(sudokuValues, 2);
-        System.out.println();
-        System.out.println("RandomizeVertically Done");
-        return sudokuValues;
-
-    }
-
-    //TODO: ta bort, fungerar men behövs ej
-    private static int[][][] shiftFirstAndLast(int[][][] sudokuValues){
-        System.out.println("RandomizeVertically initialized");
-        System.out.println("Original Sudoku:");
-        printAllValues(sudokuValues, 2);
-
-        int[][][] copy = sudokuValues.clone(); // Create a copy of the Sudoku puzzle
-        int[] rowCopy = new int[GRID_SIZE];
-        int[] row2 = new int[GRID_SIZE];
-        int firstRow = 0;
-        int lastRow = 8;
-
-        for (int boardIndex = 0; boardIndex < 2; boardIndex++){
-            for(int col = 0; col < GRID_SIZE; col++){
-                rowCopy[col] = sudokuValues[firstRow][col][boardIndex];
-                row2[col] = sudokuValues[lastRow][col][boardIndex];
-            }
-
-            for (int i = 0; i < 9; i++) {
-
-                sudokuValues[firstRow][i][boardIndex] = row2[i];
-                sudokuValues[lastRow][i][boardIndex] = rowCopy[i];
-            }
-            System.out.println("Row 1: " + Arrays.toString(rowCopy));
-            System.out.println("Row 2: " + Arrays.toString(row2));
-        }
-
-
-        System.out.println("Horizontally mirrored Sudoku:");
-        printAllValues(sudokuValues, 2);
-        System.out.println();
-        System.out.println("RandomizeVertically Done");
-        return sudokuValues;
-    }
-
-//TODO: För test eller inte om den funkar
-    private static int[][][] shiftSelectedRows(int[][][] sudokuValues, int row1, int row2){
+    private static int[][][] shiftAllRowsUp(int[][][] sudokuValues){
         System.out.println("Shift rows initialized");
-        System.out.println("Original Sudoku:");
-        printAllValues(sudokuValues, 2);
-
-
-        for (int boardIndex = 0; boardIndex < 1; boardIndex++){
-            for (int i = 0; i < 9; i++) {
-                sudokuValues[row1][i][boardIndex] =  sudokuValues[row2][i][boardIndex];
-
+        int[] rowCopy = new int[GRID_SIZE];
+        int[] rowCopy2 = new int[GRID_SIZE];
+            //switch places of row 1-9 from the bottom up
+        for(int row1 = 0; row1 < GRID_SIZE-1; row1++) {
+            //For each board (index[0] and index[1])
+            for (int boardIndex = 0; boardIndex < 2; boardIndex++) {
+                //copy row and row+1
+                for (int col = 0; col < GRID_SIZE; col++) {
+                    rowCopy[col] = sudokuValues[row1][col][boardIndex];
+                    rowCopy2[col] = sudokuValues[row1+1][col][boardIndex];
+                }
+                //swap places of row and row+1
+                for (int i = 0; i < 9; i++) {
+                    sudokuValues[row1][i][boardIndex] = rowCopy2[i];
+                    sudokuValues[row1+1][i][boardIndex] = rowCopy[i];
+                }
             }
         }
-
-
-        System.out.println("Shifted Sudoku:");
-        printAllValues(sudokuValues, 2);
-        System.out.println();
         System.out.println("Shift Rows Done");
         return sudokuValues;
     }
-
-
     private static int convertCharToSudokuInt(char ch) {
         if (ch < '0' || ch > '9') throw new IllegalArgumentException("character " + ch);
         return ch - '0';
@@ -339,8 +240,14 @@ public class SudokuUtilities implements Serializable {
     public int getCurrentValue(int[][][] sudokuValues, int x, int y,int z) {
         return sudokuValues[x][y][z];
     }
+
     /**
-     * Help Method
+     * Prints the Sudoku puzzle to the console.
+     *
+     * This method takes a Sudoku puzzle represented as a 3D array and the number of boards to display, and prints the puzzle to the console.
+     *
+     * @param sudokuValues The Sudoku puzzle to be printed.
+     * @param numberOfBoardsToDisplay The number of boards to display.
      */
     public static void printAllValues(int[][][] sudokuValues, int numberOfBoardsToDisplay){
         int boardIndex = 0;
@@ -357,13 +264,10 @@ public class SudokuUtilities implements Serializable {
                     }
                     System.out.print("|");
                     System.out.print(sudokuValues[i][j][z]);
-
                 }
-
             }
             boardIndex += 1;
         }
-
         System.out.println("|");
     }
 
@@ -426,24 +330,24 @@ public class SudokuUtilities implements Serializable {
                     "143825697";
 
     private static final String hard =
-//                    "030600000" +
-//                    "000010070" +
-//                    "080000000" +
-//                    "000020000" +
-//                    "340000800" +
-//                    "500030094" +
-//                    "000400000" +
-//                    "150800200" +
-//                    "700006050" +
-            "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
-                    "000000000" +
+                    "030600000" +
+                    "000010070" +
+                    "080000000" +
+                    "000020000" +
+                    "340000800" +
+                    "500030094" +
+                    "000400000" +
+                    "150800200" +
+                    "700006050" +
+//            "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
+//                    "000000000" +
                     "931687542" +
                     "465219378" +
                     "287345916" +

@@ -295,9 +295,7 @@ public class GridView extends BorderPane {
 
         @Override
         public void handle(ActionEvent actionEvent) {
-//TODO: fixa någon kontroll så den inte gör så att programmet kraschar när man väljer 'cancel' i filechooser
                 bord = controller.loadGame();
-
             if (bord != null) {
                 controller.updateBord(numberTiles);
             }

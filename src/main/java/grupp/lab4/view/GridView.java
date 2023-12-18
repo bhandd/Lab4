@@ -1,6 +1,7 @@
 package grupp.lab4.view;
 
 import grupp.lab4.model.Bord;
+import grupp.lab4.model.SudokuLevel;
 import grupp.lab4.model.SudokuUtilities;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,7 +38,7 @@ public class GridView extends BorderPane {
      */
     //TODO: GridView ska ta emot en Bord bord?
     public GridView() {
-        this.bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
+        this.bord = new Bord(SudokuLevel.EASY);
 
         buttonCheck = '0';
         numberTiles = new Label[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
@@ -383,15 +384,15 @@ public class GridView extends BorderPane {
             alert.setContentText("Choose the difficulty");
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.get() == easy) {
-                bord = new Bord(SudokuUtilities.SudokuLevel.EASY);
+                bord = new Bord(SudokuLevel.EASY);
                 controller.restartGame(bord);
                 controller.updateBord(numberTiles);
             } else if (choice.get() == medium) {
-                bord = new Bord(SudokuUtilities.SudokuLevel.MEDIUM);
+                bord = new Bord(SudokuLevel.MEDIUM);
                 controller.restartGame(bord);
                 controller.updateBord(numberTiles);
             } else if (choice.get() == hard) {
-                bord = new Bord(SudokuUtilities.SudokuLevel.HARD);
+                bord = new Bord(SudokuLevel.HARD);
                 controller.restartGame(bord);
                 controller.updateBord(numberTiles);
             }

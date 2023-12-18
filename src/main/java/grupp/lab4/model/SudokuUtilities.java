@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 public class SudokuUtilities implements Serializable {
 
-    public enum SudokuLevel {EASY, MEDIUM, HARD}
-//TODO: kolla variabelnamn och vart vi ska använda SECTIONS_PER_ROW och SECTION_SIZE
+  //  public enum SudokuLevel {EASY, MEDIUM, HARD}
+    SudokuLevel level;
     public static final int GRID_SIZE = 9;
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;

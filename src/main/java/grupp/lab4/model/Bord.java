@@ -7,13 +7,14 @@ public class Bord implements Serializable {
     public static final int Cols = 9;
     public static final int Rows = 9;
     private Square inGameBord[][] = new Square[Rows][Cols];
-    private SudokuUtilities.SudokuLevel theDiffiulty;
+    private SudokuLevel theDiffiulty;
+
 
     /**
      *
      * @param theDiffiulty
      */
-    public Bord(SudokuUtilities.SudokuLevel theDiffiulty) {
+    public Bord(SudokuLevel theDiffiulty) {
         int tempBord[][][] = SudokuUtilities.generateSudokuMatrix(theDiffiulty);
 
         for (int i = 0; i < Rows; i++) {
@@ -164,7 +165,7 @@ public class Bord implements Serializable {
      * Gets the current game difficulty in an enum.
      * @return the game difficulty.
      */
-    public SudokuUtilities.SudokuLevel getTheDiffiulty() {
+    public SudokuLevel getTheDiffiulty() {
         return theDiffiulty;
     }
 
@@ -172,7 +173,7 @@ public class Bord implements Serializable {
      * Set the difficulty of a game.
      * @param theDiffiulty to set to.
      */
-    public void setTheDiffiulty(SudokuUtilities.SudokuLevel theDiffiulty) {
+    public void setTheDiffiulty(SudokuLevel theDiffiulty) {
         this.theDiffiulty = theDiffiulty;
     }
 

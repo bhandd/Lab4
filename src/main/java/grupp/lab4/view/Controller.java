@@ -2,6 +2,7 @@ package grupp.lab4.view;
 
 import grupp.lab4.model.Bord;
 import grupp.lab4.model.SudokuFileIO;
+import grupp.lab4.model.SudokuLevel;
 import grupp.lab4.model.SudokuUtilities;
 import grupp.lab4.view.GridView;
 import javafx.scene.control.Alert;
@@ -24,6 +25,8 @@ public class Controller {
         this.view = view;
         this.bord = bord;
     }
+
+
 
     /**
      * Takes button of choice ("1-9" or "C") and updateTile

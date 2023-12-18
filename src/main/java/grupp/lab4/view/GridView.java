@@ -73,7 +73,7 @@ public class GridView extends BorderPane {
     /**
      *
      */
-    private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
+    /*private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
             for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
@@ -87,7 +87,7 @@ public class GridView extends BorderPane {
                 }
             }
         }
-    };
+    };*/
 
     /**
      * A method to get a reference to the numberpane
@@ -97,6 +97,14 @@ public class GridView extends BorderPane {
     // use this method to get a reference to the number (called by some other class)
     public TilePane getNumberPane() {
         return numberPane;
+    }
+
+    public Label[][] getNumberTiles() {
+        return numberTiles;
+    }
+
+    public Label getNumberByPos(int row, int col) {
+        return numberTiles[row][col];
     }
 
     /**
@@ -117,7 +125,7 @@ public class GridView extends BorderPane {
                 tile.setFont(font);
                 tile.setAlignment(Pos.CENTER);
                 tile.setStyle("-fx-border-color: black; -fx-border-width: 0.5px;"); // css style
-                tile.setOnMouseClicked(tileCLickHandler); // add your custom event handler
+                tile.setOnMouseClicked(controller.tileCLickHandler); // add your custom event handler
                 // add new tile to grid
                 numberTiles[row][col] = tile;
             }
@@ -194,25 +202,25 @@ public class GridView extends BorderPane {
 
         l2.setAlignment(Pos.CENTER);
         Button one = new Button("1");
-        one.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        one.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button two = new Button("2");
-        two.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        two.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button three = new Button("3");
-        three.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        three.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button four = new Button("4");
-        four.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        four.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button five = new Button("5");
-        five.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        five.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button six = new Button("6");
-        six.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        six.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button seven = new Button("7");
-        seven.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        seven.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button eight = new Button("8");
-        eight.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        eight.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button nine = new Button("9");
-        nine.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        nine.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         Button clear = new Button("C");
-        clear.addEventHandler(ActionEvent.ACTION, buttonHandler);
+        clear.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
         l2.getChildren().addAll(one, two, three, four, five, six, seven, eight, nine, clear);
         l2.setPadding(new Insets(10));
         l2.setSpacing(1);
@@ -325,12 +333,12 @@ public class GridView extends BorderPane {
     /**
      * Event for button press
      */
-    private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+    /*private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
             buttonCheck = controller.PressedButton(actionEvent.getSource());
         }
-    };
+    };*/
 
     /**
      * Update a single tile on the bord

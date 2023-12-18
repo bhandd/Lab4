@@ -1,8 +1,11 @@
 package grupp.lab4.view;
 
 import grupp.lab4.model.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -11,6 +14,31 @@ import java.io.IOException;
 public class Controller {
     private final GridView view;
     private Bord bord;
+
+    private char buttonCheck = '0';
+
+    public EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
+                for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
+                    if (event.getSource() == view.getNumberByPos(row,col)) {
+                        // we got the row and column - now call the appropriate controller method, e.g.
+                        MouseEvent(buttonCheck, row, col, view.getNumberTiles());
+                        view.FullBord();
+                        return;
+                    }
+                }
+            }
+        }
+    };
+
+    public EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            buttonCheck = PressedButton(actionEvent.getSource());
+        }
+    };
 
     public void setBord(Bord bord){
         this.bord = bord;

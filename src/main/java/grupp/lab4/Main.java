@@ -1,5 +1,6 @@
 package grupp.lab4;
 
+import grupp.lab4.view.Controller;
 import grupp.lab4.view.GridView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Controller controller = new Controller();
         GridView gridView = new GridView();
         MenuBar menuBar = gridView.getMenu();
 

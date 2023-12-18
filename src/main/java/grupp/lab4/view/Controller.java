@@ -12,16 +12,58 @@ public class Controller {
     private final GridView view;
     private Bord bord;
 
-
-    /**
-     * @param view
-     * @param bord
-     */
-    public Controller(GridView view, Bord bord) {
-        this.view = view;
+    public void setBord(Bord bord){
         this.bord = bord;
     }
+//original
+//    public Controller(GridView view, Bord bord) {
+//        this.view = view;
+//        this.bord = bord;
+//    }
 
+    public Controller(GridView view, Bord bord){
+        this.view = view;
+        this.bord = new Bord(SudokuLevel.DEFAULT);
+    }
+
+    public Controller() {
+        this.view = new GridView();
+        this.bord = new Bord(SudokuLevel.DEFAULT);
+    }
+
+    public int getGridSize(){
+        return SudokuUtilities.GRID_SIZE;
+    }
+    public int getSectionsPerRow(){
+        return SudokuUtilities.SECTIONS_PER_ROW;
+    }
+
+    public Bord getNewBord(){
+        bord = new Bord(SudokuLevel.DEFAULT);
+        return bord;
+    }
+
+    public Boolean getSqareInfoByPosition(int row, int col){
+      return bord.getSquareInfoByPos(row,col).isHidden();
+    }
+
+    public int getSqareInfo(int row, int col){
+        return bord.getCurrentValue(row, col);
+    }
+
+    public GridView getView(){
+        return view;
+    }
+
+    public Bord getBord(){
+        return new Bord();
+
+    }
+
+
+    public int checkPlaced(){
+        return bord.checkPlaced();
+    }
 
 
     /**
@@ -31,8 +73,6 @@ public class Controller {
      * @param x      x position on bord
      * @param y      y position on bord
      */
-
-    //TODO: Gick inte att dela upp i 2 metoder?
     public void MouseEvent(char button, int x, int y) {
         if (button == 'C') {
             bord.removeCurrentValue(x, y);
@@ -119,9 +159,8 @@ public class Controller {
             throw new RuntimeException(e);
         }catch (NullPointerException e) {//TODO:Alert:"gick inte att läsa in fil"
             System.out.println("Nullpointer Exception hanteras i Controller");
+       //     e.printStackTrace();
     }
-
-
     }
 
 
@@ -146,10 +185,8 @@ public class Controller {
             throw new RuntimeException(e);
         }catch (NullPointerException e) {
             //TODO: Alertmeddelande
-
-
           //  e.printStackTrace();
-         //   new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }catch (RuntimeException e){
            // e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -157,10 +194,10 @@ public class Controller {
            // e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
-        if (this.bord != null){
-            return this.bord;
-        }
-        return null;
+//        if (this.bord != null){
+//            return this.bord;
+//        }
+        return this.bord;
     }
 
     public void updateTile(Label[][] numberTiles,int row, int col) {
@@ -186,6 +223,4 @@ public class Controller {
     public int getCurrentVale(int row, int col) {
         return bord.getCurrentValue(row,col);
     }
-
-
 }

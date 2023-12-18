@@ -42,8 +42,8 @@ public class SudokuFileIO {
         try {
             in = new ObjectInputStream(new FileInputStream(file));
             return (Bord) in.readObject();
-        }catch (NullPointerException e) {
-            throw new NullPointerException("Är det verkligen nödvändigt med en Alert här?"); //throws exeption to calling method
+//        }catch (NullPointerException e) {
+//            throw new NullPointerException("Är det verkligen nödvändigt med en Alert här?"); //throws exeption to calling method
 
         } catch (EOFException exception) {
         throw  new EOFException("Could not read file");

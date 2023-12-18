@@ -1,7 +1,5 @@
 package grupp.lab4.model;
 
-import grupp.lab4.model.Bord;
-
 import java.io.Serializable;
 
 public class SudokuUtilities implements Serializable {
@@ -11,6 +9,10 @@ public class SudokuUtilities implements Serializable {
     public static final int GRID_SIZE = 9;
     public static final int SECTIONS_PER_ROW = 3;
     public static final int SECTION_SIZE = 3;
+
+    private SudokuUtilities() {
+    }
+
 
     /**
      * Create a 3-dimensional matrix with initial values and solution in Sudoku.
@@ -103,8 +105,6 @@ public class SudokuUtilities implements Serializable {
             }
         }
         return values;
-    }
-    private SudokuUtilities() {
     }
 
     private static int[][][] randomizeSudoku(int[][][] sudokuValues){

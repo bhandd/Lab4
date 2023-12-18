@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -15,7 +14,6 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.FileChooser;
 
 import java.net.URL;
 import java.util.Optional;
@@ -23,35 +21,54 @@ import java.util.ResourceBundle;
 
 public class GridView extends BorderPane {
     private Label[][] numberTiles; // the tiles/squares to show in the ui grid
-    private Canvas canvas; //TODO:behövs?
     private TilePane numberPane;
     private MenuBar menubar;
     private Bord bord;
     private Controller controller;
     private char buttonCheck;
 
-    FileChooser fileChooser = new FileChooser(); //TODO:Check if this is right
+
 
     /**
      * The Constructor creates a bord, menubar, the tiles an butten choices.
      * And the intaials input is set to zero.
      */
     //TODO: GridView ska ta emot en Bord bord?
+//    public GridView() {
+//        this.bord = new Bord(SudokuLevel.MEDIUM);
+//
+//
+//        buttonCheck = '0';
+//        numberTiles = new Label[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
+//        initNumberTiles();
+//
+//        numberPane = makeNumberPane();
+//        controller = new Controller(this, bord);
+//        this.setCenter(numberPane);
+//        this.setLeft(left());
+//        this.setRight(right());
+//        this.setBottom(bottom());
+//        creatMenu();
+//    }
+
     public GridView() {
-        this.bord = new Bord(SudokuLevel.EASY);
+        controller = new Controller(this, bord);
+       // this.bord = controller.getNewBord();
+//        this.bord = new Bord(SudokuLevel.MEDIUM);
 
         buttonCheck = '0';
-        numberTiles = new Label[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
+        numberTiles = new Label[controller.getGridSize()][controller.getGridSize()];
         initNumberTiles();
 
         numberPane = makeNumberPane();
-        controller = new Controller(this, bord);
+
         this.setCenter(numberPane);
         this.setLeft(left());
         this.setRight(right());
         this.setBottom(bottom());
         creatMenu();
     }
+
 
     /**
      *
@@ -92,8 +109,8 @@ public class GridView extends BorderPane {
         for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
                 Label tile = new Label(""/* add number, or "", to display */); // data from model
-                if (!bord.getSquareInfoByPos(row, col).isHidden()) {
-                    tile = new Label(Integer.toString(bord.getCurrentValue(row, col)));
+                if (!controller.getSqareInfoByPosition(row,col)) {
+                    tile = new Label(Integer.toString(controller.getSqareInfo(row,col)));
                 }
                 tile.setPrefWidth(32);
                 tile.setPrefHeight(32);
@@ -121,7 +138,7 @@ public class GridView extends BorderPane {
                 "-fx-border-color: black; -fx-border-width: 1.0px; -fx-background-color: white;");
 
         // create the 3*3 sections and add the number tiles
-        TilePane[][] sections = new TilePane[SudokuUtilities.SECTIONS_PER_ROW][SudokuUtilities.SECTIONS_PER_ROW];
+        TilePane[][] sections = new TilePane[controller.getSectionsPerRow()][controller.getSectionsPerRow()];
         int i = 0;
         for (int srow = 0; srow < SudokuUtilities.SECTIONS_PER_ROW; srow++) {
             for (int scol = 0; scol < SudokuUtilities.SECTIONS_PER_ROW; scol++) {
@@ -297,8 +314,8 @@ public class GridView extends BorderPane {
 
         @Override
         public void handle(ActionEvent actionEvent) {
-                bord = controller.loadGame();
-            if (bord != null) {
+                controller.setBord(controller.loadGame());
+            if (controller.getBord() != null) {
                 controller.updateBord(numberTiles);
             }
 
@@ -323,10 +340,10 @@ public class GridView extends BorderPane {
      */
     public void updateTile(int row, int col) {
         numberTiles[row][col].setText("");
-        if (bord.getCurrentValue(row, col) == 0) {
+        if (controller.getCurrentVale(row, col) == 0) {
             numberTiles[row][col].setText("");
         } else {
-            numberTiles[row][col].setText(Integer.toString(bord.getCurrentValue(row, col)));
+            numberTiles[row][col].setText(Integer.toString(controller.getCurrentVale(row, col)));
         }
     }
 
@@ -455,7 +472,7 @@ public class GridView extends BorderPane {
      * bord The Sudoku board to check.
      */
     public void FullBord() {
-        if (bord.checkPlaced() == 81) {
+        if (controller.checkPlaced() == 81) {
             if (controller.EventCheckGame()) {
                 ButtonType newGame = new ButtonType("New game");
                 ButtonType quit = new ButtonType("Quit");

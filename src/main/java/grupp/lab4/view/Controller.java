@@ -1,5 +1,9 @@
-package grupp.lab4;
+package grupp.lab4.view;
 
+import grupp.lab4.model.Bord;
+import grupp.lab4.model.SudokuFileIO;
+import grupp.lab4.model.SudokuUtilities;
+import grupp.lab4.view.GridView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
@@ -28,6 +32,8 @@ public class Controller {
      * @param x      x position on bord
      * @param y      y position on bord
      */
+
+    //TODO: Gick inte att dela upp i 2 metoder?
     public void MouseEvent(char button, int x, int y) {
         if (button == 'C') {
             bord.removeCurrentValue(x, y);
@@ -119,10 +125,9 @@ public class Controller {
 
     }
 
-    //TODO:Flytta till SudokuFileIO
+
     /**
      * Loads a Sudoku game from a file.
-     *
      * Opens a file chooser dialog, allows the user to select a Sudoku save file, and then de-serializes
      * the Sudoku game data from the selected file.
      * @return The deserialized Sudoku game data.

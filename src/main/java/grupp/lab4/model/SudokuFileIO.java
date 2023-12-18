@@ -1,4 +1,6 @@
-package grupp.lab4;
+package grupp.lab4.model;
+
+import grupp.lab4.model.Bord;
 
 import java.io.*;
 

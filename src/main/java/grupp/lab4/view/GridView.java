@@ -1,5 +1,7 @@
-package grupp.lab4;
+package grupp.lab4.view;
 
+import grupp.lab4.model.Bord;
+import grupp.lab4.model.SudokuUtilities;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,7 +16,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;

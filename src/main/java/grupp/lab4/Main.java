@@ -1,5 +1,6 @@
 package grupp.lab4;
 
+import grupp.lab4.view.GridView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
@@ -26,13 +27,4 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
-
-    /*public static void main(String[] args) {
-        //launch();
-         Bord bord = new Bord();
-         bord.setSquareValue(5,3,2);
-        System.out.println(bord.toString());
-
-    }*/
-
 }

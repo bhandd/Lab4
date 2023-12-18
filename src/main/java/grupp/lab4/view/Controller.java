@@ -1,10 +1,6 @@
 package grupp.lab4.view;
 
-import grupp.lab4.model.Bord;
-import grupp.lab4.model.SudokuFileIO;
-import grupp.lab4.model.SudokuLevel;
-import grupp.lab4.model.SudokuUtilities;
-import grupp.lab4.view.GridView;
+import grupp.lab4.model.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
@@ -181,6 +177,14 @@ public class Controller {
                 updateTile(numberTiles,row,col);
             }
         }
+    }
+
+    public Square getSquare(int row, int col) {
+        return bord.getSquareInfoByPos(row,col);
+    }
+
+    public int getCurrentVale(int row, int col) {
+        return bord.getCurrentValue(row,col);
     }
 
 

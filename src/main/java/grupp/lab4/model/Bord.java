@@ -21,9 +21,8 @@ public class Bord implements Serializable {
             for (int j = 0; j < Cols; j++) {
                 Square data = new Square(tempBord[i][j][1], false, tempBord[i][j][0]);
                 this.inGameBord[i][j] = data;
-
                 if (tempBord[i][j][0] == 0) {
-                    inGameBord[i][j].setLocked(true);
+                    inGameBord[i][j].setHidden(true);
                 }
             }
         }
@@ -68,7 +67,7 @@ public class Bord implements Serializable {
      * @param posY y position on the bord
      */
     public void handleButtonOfChoice(char button, int posX, int posY) {
-        if (inGameBord[posX][posY].isLocked()) {
+        if (inGameBord[posX][posY].isHidden()) {
             inGameBord[posX][posY].setValue(button - '0');
         }
     }
@@ -192,7 +191,7 @@ public class Bord implements Serializable {
      * @param posy y position on the bord
      */
     public void removeCurrentValue(int posx, int posy) {
-        if (inGameBord[posx][posy].isLocked()) {
+        if (inGameBord[posx][posy].isHidden()) {
             inGameBord[posx][posy].removeValue();
         }
     }

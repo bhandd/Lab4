@@ -7,20 +7,20 @@ public class Square implements Serializable {
     //TODO ändra namn på variablerna
 
     private int taken;
-    private boolean locked;
+    private boolean hidden;
     private int value;
 
 
     public Square(int taken, boolean locked, int value) {
         this.taken = taken;
-        this.locked = locked;
+        this.hidden = locked;
         this.value = value;
 
     }
 
     public Square() {
         this.taken = 0;
-        this.locked = false;
+        this.hidden = false;
         this.value = 0;
     }
 
@@ -36,15 +36,15 @@ public class Square implements Serializable {
         this.value = 0;
     }
 
-    public boolean isLocked() {
-        return locked;
+    public boolean isHidden() {
+        return hidden;
     }
 
-    public void setLocked(boolean set) {
+    public void setHidden(boolean set) {
         if (set == true) {
-            this.locked = true;
+            this.hidden = true;
         } else {
-            this.locked = false;
+            this.hidden = false;
         }
     }
 
@@ -60,7 +60,7 @@ public class Square implements Serializable {
     public String toString() {
         return "squareData{" +
                 "correctValue=" + taken +
-                ", hidden=" + locked +
+                ", hidden=" + hidden +
                 ", currentValue=" + value +
                 '}';
     }

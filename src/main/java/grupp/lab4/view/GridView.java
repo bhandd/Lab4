@@ -92,7 +92,7 @@ public class GridView extends BorderPane {
         for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
                 Label tile = new Label(""/* add number, or "", to display */); // data from model
-                if (!bord.getSquareInfoByPos(row, col).isLocked()) {
+                if (!bord.getSquareInfoByPos(row, col).isHidden()) {
                     tile = new Label(Integer.toString(bord.getCurrentValue(row, col)));
                 }
                 tile.setPrefWidth(32);

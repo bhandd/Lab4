@@ -190,8 +190,8 @@ public class GridView extends BorderPane {
         l1.setPadding(new Insets(10));
         l1.setSpacing(10);
         this.setLeft(l1);
-        hint.addEventHandler(ActionEvent.ACTION, hintHandler);
-        check.addEventHandler(ActionEvent.ACTION, checkHandler);
+        hint.addEventHandler(ActionEvent.ACTION, controller.hintHandler);
+        check.addEventHandler(ActionEvent.ACTION, controller.checkHandler);
         return l1;
     }
 
@@ -252,27 +252,30 @@ public class GridView extends BorderPane {
     public void creatMenu() {
         Menu file = new Menu("File");
         MenuItem loadGameItem = new MenuItem("Load Game");
-        loadGameItem.addEventHandler(ActionEvent.ACTION, eventLoadGameHandler); //Add load game eventhandler
+        //loadGameItem.addEventHandler(ActionEvent.ACTION, eventLoadGameHandler); //Add load game eventhandler
+        loadGameItem.addEventHandler(ActionEvent.ACTION, controller.eventLoadGameHandler); //Add load game eventhandler
         MenuItem saveGameItem = new MenuItem("Save Game");
-        saveGameItem.addEventHandler(ActionEvent.ACTION, eventSaveGameHandler); //Add save game eventhandler
+        //saveGameItem.addEventHandler(ActionEvent.ACTION, eventSaveGameHandler); //Add save game eventhandler
+        saveGameItem.addEventHandler(ActionEvent.ACTION, controller.eventSaveGameHandler); //Add save game eventhandler
         MenuItem exitGame = new MenuItem("Exit");
-        exitGame.addEventHandler(ActionEvent.ACTION, eventExitHandler);
+        //exitGame.addEventHandler(ActionEvent.ACTION, eventExitHandler);
+        exitGame.addEventHandler(ActionEvent.ACTION, controller.eventExitHandler);
         file.getItems().addAll(loadGameItem, saveGameItem, exitGame);
 
         Menu gameMenu = new Menu("Game");
         MenuItem restartGame = new MenuItem("Restart");
-        restartGame.addEventHandler(ActionEvent.ACTION, restartHandler);
+        restartGame.addEventHandler(ActionEvent.ACTION, controller.restartHandler);
         MenuItem gameLevel = new MenuItem("Choose Level");
-        gameLevel.addEventHandler(ActionEvent.ACTION, levelHandler);
+        gameLevel.addEventHandler(ActionEvent.ACTION, controller.levelHandler);
         gameMenu.getItems().addAll(restartGame, gameLevel);
 
         Menu helpMenu = new Menu("Help");
         MenuItem checkGame = new MenuItem("Check");
-        checkGame.addEventHandler(ActionEvent.ACTION, checkHandler); //Add check gmae stat eventhandler
+        checkGame.addEventHandler(ActionEvent.ACTION, controller.checkHandler); //Add check gmae stat eventhandler
         MenuItem clerGame = new MenuItem("Clear");
-        clerGame.addEventHandler(ActionEvent.ACTION, clearHandler); //Add clear stat eventhandler
+        clerGame.addEventHandler(ActionEvent.ACTION, controller.clearHandler); //Add clear stat eventhandler
         MenuItem gameRules = new MenuItem("Game Rulse");
-        gameRules.addEventHandler(ActionEvent.ACTION, rulesHandler); //Add Game Rulse eventhandler
+        gameRules.addEventHandler(ActionEvent.ACTION, controller.rulesHandler); //Add Game Rulse eventhandler
         helpMenu.getItems().addAll(checkGame, clerGame, gameRules);
 
         menubar = new MenuBar();

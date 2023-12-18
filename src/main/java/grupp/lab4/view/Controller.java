@@ -4,12 +4,14 @@ import grupp.lab4.model.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 public class Controller {
     private final GridView view;
@@ -36,6 +38,124 @@ public class Controller {
         @Override
         public void handle(ActionEvent actionEvent) {
             buttonCheck = PressedButton(actionEvent.getSource());
+        }
+    };
+
+    public EventHandler<ActionEvent> eventExitHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            System.exit(0);
+        }
+    };
+
+    public EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            saveGame();
+        }
+    };
+
+    public EventHandler<ActionEvent> eventLoadGameHandler = new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            setBord(loadGame());
+            if (getBord() != null) {
+                updateBord(view.getNumberTiles());
+            }
+
+        }
+    };
+
+    public EventHandler<ActionEvent> restartHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            getNewBordWithDifficulty(getCurrentDifficulty());
+            updateBord(view.getNumberTiles());
+        }
+    };
+
+    public EventHandler<ActionEvent> clearHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            EventClearGame();
+            updateBord(view.getNumberTiles());
+        }
+    };
+
+    public EventHandler<ActionEvent> levelHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            ButtonType easy = new ButtonType("Easy");
+            ButtonType medium = new ButtonType("Medium");
+            ButtonType hard = new ButtonType("Hard");
+
+            alert.getButtonTypes().setAll(easy, medium, hard);
+            alert.setTitle("Difficulty");
+            alert.setHeaderText(null);
+            alert.setContentText("Choose the difficulty");
+            Optional<ButtonType> choice = alert.showAndWait();
+            if (choice.get() == easy) {
+                //   bord = new Bord(SudokuLevel.EASY);
+                getNewBordWithDifficulty(SudokuLevel.EASY);
+                // controller.restartGame(bord);
+                updateBord(view.getNumberTiles());
+            } else if (choice.get() == medium) {
+                //  bord = new Bord(SudokuLevel.MEDIUM);
+                //  controller.restartGame(bord);
+                getNewBordWithDifficulty(SudokuLevel.MEDIUM);
+                updateBord(view.getNumberTiles());
+            } else if (choice.get() == hard) {
+//                bord = new Bord(SudokuLevel.HARD);
+//                controller.restartGame(bord);
+                getNewBordWithDifficulty(SudokuLevel.HARD);
+                updateBord(view.getNumberTiles());
+            }
+        }
+    };
+
+    public EventHandler<ActionEvent> rulesHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setTitle("Rulse");
+            alert.setHeaderText("Sudoku Rules");
+            alert.setContentText("Every square needs contain a number\n" +
+                    "The numbers 1-9 can be used\n" +
+                    "In each of the 3x3 boxes the numbers 1-9 can only appare once\n" +
+                    "The same numbers can only appare once in each row and column\n");
+            alert.showAndWait();
+        }
+    };
+
+    public EventHandler<ActionEvent> checkHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            if (EventCheckGame()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Check");
+                alert.setHeaderText(null);
+                alert.setContentText("All tiles are in the right place");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Check");
+                alert.setHeaderText(null);
+                alert.setContentText("Some tiles are not correct");
+                alert.showAndWait();
+            }
+        }
+    };
+
+    public EventHandler<ActionEvent> hintHandler = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            eventHint();
+            updateBord(view.getNumberTiles());
+            view.FullBord();
         }
     };
 

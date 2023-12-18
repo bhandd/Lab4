@@ -43,6 +43,11 @@ public class Controller {
         return bord;
     }
 
+    public Bord getNewBordWithDifficulty(SudokuLevel level){
+        bord = new Bord(level);
+        return bord;
+    }
+
     public Boolean getSqareInfoByPosition(int row, int col){
       return bord.getSquareInfoByPos(row,col).isHidden();
     }
@@ -65,6 +70,9 @@ public class Controller {
         return bord.checkPlaced();
     }
 
+    public SudokuLevel getCurrentDifficulty(){
+       return bord.getTheDiffiulty();
+    }
 
     /**
      * Takes button of choice ("1-9" or "C") and updateTile
@@ -73,13 +81,13 @@ public class Controller {
      * @param x      x position on bord
      * @param y      y position on bord
      */
-    public void MouseEvent(char button, int x, int y) {
+    public void MouseEvent(char button, int x, int y, Label[][] numberTiles) {
         if (button == 'C') {
             bord.removeCurrentValue(x, y);
-            view.updateTile(x, y);
+            updateTile(numberTiles, x, y);
         } else if (bord.getCurrentValue(x, y) == 0) {
             bord.handleButtonOfChoice(button, x, y);
-            view.updateTile(x, y);
+            updateTile(numberTiles, x, y);
         }
     }
 
@@ -129,9 +137,9 @@ public class Controller {
      *
      * @param newbord
      */
-    public void restartGame(Bord newbord) {
-        bord = newbord;
-    }
+//    public void restartGame(Bord newbord) {
+//        bord = getNewBord();
+//    }
 
     /**
      * Handles the event of clicking the "Save Game" button.

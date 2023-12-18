@@ -80,7 +80,7 @@ public class GridView extends BorderPane {
                 for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
                     if (event.getSource() == numberTiles[row][col]) {
                         // we got the row and column - now call the appropriate controller method, e.g.
-                        controller.MouseEvent(buttonCheck, row, col);
+                        controller.MouseEvent(buttonCheck, row, col, numberTiles);
                         FullBord();
                         return;
                     }
@@ -364,8 +364,9 @@ public class GridView extends BorderPane {
     private EventHandler<ActionEvent> restartHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
-            bord = new Bord(bord.getTheDiffiulty());
-            controller.restartGame(bord);
+           // bord = new Bord(bord.getTheDiffiulty());
+          controller.getNewBordWithDifficulty(controller.getCurrentDifficulty());
+//            controller.getNewBord();
             controller.updateBord(numberTiles);
         }
     };
@@ -401,16 +402,19 @@ public class GridView extends BorderPane {
             alert.setContentText("Choose the difficulty");
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.get() == easy) {
-                bord = new Bord(SudokuLevel.EASY);
-                controller.restartGame(bord);
+             //   bord = new Bord(SudokuLevel.EASY);
+                controller.getNewBordWithDifficulty(SudokuLevel.EASY);
+               // controller.restartGame(bord);
                 controller.updateBord(numberTiles);
             } else if (choice.get() == medium) {
-                bord = new Bord(SudokuLevel.MEDIUM);
-                controller.restartGame(bord);
+              //  bord = new Bord(SudokuLevel.MEDIUM);
+              //  controller.restartGame(bord);
+                controller.getNewBordWithDifficulty(SudokuLevel.MEDIUM);
                 controller.updateBord(numberTiles);
             } else if (choice.get() == hard) {
-                bord = new Bord(SudokuLevel.HARD);
-                controller.restartGame(bord);
+//                bord = new Bord(SudokuLevel.HARD);
+//                controller.restartGame(bord);
+                controller.getNewBordWithDifficulty(SudokuLevel.HARD);
                 controller.updateBord(numberTiles);
             }
         }

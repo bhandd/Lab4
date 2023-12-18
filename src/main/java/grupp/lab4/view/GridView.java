@@ -29,7 +29,7 @@ public class GridView extends BorderPane {
 
 
     /**
-     * The Constructor creates a bord, menubar, the tiles an butten choices.
+     * The Constructor creates menubar, the tiles and button choices.
      * And the intaials input is set to zero.
      */
     //TODO: GridView ska ta emot en Bord bord?
@@ -50,6 +50,10 @@ public class GridView extends BorderPane {
 //        creatMenu();
 //    }
 
+    /**
+     * The Constructor creates menubar, the tiles and button choices.
+     * And the intaials input is set to zero.
+     */
     public GridView() {
         controller = new Controller(this);
        // this.bord = controller.getNewBord();

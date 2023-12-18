@@ -14,7 +14,6 @@ import java.io.IOException;
 public class Controller {
     private final GridView view;
     private Bord bord;
-
     private char buttonCheck = '0';
 
     public EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {

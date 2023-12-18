@@ -23,7 +23,6 @@ public class GridView extends BorderPane {
     private Label[][] numberTiles; // the tiles/squares to show in the ui grid
     private TilePane numberPane;
     private MenuBar menubar;
-    private Bord bord;
     private Controller controller;
     private char buttonCheck;
 
@@ -52,7 +51,7 @@ public class GridView extends BorderPane {
 //    }
 
     public GridView() {
-        controller = new Controller(this, bord);
+        controller = new Controller(this);
        // this.bord = controller.getNewBord();
 //        this.bord = new Bord(SudokuLevel.MEDIUM);
 

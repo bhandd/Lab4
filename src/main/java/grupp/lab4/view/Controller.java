@@ -49,9 +49,9 @@ public class Controller {
 //        this.bord = bord;
 //    }
 
-    public Controller(GridView view, Bord bord){
+    public Controller(GridView view){
         this.view = view;
-        this.bord = new Bord(SudokuLevel.DEFAULT);
+        getNewBord();
     }
 
     public Controller() {

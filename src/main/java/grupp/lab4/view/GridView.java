@@ -1,6 +1,5 @@
 package grupp.lab4.view;
 
-import grupp.lab4.model.Bord;
 import grupp.lab4.model.SudokuLevel;
 import grupp.lab4.model.SudokuUtilities;
 import javafx.event.ActionEvent;
@@ -8,47 +7,20 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
+
 
 public class GridView extends BorderPane {
-    private Label[][] numberTiles; // the tiles/squares to show in the ui grid
-    private TilePane numberPane;
+    private final Label[][] numberTiles;
+    private final TilePane numberPane;
     private MenuBar menubar;
-    private Controller controller;
+    private final Controller controller;
     private char buttonCheck;
-
-
-
-    /**
-     * The Constructor creates menubar, the tiles and button choices.
-     * And the intaials input is set to zero.
-     */
-    //TODO: GridView ska ta emot en Bord bord?
-//    public GridView() {
-//        this.bord = new Bord(SudokuLevel.MEDIUM);
-//
-//
-//        buttonCheck = '0';
-//        numberTiles = new Label[SudokuUtilities.GRID_SIZE][SudokuUtilities.GRID_SIZE];
-//        initNumberTiles();
-//
-//        numberPane = makeNumberPane();
-//        controller = new Controller(this, bord);
-//        this.setCenter(numberPane);
-//        this.setLeft(left());
-//        this.setRight(right());
-//        this.setBottom(bottom());
-//        creatMenu();
-//    }
 
     /**
      * The Constructor creates menubar, the tiles and button choices.
@@ -56,8 +28,7 @@ public class GridView extends BorderPane {
      */
     public GridView() {
         controller = new Controller(this);
-       // this.bord = controller.getNewBord();
-//        this.bord = new Bord(SudokuLevel.MEDIUM);
+
 
         buttonCheck = '0';
         numberTiles = new Label[controller.getGridSize()][controller.getGridSize()];
@@ -72,36 +43,6 @@ public class GridView extends BorderPane {
         creatMenu();
     }
 
-
-    /**
-     *
-     */
-    /*private EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
-                for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
-                    if (event.getSource() == numberTiles[row][col]) {
-                        // we got the row and column - now call the appropriate controller method, e.g.
-                        controller.MouseEvent(buttonCheck, row, col, numberTiles);
-                        FullBord();
-                        return;
-                    }
-                }
-            }
-        }
-    };*/
-
-    /**
-     * A method to get a reference to the numberpane
-     *
-     * @return numberPane
-     */
-    // use this method to get a reference to the number (called by some other class)
-    public TilePane getNumberPane() {
-        return numberPane;
-    }
-
     public Label[][] getNumberTiles() {
         return numberTiles;
     }
@@ -114,7 +55,7 @@ public class GridView extends BorderPane {
      * Create the view tiles to the game, with what height, width and font they will have.
      */
     // called by constructor (only)
-    private final void initNumberTiles() {
+    private void initNumberTiles() {
         Font font = Font.font("Monospaced", FontWeight.NORMAL, 20);
 
         for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
@@ -140,16 +81,14 @@ public class GridView extends BorderPane {
      *
      * @return Tilepane
      */
-    private final TilePane makeNumberPane() {
+    final TilePane makeNumberPane() {
         // create the root tile pane
         TilePane root = new TilePane();
         root.setPrefColumns(SudokuUtilities.SECTIONS_PER_ROW);
         root.setPrefRows(SudokuUtilities.SECTIONS_PER_ROW);
-        root.setStyle(
-                "-fx-border-color: black; -fx-border-width: 1.0px; -fx-background-color: white;");
+        root.setStyle("-fx-border-color: black; -fx-border-width: 1.0px; -fx-background-color: white;");
 
         // create the 3*3 sections and add the number tiles
-        TilePane[][] sections = new TilePane[controller.getSectionsPerRow()][controller.getSectionsPerRow()];
         int i = 0;
         for (int srow = 0; srow < SudokuUtilities.SECTIONS_PER_ROW; srow++) {
             for (int scol = 0; scol < SudokuUtilities.SECTIONS_PER_ROW; scol++) {
@@ -170,7 +109,6 @@ public class GridView extends BorderPane {
                 root.getChildren().add(section);
             }
         }
-
         return root;
     }
 
@@ -202,7 +140,6 @@ public class GridView extends BorderPane {
      */
     public VBox right() {
         VBox l2 = new VBox();
-
         l2.setAlignment(Pos.CENTER);
         Button one = new Button("1");
         one.addEventHandler(ActionEvent.ACTION, controller.buttonHandler);
@@ -228,7 +165,6 @@ public class GridView extends BorderPane {
         l2.setPadding(new Insets(10));
         l2.setSpacing(1);
         this.setRight(l2);
-
         return l2;
     }
 
@@ -252,13 +188,10 @@ public class GridView extends BorderPane {
     public void creatMenu() {
         Menu file = new Menu("File");
         MenuItem loadGameItem = new MenuItem("Load Game");
-        //loadGameItem.addEventHandler(ActionEvent.ACTION, eventLoadGameHandler); //Add load game eventhandler
-        loadGameItem.addEventHandler(ActionEvent.ACTION, controller.eventLoadGameHandler); //Add load game eventhandler
+        loadGameItem.addEventHandler(ActionEvent.ACTION, controller.eventLoadGameHandler);
         MenuItem saveGameItem = new MenuItem("Save Game");
-        //saveGameItem.addEventHandler(ActionEvent.ACTION, eventSaveGameHandler); //Add save game eventhandler
-        saveGameItem.addEventHandler(ActionEvent.ACTION, controller.eventSaveGameHandler); //Add save game eventhandler
+        saveGameItem.addEventHandler(ActionEvent.ACTION, controller.eventSaveGameHandler);
         MenuItem exitGame = new MenuItem("Exit");
-        //exitGame.addEventHandler(ActionEvent.ACTION, eventExitHandler);
         exitGame.addEventHandler(ActionEvent.ACTION, controller.eventExitHandler);
         file.getItems().addAll(loadGameItem, saveGameItem, exitGame);
 
@@ -271,11 +204,11 @@ public class GridView extends BorderPane {
 
         Menu helpMenu = new Menu("Help");
         MenuItem checkGame = new MenuItem("Check");
-        checkGame.addEventHandler(ActionEvent.ACTION, controller.checkHandler); //Add check gmae stat eventhandler
+        checkGame.addEventHandler(ActionEvent.ACTION, controller.checkHandler);
         MenuItem clerGame = new MenuItem("Clear");
-        clerGame.addEventHandler(ActionEvent.ACTION, controller.clearHandler); //Add clear stat eventhandler
+        clerGame.addEventHandler(ActionEvent.ACTION, controller.clearHandler);
         MenuItem gameRules = new MenuItem("Game Rulse");
-        gameRules.addEventHandler(ActionEvent.ACTION, controller.rulesHandler); //Add Game Rulse eventhandler
+        gameRules.addEventHandler(ActionEvent.ACTION, controller.rulesHandler);
         helpMenu.getItems().addAll(checkGame, clerGame, gameRules);
 
         menubar = new MenuBar();
@@ -283,68 +216,13 @@ public class GridView extends BorderPane {
     }
 
     /**
-     * Returns menubar
+     * Retrieves the `MenuBar` object associated with this class or object.
      *
-     * @return menubar
+     * @return The `MenuBar` object associated with this class or object.
      */
     public MenuBar getMenu() {
         return this.menubar;
     }
-
-    /**
-     * Handles exit option in menubar
-     */
-    private EventHandler<ActionEvent> eventExitHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            System.exit(0);
-        }
-    };
-
-    //TODO: ta bort
-    public void initializeDirectory(URL location, ResourceBundle resources) {
-
-        //  fileChooser.setInitialDirectory(new File("C:\\temp"));
-
-    }
-
-    /**
-     * handle for save game-button
-     * actionEvent The event object representing the button press.
-     */
-
-    private EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-                controller.saveGame();
-        }
-    };
-
-    /**
-     * Handle for Loadgame
-     */
-
-    private EventHandler<ActionEvent> eventLoadGameHandler = new EventHandler<ActionEvent>() {
-
-        @Override
-        public void handle(ActionEvent actionEvent) {
-                controller.setBord(controller.loadGame());
-            if (controller.getBord() != null) {
-                controller.updateBord(numberTiles);
-            }
-
-        }
-    };
-
-    /**
-     * Event for button press
-     */
-    /*private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            buttonCheck = controller.PressedButton(actionEvent.getSource());
-        }
-    };*/
 
     /**
      * Update a single tile on the bord
@@ -373,33 +251,9 @@ public class GridView extends BorderPane {
     }
 
     /**
-     * Handler for restart of game
-     */
-    private EventHandler<ActionEvent> restartHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-           // bord = new Bord(bord.getTheDiffiulty());
-          controller.getNewBordWithDifficulty(controller.getCurrentDifficulty());
-//            controller.getNewBord();
-            controller.updateBord(numberTiles);
-        }
-    };
-
-    /**
-     * Handler for clearing the board
-     */
-    public EventHandler<ActionEvent> clearHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            controller.EventClearGame();
-            controller.updateBord(numberTiles);
-        }
-    };
-
-    /**
-     * Gives you four choose, three where you can start a new game
-     * with a diffrent level or a cancel an go back to game.
-     * This choose is made with an alert
+     * Gives you four choices, three where you can start a new game
+     * with a diffrent level or a cancel and go back to game.
+     * This choice is made with an alert
      */
     public EventHandler<ActionEvent> levelHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -416,77 +270,23 @@ public class GridView extends BorderPane {
             alert.setContentText("Choose the difficulty");
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.get() == easy) {
-             //   bord = new Bord(SudokuLevel.EASY);
+
                 controller.getNewBordWithDifficulty(SudokuLevel.EASY);
-               // controller.restartGame(bord);
                 controller.updateBord(numberTiles);
             } else if (choice.get() == medium) {
-              //  bord = new Bord(SudokuLevel.MEDIUM);
-              //  controller.restartGame(bord);
                 controller.getNewBordWithDifficulty(SudokuLevel.MEDIUM);
                 controller.updateBord(numberTiles);
             } else if (choice.get() == hard) {
-//                bord = new Bord(SudokuLevel.HARD);
-//                controller.restartGame(bord);
                 controller.getNewBordWithDifficulty(SudokuLevel.HARD);
                 controller.updateBord(numberTiles);
             }
         }
     };
 
-    /**
-     * Shows the rulses of a sudoku game in the form of an alert popup
-     */
-    public EventHandler<ActionEvent> rulesHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
-            alert.setTitle("Rulse");
-            alert.setHeaderText("Sudoku Rules");
-            alert.setContentText("Every square needs contain a number\n" +
-                    "The numbers 1-9 can be used\n" +
-                    "In each of the 3x3 boxes the numbers 1-9 can only appare once\n" +
-                    "The same numbers can only appare once in each row and column\n");
-            alert.showAndWait();
-        }
-    };
-
-    public EventHandler<ActionEvent> checkHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            if (controller.EventCheckGame()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Check");
-                alert.setHeaderText(null);
-                alert.setContentText("All tiles are in the right place");
-                alert.showAndWait();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Check");
-                alert.setHeaderText(null);
-                alert.setContentText("Some tiles are not correct");
-                alert.showAndWait();
-            }
-        }
-    };
-
-    /**
-     * Handler for hint of number
-     */
-
-    public EventHandler<ActionEvent> hintHandler = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            controller.eventHint();
-            controller.updateBord(numberTiles);
-            FullBord();
-        }
-    };
 
     /**
      * Checks if the Sudoku board is complete and displays a message if it is.
-     *
      * bord The Sudoku board to check.
      */
     public void FullBord() {
@@ -519,7 +319,7 @@ public class GridView extends BorderPane {
                 if (choice.get() == newGame) {
                     ActionEvent actionEvent = new ActionEvent();
                     levelHandler.handle(actionEvent);
-                } else if (choice.get() == quit) { //TODO kanske lägga till ett val att spara
+                } else if (choice.get() == quit) {
                     controller.saveGame();
                     System.exit(0);
                 }

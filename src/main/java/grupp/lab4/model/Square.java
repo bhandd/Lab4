@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public class Square implements Serializable {
 
-    //TODO ändra namn på variablerna
-
     private int taken;
     private boolean hidden;
     private int value;
@@ -24,6 +22,11 @@ public class Square implements Serializable {
         this.value = 0;
     }
 
+    /**
+     * Determines whether the item is currently taken or not.
+     *
+     * @return An integer representing whether the item is taken: 1 if taken, 0 if not taken.
+     */
     public int isTaken() {
         return taken;
     }
@@ -36,10 +39,20 @@ public class Square implements Serializable {
         this.value = 0;
     }
 
+    /**
+     * Returns whether the object is currently hidden or not.
+     *
+     * @return True if the object is hidden, false otherwise.
+     */
     public boolean isHidden() {
         return hidden;
     }
 
+    /**
+     * Sets the hidden state of the object.
+     *
+     * @param set True to set the object as hidden, false to set it as visible.
+     */
     public void setHidden(boolean set) {
         if (set == true) {
             this.hidden = true;
@@ -48,10 +61,20 @@ public class Square implements Serializable {
         }
     }
 
+    /**
+     * Retrieves the current value of the object.
+     *
+     * @return The current value of the object.
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Sets the value of the object.
+     *
+     * @param value The new value to set for the object.
+     */
     public void setValue(int value) {
         this.value = value;
     }

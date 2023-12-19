@@ -63,7 +63,6 @@ public class Controller {
             if (getBord() != null) {
                 updateBord(view.getNumberTiles());
             }
-
         }
     };
 
@@ -98,18 +97,16 @@ public class Controller {
             alert.setContentText("Choose the difficulty");
             Optional<ButtonType> choice = alert.showAndWait();
             if (choice.get() == easy) {
-                //   bord = new Bord(SudokuLevel.EASY);
+
                 getNewBordWithDifficulty(SudokuLevel.EASY);
-                // controller.restartGame(bord);
+
                 updateBord(view.getNumberTiles());
             } else if (choice.get() == medium) {
-                //  bord = new Bord(SudokuLevel.MEDIUM);
-                //  controller.restartGame(bord);
+
                 getNewBordWithDifficulty(SudokuLevel.MEDIUM);
                 updateBord(view.getNumberTiles());
             } else if (choice.get() == hard) {
-//                bord = new Bord(SudokuLevel.HARD);
-//                controller.restartGame(bord);
+
                 getNewBordWithDifficulty(SudokuLevel.HARD);
                 updateBord(view.getNumberTiles());
             }
@@ -162,11 +159,7 @@ public class Controller {
     public void setBord(Bord bord){
         this.bord = bord;
     }
-//original
-//    public Controller(GridView view, Bord bord) {
-//        this.view = view;
-//        this.bord = bord;
-//    }
+
 
     public Controller(GridView view){
         this.view = view;
@@ -211,7 +204,6 @@ public class Controller {
         return new Bord();
 
     }
-
 
     public int checkPlaced(){
         return bord.checkPlaced();
@@ -271,22 +263,12 @@ public class Controller {
     /**
      *
      */
-    //TODO: flyttat till SudokuLogic för MVC. Kolla med Noah innan utkommenterad kod tas bort
+
     public void eventHint() {
-     SudokuUtilities.getHint(bord); //Todo: test att flytta rutinen till sudokuutilities
+     SudokuUtilities.getHint(bord);
      //view.updateBord();
     }
 
-
-    //TODO: borde den inte uppdatera view? kanske behöver föra över vissa rutiner från gridView till controller?
-    /**
-     * Call new bord for restart of game
-     *
-     * @param newbord
-     */
-//    public void restartGame(Bord newbord) {
-//        bord = getNewBord();
-//    }
 
     /**
      * Handles the event of clicking the "Save Game" button.
@@ -294,27 +276,21 @@ public class Controller {
      * Opens a file chooser dialog, allows the user to select a file, and then saves
      * the current Sudoku game data to the selected file.
      */
-    //Kanske kan vara såhär, för flyttas den till view får man endå kalla på view i controller vilket känns onödigt, samma med loadGame
+    //här för flyttas den till view får man endå kalla på view i controller vilket känns onödigt, samma med loadGame
     public void saveGame() {
-        //Ska dessa till view?
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save my files");
         FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("Sudoku", "*.sud");
         fileChooser.getExtensionFilters().addAll(ex1);
         fileChooser.setInitialDirectory(new File("/C:/temp"));
 
-        //TODO: kontrollera exceptions, exceptions ska kastas hela vägen upp till där metoden kallades från
         try {
             File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow()); //TODO: här väljs vilket fönster som skall visa filechooser
             if (selectedFile != null) {
                 SudokuFileIO.serializeToFile(selectedFile, bord);
             }
-
-        } catch (IOException e) {//TODO:Alert:"gick inte att läsa in fil"
-            throw new RuntimeException(e);
-        }catch (NullPointerException e) {//TODO:Alert:"gick inte att läsa in fil"
-            System.out.println("Nullpointer Exception hanteras i Controller");
-       //     e.printStackTrace();
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
     }
     }
 
@@ -337,21 +313,15 @@ public class Controller {
             this.bord = SudokuFileIO.deSerializeFromFile(selectedFile);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+
+           // throw new RuntimeException(e);
         }catch (NullPointerException e) {
-            //TODO: Alertmeddelande
-          //  e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }catch (RuntimeException e){
-           // e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
-           // e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
-//        if (this.bord != null){
-//            return this.bord;
-//        }
         return this.bord;
     }
 

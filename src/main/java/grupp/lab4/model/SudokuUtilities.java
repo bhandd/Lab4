@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class SudokuUtilities implements Serializable {
 
-  //  public enum SudokuLevel {EASY, MEDIUM, HARD}
     SudokuLevel level;
     public static final int GRID_SIZE = 9;
     public static final int SECTIONS_PER_ROW = 3;
@@ -40,8 +39,6 @@ public class SudokuUtilities implements Serializable {
             default:
                 representationString = medium;
         }
-        //Original
-        //return convertStringToIntMatrix(representationString);
         representationInt = convertStringToIntMatrix(representationString);
         return  randomizeSudoku(representationInt);
     }
@@ -92,24 +89,30 @@ public class SudokuUtilities implements Serializable {
         // initial values
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
-                values[row][col][0] =
-
-                        convertCharToSudokuInt(charRepresentation[charIndex++]);
+                values[row][col][0] = convertCharToSudokuInt(charRepresentation[charIndex++]);
             }
         }
         // solution values
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
-                values[row][col][1] =
-                        convertCharToSudokuInt(charRepresentation[charIndex++]);
+                values[row][col][1] = convertCharToSudokuInt(charRepresentation[charIndex++]);
             }
         }
         return values;
     }
 
+    /**
+     * Randomizes a Sudoku puzzle by performing a combination of row swapping, column shifting,
+     * and number swapping operations. calls two other methods; shiftAllRowsUp and shiftAllRowsLeft
+     *
+     * @param sudokuValues The Sudoku puzzle to be randomized.
+     * @return The randomized Sudoku puzzle.
+     * @see #shiftAllRowsUp(int[][][])
+     * @see #shiftAllColsLeft(int[][][])
+     */
     private static int[][][] randomizeSudoku(int[][][] sudokuValues){
-        int timesLeft = (int) (Math.random() * 10 + 1);
-        int timesUp = (int) (Math.random() * 8 + 1);
+        int timesLeft = (int) (Math.random() * 10 + 1)*3;
+        int timesUp = (int) (Math.random() * 8 + 1)*3;
         swapTwoRandomNumbers(sudokuValues);
         do{
             shiftAllColsLeft(sudokuValues);
@@ -119,20 +122,18 @@ public class SudokuUtilities implements Serializable {
             shiftAllRowsUp(sudokuValues);
             timesUp--;
         }while (timesUp > 0);
-
         return sudokuValues;
     }
 
     /**
      * Swaps the values of two randomly selected numbers in the Sudoku puzzle.
-          * This method randomly selects two numbers from 1 to 9 and then swaps their values in the Sudoku puzzle.
+     * This method randomly selects two numbers from 1 to 9 and then swaps their values in the Sudoku puzzle.
      * It ensures that the numbers are not the same and that they are swapped in both boards of the Sudoku puzzle.
      *
      * @param sudokuValues The Sudoku puzzle to be modified.
      * @return The modified Sudoku puzzle.
      */
     private static int[][][] swapTwoRandomNumbers(int[][][] sudokuValues) {
-
         int firstNumber;
         int secNumber;
         //Two random numbers
@@ -140,7 +141,7 @@ public class SudokuUtilities implements Serializable {
             firstNumber = (int) (Math.random() * 9 + 1);
             secNumber = (int) (Math.random() * 9 + 1);
         } while (firstNumber == secNumber);
-        //
+
         for (int row1 = 0; row1 < GRID_SIZE; row1++) {
             for (int col1 = 0; col1 < GRID_SIZE; col1++) {
                 if (firstNumber == sudokuValues[row1][col1][1]) {
@@ -156,7 +157,6 @@ public class SudokuUtilities implements Serializable {
                 }
             }
         }
-          System.out.println("swapNumbers Finished!");            //För testning
         return sudokuValues;
     }
 
@@ -170,13 +170,10 @@ public class SudokuUtilities implements Serializable {
      * @param sudokuValues The Sudoku puzzle to be shifted.
      * @return The shifted Sudoku puzzle.
      */
-    //man kan göra en kopia av första kolumnen och sedan skriva över alla kolumner åt vänster
-    //för att sedan sätta in första kolumnen på den sista, men det kommer då bli mer kod
+
     private static int[][][] shiftAllColsLeft(int[][][] sudokuValues){
-         System.out.println("Shift cols initialized");
         int[] colCopy1 = new int[GRID_SIZE];
         int[] colCopy2 = new int[GRID_SIZE];
-
         //switch places of col 1-9 to the left
         for(int col = 0; col < GRID_SIZE-1; col++) {
             //Do for each board; index[0] and index[1]
@@ -187,27 +184,25 @@ public class SudokuUtilities implements Serializable {
                     colCopy2[row] = sudokuValues[row][col+1][boardIndex];
                 }
                 //switch place of col1 and col2 to the left
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < GRID_SIZE; i++) {
                     sudokuValues[i][col][boardIndex] = colCopy2[i];
-                    sudokuValues[i][col+1][boardIndex] = colCopy1[i];//Todo: skriv ut sudokuValues[i][col+1][boardIndex] blir col+1= col[8]?
+                    sudokuValues[i][col+1][boardIndex] = colCopy1[i];
                 }
             }
         }
-        System.out.println("Shift Cols Done");
         return sudokuValues;
     }
 
     /**
      * Shifts all rows one position upwards in the Sudoku puzzle.
-     *
      * This method modifies the Sudoku puzzle by moving all rows one position upwards.
-     * It ensures that the rows are not overwritten by using temporary arrays to store the values of the rows before shifting them.
+     * It ensures that the rows are not overwritten by using temporary arrays to store the values of the rows
+     * before shifting them.
      *
      * @param sudokuValues The Sudoku puzzle to be shifted.
      * @return The shifted Sudoku puzzle.
      */
     private static int[][][] shiftAllRowsUp(int[][][] sudokuValues){
-        System.out.println("Shift rows initialized");
         int[] rowCopy = new int[GRID_SIZE];
         int[] rowCopy2 = new int[GRID_SIZE];
             //switch places of row 1-9 from the bottom up
@@ -220,41 +215,46 @@ public class SudokuUtilities implements Serializable {
                     rowCopy2[col] = sudokuValues[row1+1][col][boardIndex];
                 }
                 //swap places of row and row+1
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < GRID_SIZE; i++) {
                     sudokuValues[row1][i][boardIndex] = rowCopy2[i];
                     sudokuValues[row1+1][i][boardIndex] = rowCopy[i];
                 }
             }
         }
-        System.out.println("Shift Rows Done");
         return sudokuValues;
     }
+
+    /**
+     * Converts a character representing a Sudoku digit ('0' to '9') to its corresponding integer value.
+     *
+     * @param ch The character to be converted.
+     * @return The corresponding integer value of the character, or throws an `IllegalArgumentException` if the
+     * character is not a valid Sudoku digit.
+     */
     private static int convertCharToSudokuInt(char ch) {
         if (ch < '0' || ch > '9') throw new IllegalArgumentException("character " + ch);
         return ch - '0';
     }
 
-
     /** Help method
-     * Returns the current value at the specified position (x, y, z) on the Sudoku board.
+     * Returns the current value at the specified position (x, y, z) in the Sudoku board.
      *
      */
     public int getCurrentValue(int[][][] sudokuValues, int x, int y,int z) {
         return sudokuValues[x][y][z];
     }
 
-    /**
+    /** Help method
      * Prints the Sudoku puzzle to the console.
      *
-     * This method takes a Sudoku puzzle represented as a 3D array and the number of boards to display, and prints the puzzle to the console.
+     * This method takes a Sudoku puzzle represented as a 3D array and the number of boards to display,
+     * and prints the puzzle to the console.
      *
      * @param sudokuValues The Sudoku puzzle to be printed.
      * @param numberOfBoardsToDisplay The number of boards to display.
      */
     public static void printAllValues(int[][][] sudokuValues, int numberOfBoardsToDisplay){
         int boardIndex = 0;
-        // System.out.println(Arrays.deepToString(inGameBord));
-
         for(int z = 0; z < numberOfBoardsToDisplay; z++ ){
             System.out.println();
             System.out.println("Board index: " + boardIndex);
@@ -312,7 +312,7 @@ public class SudokuUtilities implements Serializable {
                     "900610000" +
                     "200300058" +
                     "100800090" +
-//            "000000000" +
+//            "000000000" +         //kept for testing purposes
 //                    "000000000" +
 //                    "000000000" +
 //                    "000000000" +

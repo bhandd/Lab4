@@ -6,16 +6,17 @@ public class Bord implements Serializable {
 
     public static final int Cols = 9;
     public static final int Rows = 9;
-    private Square inGameBord[][] = new Square[Rows][Cols];
+    private final Square[][] inGameBord = new Square[Rows][Cols];
     private SudokuLevel theDiffiulty;
 
 
     /**
+     * Constructs a new `Bord` object, initializing the Sudoku board with a specified difficulty level.
      *
-     * @param theDiffiulty
+     * @param theDiffiulty The desired difficulty level for the Sudoku puzzle.
      */
     public Bord(SudokuLevel theDiffiulty) {
-        int tempBord[][][] = SudokuUtilities.generateSudokuMatrix(theDiffiulty);
+        int[][][] tempBord = SudokuUtilities.generateSudokuMatrix(theDiffiulty);
 
         for (int i = 0; i < Rows; i++) {
             for (int j = 0; j < Cols; j++) {
@@ -29,25 +30,10 @@ public class Bord implements Serializable {
         this.theDiffiulty = theDiffiulty;
     }
 
-
     /**
-     * Parameterlös konstruktor
-     * Skapar en tom 9x9 matrix
-     **/
+     * Constructs a new `Bord` object, initializing the Sudoku board with a default difficulty level.
+     */
     public Bord() {
-
-        //Square square = inGameBord[Rows][Cols];
-//        for(int i = 0;i<Rows;i++) {
-//            for (int j = 0;j<Cols;j++) {
-//                Square data = new Square(tempBord[i][j][1],false,tempBord[i][j][0]);
-//                this.inGameBord[i][j] = data;
-//
-//                if (tempBord[i][j][0] == 0) {
-//                    inGameBord[i][j].setLocked(true);
-//                }
-//            }
-//        }
-
     }
 
     /**
@@ -70,16 +56,6 @@ public class Bord implements Serializable {
         if (inGameBord[posX][posY].isHidden()) {
             inGameBord[posX][posY].setValue(button - '0');
         }
-    }
-
-    public int checkGame() {
-        int count = 0;
-        for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
-            for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
-                //If
-            }
-        }
-        return count;
     }
 
     /**
@@ -115,12 +91,18 @@ public class Bord implements Serializable {
         return count;
     }
 
-
+    /**
+     * Returns a number from the sudoku board at the specified position (row `posx` and column `posy`) on the Sudoku board.
+     * if the position is not taken by a visible number already
+     *
+     * @param posx The x-coordinate of the position to provide a hint for.
+     * @param posy The y-coordinate of the position to provide a hint for.
+     * @return An integer representing the number of possible values that can be placed at the specified position.
+     */
     public int Hint(int posx, int posy) {
         return this.inGameBord[posx][posy].isTaken();
     }
 
-    //public int handleHintBordPos(int )
     /** Help method
      * Returns the current value at the specified position (x, y) on the Sudoku board.
      *
@@ -132,13 +114,11 @@ public class Bord implements Serializable {
         return inGameBord[x][y].getValue();
     }
 
-    /**
-     * Help Method
+    /** Help method
+     * Prints the entire Sudoku board in a formatted manner, with each row separated by a newline and each cell
+     * separated by a pipe (`|`).
      */
-    public void printAllIntegers(){
-
-        // System.out.println(Arrays.deepToString(inGameBord));
-
+    public void printTheWholeBoard(){
         for (int i = 0; i < 9; i++) {
             System.out.print("|");
             for(int j = 0; j < 9; j++) {
@@ -147,9 +127,7 @@ public class Bord implements Serializable {
                 }
                 System.out.print("|");
                 System.out.print(inGameBord[i][j].getValue());
-
             }
-
         }
         System.out.println("|");
     }
@@ -168,20 +146,13 @@ public class Bord implements Serializable {
         return theDiffiulty;
     }
 
-    /**
-     * Set the difficulty of a game.
-     * @param theDiffiulty to set to.
-     */
-    public void setTheDiffiulty(SudokuLevel theDiffiulty) {
-        this.theDiffiulty = theDiffiulty;
-    }
 
-    /**
+
+    /** Help method
      * Gets the current in game bord
      * @return in game bord
      */
     public Square[][] getInGameBord() {
-
         return inGameBord;
     }
 
@@ -197,7 +168,7 @@ public class Bord implements Serializable {
     }
 
 
-    //Kolla och lägga till andra variabler från classen
+
     @Override
     public String toString() {
         String info = "";

@@ -60,9 +60,10 @@ public class Controller {
         @Override
         public void handle(ActionEvent actionEvent) {
             setBord(loadGame());
-            if (getBord() != null) {
+            if (getNewBord() != null) {
                 updateBord(view.getNumberTiles());
             }
+
         }
     };
 
@@ -156,59 +157,100 @@ public class Controller {
         }
     };
 
-    public void setBord(Bord bord){
-        this.bord = bord;
-    }
 
-
+    /**
+     * Constructs a new `Controller` object, initializing the provided `GridView` instance.
+     *
+     * @param view The `GridView` object representing the visual representation of the Sudoku board.
+     */
     public Controller(GridView view){
         this.view = view;
-        getNewBord();
+        bord = new Bord(SudokuLevel.DEFAULT);
     }
 
+    /**
+     * Constructs a new `Controller` object, initializing the `GridView` and `Bord` objects.
+     */
     public Controller() {
         this.view = new GridView();
         this.bord = new Bord(SudokuLevel.DEFAULT);
     }
 
+    /**
+     * Sets the internal `Bord` object representing the Sudoku puzzle data.
+     * @param bord The `Bord` object containing the Sudoku puzzle data to be set.
+     */
+    public void setBord(Bord bord){
+        this.bord = bord;
+    }
+
+
+    /**
+     * Retrieves the size of the Sudoku grid from SudokuUtilities
+     *
+     * @return An integer representing the size of the Sudoku grid.
+     */
     public int getGridSize(){
         return SudokuUtilities.GRID_SIZE;
     }
-    public int getSectionsPerRow(){
-        return SudokuUtilities.SECTIONS_PER_ROW;
-    }
 
-    public Bord getNewBord(){
-        bord = new Bord(SudokuLevel.DEFAULT);
-        return bord;
-    }
-
+    /**
+     * Creates a new instance of the `Bord` class representing a new Sudoku puzzle with the specified difficulty level.
+     *
+     * @param level The desired difficulty level for the new Sudoku puzzle.
+     * @return A new `Bord` object representing a new Sudoku puzzle with the specified difficulty level.
+     */
     public Bord getNewBordWithDifficulty(SudokuLevel level){
         bord = new Bord(level);
         return bord;
     }
 
+    /**
+     * Checks whether the specified position on the Sudoku board has a hidden value or is already revealed.
+     *
+     * @param row The row index of the position to check.
+     * @param col The column index of the position to check.
+     * @return A `boolean` indicating whether the position is hidden (true) or revealed (false).
+     */
     public Boolean getSqareInfoByPosition(int row, int col){
       return bord.getSquareInfoByPos(row,col).isHidden();
     }
 
+    /**
+     * Retrieves the value at the specified position on the Sudoku board and if its hidden or not
+     *
+     * @param row The row index of the position to retrieve the information for.
+     * @param col The column index of the position to retrieve the information for.
+     * @return An integer representing the value at the specified position and if its hidden or not
+     */
     public int getSqareInfo(int row, int col){
         return bord.getCurrentValue(row, col);
     }
 
-    public GridView getView(){
-        return view;
-    }
-
-    public Bord getBord(){
+    /**
+     * Creates a new instance of the `Bord` class representing a new Sudoku puzzle with a predefined difficulty level.
+     *
+     * @return A new `Bord` object representing a new Sudoku puzzle with the specified difficulty level.
+     */
+    public Bord getNewBord(){
         return new Bord();
-
     }
 
+
+    /**
+     * Validates the current state of the Sudoku board and checks if any valid placements are possible.
+     *
+     * @return An integer indicating the number of valid placements remaining in the Sudoku board.
+     */
     public int checkPlaced(){
         return bord.checkPlaced();
     }
 
+
+    /**
+     * Retrieves the current difficulty level of the Sudoku puzzle.
+     * @return The current Sudoku puzzle difficulty.
+     */
     public SudokuLevel getCurrentDifficulty(){
        return bord.getTheDiffiulty();
     }
@@ -231,8 +273,10 @@ public class Controller {
     }
 
     /**
-     * @param button
-     * @return
+     * Extracts the pressed button character from the given `Object` representing a button.
+     *
+     * @param button The `Object` representing the pressed button.
+     * @return The extracted pressed button character.
      */
     public char PressedButton(Object button) {
         return button.toString().charAt(button.toString().length() - 2);
@@ -261,12 +305,11 @@ public class Controller {
     }
 
     /**
-     *
+     * Triggers the hint mechanism to provide hints for the current Sudoku puzzle.
      */
-
     public void eventHint() {
      SudokuUtilities.getHint(bord);
-     //view.updateBord();
+
     }
 
 
@@ -276,7 +319,6 @@ public class Controller {
      * Opens a file chooser dialog, allows the user to select a file, and then saves
      * the current Sudoku game data to the selected file.
      */
-    //här för flyttas den till view får man endå kalla på view i controller vilket känns onödigt, samma med loadGame
     public void saveGame() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save my files");
@@ -285,7 +327,7 @@ public class Controller {
         fileChooser.setInitialDirectory(new File("/C:/temp"));
 
         try {
-            File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow()); //TODO: här väljs vilket fönster som skall visa filechooser
+            File selectedFile = fileChooser.showSaveDialog(view.getScene().getWindow());
             if (selectedFile != null) {
                 SudokuFileIO.serializeToFile(selectedFile, bord);
             }
@@ -313,8 +355,7 @@ public class Controller {
             this.bord = SudokuFileIO.deSerializeFromFile(selectedFile);
 
         } catch (IOException e) {
-
-           // throw new RuntimeException(e);
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }catch (NullPointerException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }catch (RuntimeException e){
@@ -325,6 +366,13 @@ public class Controller {
         return this.bord;
     }
 
+    /**
+     * Updates the specified tile at the given row and column in the given array of `Label` objects.
+     *
+     * @param numberTiles The 2D array of `Label` objects representing the Sudoku board.
+     * @param row The row index of the tile to update.
+     * @param col The column index of the tile to update.
+     */
     public void updateTile(Label[][] numberTiles,int row, int col) {
         numberTiles[row][col].setText("");
         if (bord.getCurrentValue(row, col) == 0) {
@@ -333,6 +381,12 @@ public class Controller {
             numberTiles[row][col].setText(Integer.toString(bord.getCurrentValue(row, col)));
         }
     }
+
+    /**
+     * Updates the Sudoku board displayed by the array of `Label` objects.
+     *
+     * @param numberTiles The 2D array of `Label` objects representing the Sudoku board.
+     */
     public void updateBord(Label[][] numberTiles) {
         for(int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
             for(int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
@@ -341,10 +395,26 @@ public class Controller {
         }
     }
 
+
+    /**Help method
+     * Retrieves the `Square` object at the specified row and column from the internal `Bord` object.
+     *
+     * @param row The row index of the desired `Square` object.
+     * @param col The column index of the desired `Square` object.
+     * @return The `Square` object representing the specified position on the Sudoku board.
+     */
     public Square getSquare(int row, int col) {
         return bord.getSquareInfoByPos(row,col);
     }
 
+
+    /**
+     * Retrieves the current value at the specified position on the Sudoku board.
+     *
+     * @param row The row index of the position to retrieve the value for.
+     * @param col The column index of the position to retrieve the value for.
+     * @return The current value at the specified position on the Sudoku board.
+     */
     public int getCurrentVale(int row, int col) {
         return bord.getCurrentValue(row,col);
     }

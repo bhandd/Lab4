@@ -89,7 +89,6 @@ public class GridView extends BorderPane {
         root.setStyle("-fx-border-color: black; -fx-border-width: 1.0px; -fx-background-color: white;");
 
         // create the 3*3 sections and add the number tiles
-        int i = 0;
         for (int srow = 0; srow < SudokuUtilities.SECTIONS_PER_ROW; srow++) {
             for (int scol = 0; scol < SudokuUtilities.SECTIONS_PER_ROW; scol++) {
                 TilePane section = new TilePane();
@@ -169,8 +168,9 @@ public class GridView extends BorderPane {
     }
 
     /**
-     * Creates the bottom inset
-     * @return
+     * Creates and configures a vertical box (`VBox`) to be placed at the bottom of the main layout.
+     *
+     * @return The configured `VBox` object.
      */
     public VBox bottom() {
         VBox b1 = new VBox();
@@ -240,7 +240,7 @@ public class GridView extends BorderPane {
     }
 
     /**
-     * Update the complet board
+     * Update the complete board
      */
     public void updateBord() {
         for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
@@ -255,7 +255,7 @@ public class GridView extends BorderPane {
      * with a diffrent level or a cancel and go back to game.
      * This choice is made with an alert
      */
-    public EventHandler<ActionEvent> levelHandler = new EventHandler<ActionEvent>() {
+    public EventHandler<ActionEvent> levelHandler = new EventHandler<>() {
         @Override
         public void handle(ActionEvent actionEvent) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

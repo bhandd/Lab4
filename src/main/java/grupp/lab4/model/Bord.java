@@ -132,6 +132,13 @@ public class Bord implements Serializable {
         System.out.println("|");
     }
 
+    /**
+     * Sets new value to a square/tile (used in tileCLickHandler)
+     * if square is empty
+     * @param val the value to set square in
+     * @param row row where set square
+     * @param col row where set square
+     */
     public void setSquareValue(int val, int row, int col) {
         if (inGameBord[row][col].getValue() == 0) {
             inGameBord[row][col].setValue(val);

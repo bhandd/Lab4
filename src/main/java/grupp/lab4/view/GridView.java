@@ -20,7 +20,6 @@ public class GridView extends BorderPane {
     private final TilePane numberPane;
     private MenuBar menubar;
     private final Controller controller;
-    private char buttonCheck;
 
     /**
      * The Constructor creates menubar, the tiles and button choices.
@@ -29,8 +28,6 @@ public class GridView extends BorderPane {
     public GridView() {
         controller = new Controller(this);
 
-
-        buttonCheck = '0';
         numberTiles = new Label[controller.getGridSize()][controller.getGridSize()];
         initNumberTiles();
 
@@ -43,10 +40,22 @@ public class GridView extends BorderPane {
         creatMenu();
     }
 
+    /**
+     * Retrieves the 2D array of `Label` objects representing the Sudoku number tiles.
+     *
+     * @return The 2D array of `Label` objects.
+     */
     public Label[][] getNumberTiles() {
         return numberTiles;
     }
 
+    /**
+     * Retrieves the `Label` object representing the number tile at the specified position.
+     *
+     * @param row The row index of the number tile.
+     * @param col The column index of the number tile.
+     * @return The `Label` object representing the number tile.
+     */
     public Label getNumberByPos(int row, int col) {
         return numberTiles[row][col];
     }
@@ -62,11 +71,15 @@ public class GridView extends BorderPane {
             for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
                 Label tile = new Label(""/* add number, or "", to display */); // data from model
                 if (!controller.getSqareInfoByPosition(row,col)) {
+                    font = Font.font("Monospaced", FontWeight.BOLD, 20);
                     tile = new Label(Integer.toString(controller.getSqareInfo(row,col)));
+                    tile.setFont(font);
+                } else {
+                    font = Font.font("Monospaced", FontWeight.NORMAL, 20);
+                    tile.setFont(font);
                 }
                 tile.setPrefWidth(32);
                 tile.setPrefHeight(32);
-                tile.setFont(font);
                 tile.setAlignment(Pos.CENTER);
                 tile.setStyle("-fx-border-color: black; -fx-border-width: 0.5px;"); // css style
                 tile.setOnMouseClicked(controller.tileCLickHandler); // add your custom event handler
@@ -225,67 +238,6 @@ public class GridView extends BorderPane {
     }
 
     /**
-     * Update a single tile on the bord
-     *
-     * @param row row on the board
-     * @param col col on the board
-     */
-    public void updateTile(int row, int col) {
-        numberTiles[row][col].setText("");
-        if (controller.getCurrentVale(row, col) == 0) {
-            numberTiles[row][col].setText("");
-        } else {
-            numberTiles[row][col].setText(Integer.toString(controller.getCurrentVale(row, col)));
-        }
-    }
-
-    /**
-     * Update the complete board
-     */
-    public void updateBord() {
-        for (int row = 0; row < SudokuUtilities.GRID_SIZE; row++) {
-            for (int col = 0; col < SudokuUtilities.GRID_SIZE; col++) {
-                updateTile(row, col);
-            }
-        }
-    }
-
-    /**
-     * Gives you four choices, three where you can start a new game
-     * with a diffrent level or a cancel and go back to game.
-     * This choice is made with an alert
-     */
-    public EventHandler<ActionEvent> levelHandler = new EventHandler<>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-            ButtonType easy = new ButtonType("Easy");
-            ButtonType medium = new ButtonType("Medium");
-            ButtonType hard = new ButtonType("Hard");
-
-            alert.getButtonTypes().setAll(easy, medium, hard);
-            alert.setTitle("Difficulty");
-            alert.setHeaderText(null);
-            alert.setContentText("Choose the difficulty");
-            Optional<ButtonType> choice = alert.showAndWait();
-            if (choice.get() == easy) {
-
-                controller.getNewBordWithDifficulty(SudokuLevel.EASY);
-                controller.updateBord(numberTiles);
-            } else if (choice.get() == medium) {
-                controller.getNewBordWithDifficulty(SudokuLevel.MEDIUM);
-                controller.updateBord(numberTiles);
-            } else if (choice.get() == hard) {
-                controller.getNewBordWithDifficulty(SudokuLevel.HARD);
-                controller.updateBord(numberTiles);
-            }
-        }
-    };
-
-
-
-    /**
      * Checks if the Sudoku board is complete and displays a message if it is.
      * bord The Sudoku board to check.
      */
@@ -302,7 +254,7 @@ public class GridView extends BorderPane {
                 Optional<ButtonType> choice = alert.showAndWait();
                 if (choice.get() == newGame) {
                     ActionEvent actionEvent = new ActionEvent();
-                    levelHandler.handle(actionEvent);
+                    controller.levelHandler.handle(actionEvent);
                 } else {
                     System.exit(0);
                 }
@@ -318,7 +270,7 @@ public class GridView extends BorderPane {
                 Optional<ButtonType> choice = alert.showAndWait();
                 if (choice.get() == newGame) {
                     ActionEvent actionEvent = new ActionEvent();
-                    levelHandler.handle(actionEvent);
+                    controller.levelHandler.handle(actionEvent);
                 } else if (choice.get() == quit) {
                     controller.saveGame();
                     System.exit(0);

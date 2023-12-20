@@ -8,7 +8,12 @@ public class Square implements Serializable {
     private boolean hidden;
     private int value;
 
-
+    /**
+     * Initializes a new `Square` instance with the given properties.
+     * @param taken Whether the square has a value placed in it.
+     * @param locked Whether the square is visible or hidden.
+     * @param value The value placed in the square.
+     */
     public Square(int taken, boolean locked, int value) {
         this.taken = taken;
         this.hidden = locked;
@@ -16,6 +21,10 @@ public class Square implements Serializable {
 
     }
 
+    /**
+     * Initializes a new `Square` instance with default properties.
+     * The square is considered empty with no value (`value = 0`), not locked (`hidden = false`), and not filled (`taken = 0`).
+     */
     public Square() {
         this.taken = 0;
         this.hidden = false;

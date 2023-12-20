@@ -16,6 +16,11 @@ public class Controller {
     private Bord bord;
     private char buttonCheck = '0';
 
+    /**
+     * An event handler for mouse clicks on the Sudoku grid.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<MouseEvent> tileCLickHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
@@ -32,6 +37,11 @@ public class Controller {
         }
     };
 
+    /**
+     * The event handler for button clicks.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -39,6 +49,11 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for exiting the application.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> eventExitHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -46,6 +61,11 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for saving the game.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> eventSaveGameHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -53,6 +73,11 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for loading the game.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> eventLoadGameHandler = new EventHandler<ActionEvent>() {
 
         @Override
@@ -65,6 +90,11 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for restarting the game.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> restartHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -73,6 +103,11 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for restarting the Sudoku game.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> clearHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -81,6 +116,9 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for selecting the Sudoku difficulty on new game.
+     */
     public EventHandler<ActionEvent> levelHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -112,6 +150,11 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for displaying the Sudoku rules.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> rulesHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -127,6 +170,11 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for checking the validity of the Sudoku board.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> checkHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -146,6 +194,11 @@ public class Controller {
         }
     };
 
+    /**
+     * An event handler for providing a hint for the Sudoku board.
+     *
+     * @param view The Sudoku game view.
+     */
     public EventHandler<ActionEvent> hintHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
